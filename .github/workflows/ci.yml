@@ -1,0 +1,42 @@
+name: ci
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files in the docs folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v35
+        with:
+          files: frontend/**
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Create dot env file
+        shell: bash
+        run: |
+          touch ./frontend/.env
+          echo "API_URL=${{ secrets.API_URL }}" >> ./frontend/.env
+      - run: flyctl deploy ./frontend --remote-only
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files in the docs folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v35
+        with:
+          files: backend/**
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy ./backend --remote-only
+        if: steps.changed-files-specific.outputs.any_changed == 'true'

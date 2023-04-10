@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Laravel Sail",
+            "Group": "Servers",
+            "Host": "pgsql",
+            "Port": 5432,
+            "MaintenanceDB": "backend",
+            "Username": "sail",
+            "PassFile": "/pgpass",
+            "SSLMode": "prefer"
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "nuxt": "^3.0.0",
+    "sonarjs": "^1.0.0",
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard": "^29.0.0"
+  },
+  "dependencies": {
+    "sass": "^1.57.1"
+  }
+}
