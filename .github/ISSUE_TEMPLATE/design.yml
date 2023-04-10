@@ -1,0 +1,19 @@
+name: 設計用 issue template
+description: 設計タスクを作成する場合はこちらのテンプレートを使用してください。
+title: "[設計] "
+labels: "documentation"
+body:
+  - type: input
+    attributes:
+      label: 設計書
+      description: 設計書のURLを入力してください。
+      placeholder: https://xxxxxxxx/
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 備考
+      description: 補足情報があれば記入してください。
+      render: markdown
+    validations:
+      required: false

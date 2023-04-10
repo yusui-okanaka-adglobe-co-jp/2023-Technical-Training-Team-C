@@ -1,0 +1,77 @@
+name: バグ報告用 issue template
+description: 試験で発生したバグを報告する場合はこちらのテンプレートを使用してください。
+title: "[バグ報告] "
+labels: "bug"
+body:
+  - type: input
+    attributes:
+      label: 試験仕様書
+      description: 試験仕様書のURLを入力してください。
+      placeholder: https://xxxxxxxx/
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 試験No.
+      description: |
+        該当する試験No.を入力してください。
+        試験外の項目で発見した不具合の場合は「試験外項目」と入力してください。
+      placeholder: No.XX or 試験外項目
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 再現手順
+      description: 不具合を発生させる手順を記載して下さい。
+      placeholder: |
+        1. xxx画面を表示する
+        2. yyyボタンを押下する
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 期待結果
+      description: 本来（不具合がなければ）起こるべき結果を記載してください。
+      placeholder: |
+        - zzz画面が表示される
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 不具合現象
+      description: |
+        発生した不具合を記載してください。
+        エラーログが出力されている場合はログを添付してください。
+        画面があったほうが分かりやすい場合はキャプチャを添付してください。
+      placeholder: |
+        - 画面が切り替わらない
+      render: markdown
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 再現度
+      description: |
+        再現手順 を3回繰り返し、発生した回数を記載してください。
+        不具合によっては再現性が不定なものが存在するため、こういった情報を添えることがあります。
+      value: /3
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 補足情報
+      description: |
+        環境依存の再現性や、特定条件下 (例: 登録直後等々) でしか発生しない情報がある場合に記載してください。
+        また、個人的な見解があればこちらに記載してください。
+        ※個人的見解を記載する場合は、根拠を明確にしておくと混乱を生みにくいです。
+      placeholder: |
+        特定条件についての記載例:
+        - 同様の操作を Firefox で行った場合は発生しませんでした。
+        - 入力内容をクリアした場合のみ発生しました。
+        個人的見解についての記載例:
+        - ○○というエラーメッセージから××が発生しているのではないかと思われました。参考: https://hogehoge.com/
+      render: markdown
+    validations:
+      required: false
