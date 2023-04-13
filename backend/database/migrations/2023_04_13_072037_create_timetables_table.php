@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('time_tables', function (Blueprint $table) {
+        Schema::create('timetables', function (Blueprint $table) {
             $table->id();
             $table->integer('day_of_week')->comment('曜日');
             $table->integer('period')->comment('時限');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_tables');
+        Schema::dropIfExists('timetables');
     }
 };
