@@ -28,7 +28,7 @@ return new class extends Migration
     {
         //
         Schema::table('timetables', function (Blueprint $table) {
-            $table->renameColumn('end_date', 'end-date');
+            $table->renameColumn('end_date', '"end-date"');
         });
     }
 };
