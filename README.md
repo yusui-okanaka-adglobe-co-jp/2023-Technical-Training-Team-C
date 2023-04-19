@@ -235,10 +235,6 @@ http://localhost:8080 に接続すると以下の画面が表示されますの�
 デプロイには `Fly.io` を使用します。
 https://fly.io/
 
-## 事前準備
-
-手順書の`-team-x`の部分は各チームに合わせて変更してください。
-
 ## アカウント作成
 
 ![image](https://user-images.githubusercontent.com/103744526/218354966-66b18861-0bed-43fb-8a3b-9a3874c28082.png)
@@ -292,7 +288,7 @@ $ flyctl postgres create
 
 > ? Choose an app name (leave blank to generate one):
 >
-> > technical-training-database-team-x
+> > technical-training-database-team-c
 
 > ? Select region:
 >
@@ -305,13 +301,13 @@ $ flyctl postgres create
 **接続情報が出力結果にあるため必ずコピーして保存する**
 
 ```
-Postgres cluster technical-training-database-team-x created
+Postgres cluster technical-training-database-team-c created
   Username:    postgres
   Password:    MjtH1up0tuhGa91
-  Hostname:    technical-training-database-team-x.internal
+  Hostname:    technical-training-database-team-c.internal
   Proxy port:  5432
   Postgres port:  5433
-  Connection string: postgres://postgres:MjtH1up0tuhGa91@technical-training-database-team-x.internal:5432
+  Connection string: postgres://postgres:MjtH1up0tuhGa91@technical-training-database-team-c.internal:5432
 ```
 
 ## Laravel のデプロイ
@@ -343,7 +339,7 @@ $ flyctl launch
 
 > ? Choose an app name (leave blank to generate one):
 >
-> > technical-training-backend-team-x
+> > technical-training-backend-team-c
 
 > ? Select region:
 >
@@ -359,7 +355,7 @@ $ flyctl launch
 
 ```
 $ flyctl secrets set \
-  DB_HOST=technical-training-database-team-x.internal \
+  DB_HOST=technical-training-database-team-c.internal \
   DB_DATABASE=backend \
   DB_USERNAME=postgres \
   DB_PASSWORD=MjtH1up0tuhGa91 \
@@ -369,7 +365,7 @@ $ flyctl secrets set \
 ### Laravel と Postgres を接続する
 
 ```
-$ flyctl postgres attach technical-training-database-team-x -a technical-training-backend-team-x
+$ flyctl postgres attach technical-training-database-team-c -a technical-training-backend-team-c
 ```
 
 ### backend/fly.toml を開き、PHP バージョンを 8.2 に変更する
@@ -468,7 +464,7 @@ $ flyctl secrets set PORT=3000
 
 ### API_URL を修正する
 
-API_URL=https://technical-training-backend-team-x.fly.dev
+API_URL=https://technical-training-backend-team-c.fly.dev
 
 ### デプロイする
 
@@ -502,6 +498,6 @@ token が表示されるので控えておく
 
 ### API のエンドポイントを登録する
 
-登録する URL は `https://technical-training-backend-team-x.fly.dev`
+登録する URL は `https://technical-training-backend-team-c.fly.dev`
 
 ![image](https://user-images.githubusercontent.com/103744526/218355100-c6708aa8-68a4-4f6c-8fbd-5e4340ec8f82.png)
