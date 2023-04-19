@@ -1,0 +1,63 @@
+// ページ全体に適応させたいscssの記述場所
+$main-color: #5160ae;
+$accent-color: #f4c9c9;
+$link-color: #6a53f9;
+$board-color: #ffffff;
+$base-color: #eaeaea;
+$font: 'Inter';
+$font-weight: 400;
+
+body {
+  background-color: $base-color;
+  margin: 0;
+}
+
+.main-color {
+  color: $main-color;
+}
+
+.accent-color {
+  color: $accent-color;
+}
+
+.link-color {
+  color: $link-color;
+}
+
+.board-color {
+  color: $board-color;
+}
+
+.base-color {
+  color: $base-color;
+}
+
+.font-size-xs {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 12px;
+}
+
+.font-size-s {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 14px;
+}
+
+.font-size-m {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 18px;
+}
+
+.font-size-l {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 24px;
+}
+
+.font-size-xl {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 36px;
+}
