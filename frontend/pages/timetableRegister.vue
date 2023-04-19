@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <default-layout page-name="教師用登録ページ">
     <h1>hoge</h1>
     <p><button onclick="location.href='./home.html'">ホーム</button></p>
     <p><button onclick="window.open('/studentHome.html')">生徒用画面確認</button></p>
@@ -21,9 +21,11 @@
       <button id="close">モーダルダイアログを閉じる</button>
     </dialog>
     <button id="show">モーダルダイアログを開く</button>
-  </div>
+  </default-layout>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import '@/assets/css/common.css'
+</script>
 
 <style lang="scss" scoped></style>
