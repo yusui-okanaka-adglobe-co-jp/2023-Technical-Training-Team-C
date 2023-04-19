@@ -6,4 +6,10 @@ export default defineNuxtConfig({
     },
   },
   modules: [],
+  css: [
+    // リセットcss
+    '@/assets/css/reset.css',
+    // ページ全体に適応させるscssの読み込み
+    '@/assets/scss/main.scss',
+  ],
 })
