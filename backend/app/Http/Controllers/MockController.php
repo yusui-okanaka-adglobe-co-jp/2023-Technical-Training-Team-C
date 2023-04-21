@@ -221,7 +221,12 @@ class MockController extends Controller
     public function createTimetables(Request $request)
     {
         $message = [
-            'messages' => 'success'
+            'messages' => [
+                'success' => ''
+                // その他のパターン例
+                // 'failure' => ''
+                // 'validationError' => "教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。"
+            ]
         ];
 
         return Response::json($message);
@@ -231,7 +236,12 @@ class MockController extends Controller
     public function loginTeachers(Request $request)
     {
         $message = [
-            'messages' => 'success'
+            'messages' => [
+                'success' => ''
+                // その他のパターン例
+                // 'failure' => ''
+                // 'validationError' => "メールアドレスは必須項目です。"
+            ]
         ];
 
         return Response::json($message);
