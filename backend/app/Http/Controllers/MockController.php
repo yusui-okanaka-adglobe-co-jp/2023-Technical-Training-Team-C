@@ -222,10 +222,11 @@ class MockController extends Controller
     {
         $message = [
             'messages' => [
-                'success' => ''
+                'success'
                 // その他のパターン例
-                // 'failure' => ''
-                // 'validationError' => "教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。"
+                // 'failure'
+                // 'validationError',
+                // '教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。'
             ]
         ];
 
@@ -237,10 +238,12 @@ class MockController extends Controller
     {
         $message = [
             'messages' => [
-                'success' => ''
+                'success'
                 // その他のパターン例
-                // 'failure' => ''
-                // 'validationError' => "メールアドレスは必須項目です。"
+                // 'failure'
+                // 'validationError',
+                // 'メールアドレスは必須項目です。'
+
             ]
         ];
 
