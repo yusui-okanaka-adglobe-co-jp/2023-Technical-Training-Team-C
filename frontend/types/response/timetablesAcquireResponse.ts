@@ -1,12 +1,12 @@
-export interface ITimetable {
+export interface Timetable {
   date: string
   dayOfWeek: number
   isHoliday: boolean
-  lessons?: Array<ILesson>
+  lessons?: Array<Lesson>
   holidayTitle?: string
 }
 
-interface ILesson {
+interface Lesson {
   subject: string
   teacher: string
 }

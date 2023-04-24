@@ -1,8 +1,8 @@
 <template>
-  <td :class="{ 'lesson-holiday-cell': isHoliday }">
+  <td class="lesson-cell horizontal-writing" :class="{ 'lesson-holiday-cell': isHoliday }">
     <div>
-      <p class="lessonCell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
-      <p class="lessonCell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
+      <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
+      <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
     </div>
   </td>
 </template>
@@ -22,9 +22,10 @@ const props = defineProps({
   },
 })
 /* 科目名／教師名の文字の大きさを決める */
+
 function fontSizeClass(msg: string) {
-  let subjectLength = props.subject.length
-  let teacherNameLength = props.teacherName.length
+  const subjectLength = props.subject.length
+  const teacherNameLength = props.teacherName.length
 
   if (msg == 'subject') {
     if (subjectLength >= 9) {
@@ -45,16 +46,35 @@ function fontSizeClass(msg: string) {
 </script>
 
 <style lang="scss">
-td {
-  text-align: center;
-  width: 160px;
-  height: 90px;
-  font-weight: bold;
-}
-.lesson-holiday-cell {
-  background-color: #f4c9c9;
-}
-.lesson-cell-box {
-  margin: 5px;
+@import '../assets/scss/timetable.scss';
+
+@media only screen and (max-width: 767px) {
+  td {
+    text-align: center;
+    width: 48px;
+    height: 40px;
+    font-weight: bold;
+  }
+  .lesson-holiday-cell {
+    background-color: #f4c9c9;
+  }
+  .lesson-cell-box {
+    margin: 0;
+  }
+  .font-size-xl {
+    font-size: 18px;
+  }
+  .font-size-l {
+    font-size: 8px;
+  }
+  .font-size-m {
+    font-size: 6px;
+  }
+  .font-size-s {
+    font-size: 6px;
+  }
+  .font-size-xs {
+    font-size: 4px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <!--時限表示component-->
 <template>
-  <th class="period-cell">
+  <th class="horizontal-writing period-cell">
     <p class="font-size-xl">{{ props.period }}</p>
   </th>
 </template>
@@ -14,8 +14,15 @@ const props = defineProps({
 })
 </script>
 <style lang="scss" scoped>
-.period-cell {
-  width: 80px;
-  height: 90px;
+@import '../assets/scss/timetable.scss';
+
+@media only screen and (max-width: 767px) {
+  .period-cell {
+    width: 24px;
+    height: 40px;
+  }
+  .font-size-xl {
+    font-size: 18px;
+  }
 }
 </style>
