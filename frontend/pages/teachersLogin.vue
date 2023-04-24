@@ -3,51 +3,62 @@
     <div class="container board-color">
       <section class="login">
         <div class="inner-title">
-          <h1 class="title font-size-xl">ログイン</h1>
+          <h1 class="inner-title__login font-size-xl">ログイン</h1>
           <!-- ログイン認証に失敗した場合に表示するエラーメッセージ出力場所 -->
-          <p v-if="!isValidPass" :class="style">
+          <p v-if="!isValidPass" class="red inner-title__err">
             ログインに失敗しました。<br />
             メールアドレス、またはパスワードが間違っています。
           </p>
         </div>
-        <form>
-          <div class="mail">
-            <p class="font-size-s">メールアドレス：</p>
+        <!-- フォーム　ここから -->
+        <form class="inner-form">
+          <div class="inner-form__mail">
+            <p class="font-size-s inner-form__text">メールアドレス：</p>
             <input
+              class="inner-form__input"
               type="email"
               required
-              name="required"
               placeholder="メールアドレス入力"
-              v-model="email"
-              :class="Err"
+              v-model="formData.email"
+              :class="boxColor"
               pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
             />
           </div>
-          <div class="pass">
-            <p class="font-size-s">パスワード：</p>
+          <div class="inner-form__pass">
+            <p class="font-size-s inner-form__text">パスワード：</p>
             <input
+              class="inner-form__input"
               :type="passwordType"
               required
-              name="required"
               placeholder="パスワード入力"
-              id="passwordInput"
               minlength="8"
-              :class="Err"
+              :class="boxColor"
+              v-model="formData.password"
+              pattern="^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/"
             />
             <br />
-            <input type="checkbox" id="checkPassword" v-model="isChecked" />
-            <label for="checkPassword" class="font-size-m">パスワード表示</label>
-            <br />
+            <label for="check-password" class="font-size-m">
+              <input type="checkbox" id="check-password" v-model="isChecked" class="inner-form__pass__check-password" />
+              パスワード表示
+            </label>
           </div>
-          <button class="button main-color font-size-l" @click="onClick">ログインする</button>
-          <p class="none">{{ message }}</p>
+          <button
+            type="submit"
+            class="inner-form__login-button main-color font-size-l"
+            @click="onClick"
+            formmethod="post"
+          >
+            ログインする
+          </button>
         </form>
+        <!-- フォーム　ここまで -->
       </section>
     </div>
   </default-layout>
 </template>
 
 <script lang="ts" setup>
+import { TeachersLoginResponse } from '~~/types/response/TeachersLoginResponse'
 // パスワード表示切り替え部分
 const isChecked = ref(false)
 const passwordType = computed(function () {
@@ -57,33 +68,41 @@ const passwordType = computed(function () {
   return 'password'
 })
 
-// ボタンクリック時のバリデーションチェック
-const message = ref('')
-const email = ref('')
-let style = ref('none')
-let Err = ref('nonebox')
-const isValidEmail = computed(() => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-})
-const isValidPass = computed(() => {
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(email.value)
-})
-
-const onClick = () => {
-  message.value = 'BottonClicked'
+const boxColor = ref('nonebox')
+const isValidEmail = ref(true)
+const isValidPass = ref(true)
+const formData = {
+  email: '',
+  password: '',
+}
+// ボタンクリック時の動作
+const onClick = async () => {
+  // バリデーションチェック
+  isValidEmail.value = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+  isValidPass.value = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/.test(formData.password)
   if (isValidEmail.value) {
-    // フォームを送信する処理
+    if (isValidPass.value) {
+      // 入力時のバリデーションチェック成功
+      // api取得の処理
+      const { data: response } = await useFetch<TeachersLoginResponse>('http://localhost:8000/api/teachersLogin', {
+        method: 'POST',
+        body: formData,
+      })
+      // response:success
+      if (response.value?.messages[0] === 'success') {
+        // ページ遷移の処理
+        navigateTo({ path: '/home' })
+      } else {
+        // response:success以外
+        boxColor.value = 'errbox'
+      }
+    } else {
+      // バリデーションエラーの処理
+      boxColor.value = 'errbox'
+    }
   } else {
-    // バリデーションエラーを処理する処理
-    style = ref('red')
-    Err = ref('errbox')
-  }
-  if (isValidPass.value) {
-    // フォームを送信する処理
-  } else {
-    // バリデーションエラーを処理する処理
-    style = ref('red')
-    Err = ref('errbox')
+    // バリデーションエラーの処理
+    boxColor.value = 'errbox'
   }
 }
 </script>
@@ -97,60 +116,54 @@ const onClick = () => {
 }
 .inner-title {
   height: 110px;
-  p {
+  &__login {
+    font-weight: bold;
+    text-align: center;
+  }
+  &__err {
     margin-top: 16px;
     text-align: center;
   }
 }
-.title {
-  font-weight: bold;
-  text-align: center;
-}
 
-form {
+// フォーム
+.inner-form {
   width: 250px;
   margin: 24px auto 0;
   text-align: center;
-  p {
+  &__mail {
+    height: 100px;
+  }
+  &__pass {
+    margin-top: 32px;
+    height: 136px;
+    &__check-password {
+      width: auto;
+      margin-top: 42.5px;
+    }
+  }
+  &__text {
     text-align: left;
   }
-  input {
+  &__input {
     width: 250px;
     padding: 9px 12px;
     border: 1px solid #000000;
   }
-  button {
+  &__login-button {
     text-align: center;
     transition: 0.3s;
+    margin-top: 24px;
+    color: #ffffff;
+    padding: 18px 15.5px;
+    font-weight: bold;
+    border-radius: 10px;
   }
-  button:hover {
+  &__login-button:hover {
     transform: scale(1.1);
   }
 }
-.mail {
-  height: 100px;
-}
-.pass {
-  margin-top: 32px;
-  height: 136px;
-}
-#checkPassword {
-  width: auto;
-  margin-top: 42.5px;
-}
-.button {
-  margin-top: 24px;
-  color: #ffffff;
-  padding: 18px 15.5px;
-  font-weight: bold;
-  border-radius: 10px;
-}
-.none {
-  color: #ffffff;
-}
-.red {
-  color: red;
-}
+// if
 .errbox {
   background-color: rgba(255, 229, 229, 1);
 }

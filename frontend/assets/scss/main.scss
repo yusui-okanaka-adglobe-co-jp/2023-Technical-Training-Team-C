@@ -7,9 +7,9 @@ $base-color: #eaeaea;
 $font: 'Inter';
 $font-weight: 400;
 
+// 背景色設定
 body {
   background-color: $base-color;
-  margin: 0;
 }
 
 .main-color {
@@ -32,6 +32,7 @@ body {
   background-color: $base-color;
 }
 
+// 文字設定
 .font-size-xs {
   font-family: $font;
   font-weight: $font-weight;
@@ -60,4 +61,12 @@ body {
   font-family: $font;
   font-weight: $font-weight;
   font-size: 36px;
+}
+
+.white {
+  color: #fff;
+}
+
+.red {
+  color: #f00;
 }
