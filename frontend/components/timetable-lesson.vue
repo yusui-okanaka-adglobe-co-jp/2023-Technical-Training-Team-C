@@ -47,34 +47,4 @@ function fontSizeClass(msg: string) {
 
 <style lang="scss">
 @import '../assets/scss/timetable.scss';
-
-@media only screen and (max-width: 767px) {
-  td {
-    text-align: center;
-    width: 48px;
-    height: 40px;
-    font-weight: bold;
-  }
-  .lesson-holiday-cell {
-    background-color: #f4c9c9;
-  }
-  .lesson-cell-box {
-    margin: 0;
-  }
-  .font-size-xl {
-    font-size: 18px;
-  }
-  .font-size-l {
-    font-size: 8px;
-  }
-  .font-size-m {
-    font-size: 6px;
-  }
-  .font-size-s {
-    font-size: 6px;
-  }
-  .font-size-xs {
-    font-size: 4px;
-  }
-}
 </style>

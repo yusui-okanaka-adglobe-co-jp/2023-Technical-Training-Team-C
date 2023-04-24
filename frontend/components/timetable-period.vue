@@ -15,14 +15,4 @@ const props = defineProps({
 </script>
 <style lang="scss" scoped>
 @import '../assets/scss/timetable.scss';
-
-@media only screen and (max-width: 767px) {
-  .period-cell {
-    width: 24px;
-    height: 40px;
-  }
-  .font-size-xl {
-    font-size: 18px;
-  }
-}
 </style>
