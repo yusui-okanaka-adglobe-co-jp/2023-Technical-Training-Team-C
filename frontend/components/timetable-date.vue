@@ -57,7 +57,4 @@ function fontSizeHolodayTitle() {
 
 <style lang="scss" scoped>
 @import '../assets/scss/timetable.scss';
-
-@media only screen and (max-width: 767px) {
-}
 </style>
