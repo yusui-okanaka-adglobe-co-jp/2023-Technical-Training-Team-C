@@ -1,3 +1,3 @@
 <template>
-  <test-component />
+  <teacher-timetable-component></teacher-timetable-component>
 </template>

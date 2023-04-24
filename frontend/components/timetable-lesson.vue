@@ -1,10 +1,8 @@
 <template>
-  <td>
+  <td :class="{ 'lesson-holiday-cell': isHoliday }">
     <div>
-      <span :style="fontSize">{{ props.subject }}</span
-      ><br />
-      <!-- <span :class="{ fontSizeTeacher: isLength  }">{{ props.teacherName }}</span> -->
-      <span :class="[fontSizeClass()]">{{ props.teacherName }}</span>
+      <p class="lessonCell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
+      <p class="lessonCell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
     </div>
   </td>
 </template>
@@ -13,45 +11,50 @@
 const props = defineProps({
   subject: {
     type: String,
-    required: true,
+    default: () => '',
   },
-  teacherName: String,
+  teacherName: {
+    type: String,
+    default: () => '',
+  },
+  isHoliday: {
+    type: Boolean,
+  },
 })
-function fontSizeClass() {
-  let length = props.subject.length
-  if (length >= 17) {
-    return 'fontSizeTeacher'
+/* 科目名／教師名の文字の大きさを決める */
+function fontSizeClass(msg: string) {
+  let subjectLength = props.subject.length
+  let teacherNameLength = props.teacherName.length
+
+  if (msg == 'subject') {
+    if (subjectLength >= 9) {
+      return 'font-size-s'
+    } else if (subjectLength >= 7) {
+      return 'font-size-m'
+    } else if (subjectLength >= 5) {
+      return 'font-size-l'
+    }
+    return 'font-size-xl'
   }
-  return 'fontSizeTeacher2'
+
+  if (teacherNameLength >= 9) {
+    return 'font-size-s'
+  }
+  return 'font-size-m'
 }
-
-let fontSize = { fontSize: '36px' }
-if ((props.subject?.length ?? 0) >= 17) {
-  fontSize = { fontSize: '14px' }
-} else if ((props.subject?.length ?? 0) >= 7) {
-  fontSize = { fontSize: '18px' }
-} else if ((props.subject?.length ?? 0) >= 5) {
-  fontSize = { fontSize: '24px' }
-}
-
-console.log(props.subject?.length)
-
-let isLength = (props.subject?.length ?? 0) >= 20
-console.log(isLength)
 </script>
+
 <style lang="scss">
 td {
-  box-sizing: border-box;
+  text-align: center;
   width: 160px;
   height: 90px;
-  line-height: 1.5;
-  word-break: break-word;
+  font-weight: bold;
 }
-
-.fontSizeTeacher {
-  font-size: 54px;
+.lesson-holiday-cell {
+  background-color: #f4c9c9;
 }
-.fontSizeTeacher2 {
-  font-size: 36px;
+.lesson-cell-box {
+  margin: 5px;
 }
 </style>
