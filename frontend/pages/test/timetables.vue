@@ -1,10 +1,6 @@
 <template>
-  <default-layout page-name="教師用ページ">
-    <!-- html記述場所 -->
-    <TimetableComponent :timetables="timetables"></TimetableComponent>
-  </default-layout>
+  <TimetableComponent :timetables="timetables"></TimetableComponent>
 </template>
-
 <script lang="ts" setup>
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 
@@ -155,5 +151,3 @@ const timetables: Timetable[] = [
   },
 ]
 </script>
-
-<style scoped lang="scss"></style>
