@@ -31,10 +31,10 @@
               :type="passwordType"
               required
               placeholder="パスワード入力"
-              minlength="8"
               :class="boxColor"
               v-model="formData.password"
-              pattern="^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/"
+              pattern="^[a-zA-Z\d]{8,100}$"
+              title="パスワードは半角英数字で8文字以上入力してください。"
             />
             <br />
             <label for="check-password" class="font-size-m">
@@ -75,30 +75,37 @@ const formData = {
   email: '',
   password: '',
 }
+const ex = ref(null)
 // ボタンクリック時の動作
 const onClick = async () => {
   // バリデーションチェック
   isValidEmail.value = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-  isValidPass.value = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/.test(formData.password)
-  if (isValidEmail.value) {
-    if (isValidPass.value) {
-      // 入力時のバリデーションチェック成功
-      // api取得の処理
+  isValidPass.value = /^[a-zA-Z\d]{8,100}$/.test(formData.password)
+  if (isValidEmail.value && isValidPass.value) {
+    // 入力時のバリデーションチェック成功
+    // api取得の処理
+    try {
       const { data: response } = await useFetch<TeachersLoginResponse>('http://localhost:8000/api/teachersLogin', {
         method: 'POST',
         body: formData,
       })
-      // response:success
       if (response.value?.messages[0] === 'success') {
+        // response:success
         // ページ遷移の処理
         navigateTo({ path: '/home' })
+      }
+      if (response.value?.messages[0] === 'failure') {
+        // response:failure
+        boxColor.value = 'errbox'
       } else {
-        // response:success以外
+        // response:validationError
         boxColor.value = 'errbox'
       }
-    } else {
-      // バリデーションエラーの処理
-      boxColor.value = 'errbox'
+    } catch (e) {
+      throw createError({
+        statusCode: 500,
+        message: 'Error fetching data',
+      })
     }
   } else {
     // バリデーションエラーの処理
