@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\MockController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,3 +28,8 @@ Route::post("/sample", function (Request $request) {
         "message" => empty($request->name) ? "What is your name?" : "Hello, {$request->name} san!!"
     ];
 });
+
+// モック用
+Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
+Route::post('/timetablesCreate', [MockController::class, 'createTimetables']);
+Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
