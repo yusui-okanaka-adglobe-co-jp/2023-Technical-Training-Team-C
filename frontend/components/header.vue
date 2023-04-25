@@ -22,9 +22,11 @@ header {
     h1 {
       margin: 0;
       font-style: normal;
+      font-size: 36px;
     }
     h2 {
       margin: 0;
+      font-size: 24px;
     }
   }
 }
