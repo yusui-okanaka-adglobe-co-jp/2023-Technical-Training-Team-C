@@ -5,7 +5,7 @@
       <th class="vertical-head horizontal-writing"></th>
       <th class="dayOfWeek-head horizontal-writing"></th>
       <!--時限表示ループ-->
-      <template v-for="periodNumber of brankCell" :key="periodNumber">
+      <template v-for="periodNumber of blankCell" :key="periodNumber">
         <TimetablePeriod :period="periodNumber"></TimetablePeriod>
       </template>
     </tr>
@@ -25,7 +25,7 @@
         <template v-if="timetable.isHoliday">
           <!--祝日処理-->
           <!--6回ループさせる-->
-          <template v-for="holidayCell of brankCell" :key="holidayCell">
+          <template v-for="holidayCell of blankCell" :key="holidayCell">
             <TimetableLesson :is-holiday="timetable.isHoliday"></TimetableLesson>
           </template>
         </template>
@@ -77,7 +77,7 @@ const props = defineProps({
   },
 })
 /* 6回回す用　*/
-const brankCell = 6
+const blankCell = 6
 
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
