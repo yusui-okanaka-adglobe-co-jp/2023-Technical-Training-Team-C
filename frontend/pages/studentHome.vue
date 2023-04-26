@@ -5,7 +5,6 @@
       <button @click="onclick">
         <div class="dateselect">日付選択</div>
       </button>
-      <!-- <p>{{ view }}</p> -->
       <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
     </div>
   </default-layout>
@@ -35,26 +34,6 @@ function selectDate(e) {
       view: format(view.value, 'yyyy-MM-dd'),
     },
   })
-
-  async function timetableRequest() {
-    const $config = useRuntimeConfig()
-    try {
-      const response =
-        (await $fetch) <
-        SampleResponse >
-        (`${$config.public.apiUrl}/api/sample`,
-        {
-          method: 'get',
-          body: {
-            date: view.value,
-          },
-        })
-
-      logs.value.push(response)
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 }
 </script>
 

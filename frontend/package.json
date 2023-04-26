@@ -19,9 +19,7 @@
     "tailwindcss": "^3.3.1"
   },
   "dependencies": {
-
     "@vuepic/vue-datepicker": "^4.4.0",
-
     "date-fns": "^2.29.3",
     "sass": "^1.57.1"
   }

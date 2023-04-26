@@ -35,8 +35,6 @@ const props = defineProps({
   isShown: false,
 })
 
-const isShown = ref(false)
-
 const emit = defineEmits()
 
 watch(date, () => {
@@ -45,10 +43,6 @@ watch(date, () => {
     return
   }
   emit('update:value', date.value[0])
-})
-
-watch(props.isShown, () => {
-  isShown.value = props.isShown
 })
 </script>
 
