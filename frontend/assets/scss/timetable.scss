@@ -1,0 +1,159 @@
+//PC用scss
+.timetable {
+  writing-mode: vertical-lr;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 1200px;
+  height: 660px;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px #333 inset;
+  margin-top: 24px;
+  margin-left: 24px;
+  position: fixed;
+  top: 220px;
+  left: 224px;
+}
+.horizontal-writing {
+  box-shadow: 0 0 0 1px #333 inset;
+  writing-mode: horizontal-tb;
+  word-break: break-word;
+}
+
+.vertical-head {
+  width: 80px;
+  height: 80px;
+}
+.dayOfWeek-head {
+  width: 80px;
+  height: 40px;
+}
+.lesson-cell {
+  text-align: center;
+  width: 160px;
+  height: 90px;
+  font-weight: bold;
+}
+/* 科目/教師*/
+.lesson-holiday-cell {
+  background-color: #f4c9c9;
+}
+.lesson-cell-box {
+  margin: 5px;
+}
+/* 日付 */
+.date-cell {
+  width: 160px;
+  height: 80px;
+  word-break: break-word;
+}
+.date-holiday-cell {
+  background-color: #f4c9c9;
+}
+/* 時限　*/
+.period-cell {
+  width: 80px;
+  height: 90px;
+}
+/* 曜日 */
+.dayOfWeek-cell {
+  word-break: break-word;
+  width: 160px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #5160ae;
+}
+
+//モバイル用scss
+@media only screen and (max-width: 767px) {
+  .timetable {
+    writing-mode: vertical-lr;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 360px;
+    height: 292px;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px #333 inset;
+    font-size: 14px;
+  }
+  .horizontal-writing {
+    box-shadow: 0 0 0 1px #333 inset;
+    writing-mode: horizontal-tb;
+    word-break: break-word;
+  }
+  .vertical-head {
+    width: 24px;
+    height: 36px;
+  }
+  .dayOfWeek-head {
+    width: 24px;
+    height: 16px;
+  }
+
+  .lesson-cell {
+    text-align: center;
+    width: 48px;
+    height: 40px;
+    font-weight: bold;
+  }
+  /*　科目/教師 */
+  .lesson-holiday-cell {
+    background-color: #f4c9c9;
+  }
+  .lesson-cell-box {
+    margin: 0;
+  }
+  .font-size-xl {
+    font-size: 18px;
+  }
+  .lesson-cell .font-size-l {
+    font-size: 8px;
+  }
+  .lesson-cell .font-size-m {
+    font-size: 6px;
+  }
+  .lesson-cell .font-size-s,
+  .lesson-cell .font-size-xs {
+    font-size: 4px;
+  }
+  /*　日付 */
+
+  .date-cell {
+    width: 48px;
+    height: 36px;
+    word-break: break-word;
+  }
+  .date-holiday-cell {
+    width: 48px;
+    height: 36px;
+    background-color: #f4c9c9;
+  }
+  .date-cell-margin {
+    margin-top: 0;
+  }
+  .date-holiday-cell .font-size-l,
+  .date-cell .font-size-l {
+    font-size: 10px;
+  }
+  .date-holiday-cell .font-size-m,
+  .font-size-s {
+    font-size: 5px;
+  }
+  /*　時限 */
+
+  .period-cell {
+    width: 24px;
+    height: 40px;
+  }
+  /*曜日 */
+
+  .dayOfWeek-cell {
+    word-break: break-word;
+    width: 48px;
+    height: 16px;
+    color: #ffffff;
+    background-color: #5160ae;
+  }
+  .dayOfWeek-cell .font-size-l {
+    font-size: 10px;
+  }
+}
