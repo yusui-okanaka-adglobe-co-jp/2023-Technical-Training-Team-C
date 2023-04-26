@@ -24,8 +24,6 @@ function onclick() {
 const view = ref(null)
 
 function selectDate(e) {
-  // console.log(e)
-  // onsole.log(typeof e)
   view.value = e
 
   //カレンダーモーダルを閉じる

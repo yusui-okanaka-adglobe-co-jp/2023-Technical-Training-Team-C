@@ -11,14 +11,10 @@ export default defineNuxtConfig({
   css: [
     // リセットcss
     '@/assets/css/reset.css',
-  ],
-  scss: [
     // ページ全体に適応させるscssの読み込み
     '@/assets/scss/main.scss',
   ],
   build: {
     transpile: ['@vuepic/vue-datepicker'],
   },
-
-  ssr: false,
 })
