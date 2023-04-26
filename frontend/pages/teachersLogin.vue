@@ -36,7 +36,6 @@
               pattern="^[a-zA-Z\d]{8,100}$"
               title="パスワードは半角英数字で8文字以上入力してください。"
             />
-            <br />
             <label for="check-password" class="font-size-m">
               <input type="checkbox" id="check-password" v-model="isChecked" class="inner-form__pass__check-password" />
               パスワード表示
@@ -93,12 +92,8 @@ const onClick = async () => {
         // response:success
         // ページ遷移の処理
         navigateTo({ path: '/home' })
-      }
-      if (response.value?.messages[0] === 'failure') {
-        // response:failure
-        boxColor.value = 'errbox'
       } else {
-        // response:validationError
+        // response:failure
         boxColor.value = 'errbox'
       }
     } catch (e) {
