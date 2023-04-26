@@ -16,7 +16,7 @@ class MockController extends Controller
             [
                 'date' => '2023/04/17',
                 'dayOfWeek' => 1,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
@@ -48,7 +48,7 @@ class MockController extends Controller
             [
                 'date' => '2023/04/18',
                 'dayOfWeek' => 2,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
@@ -80,7 +80,7 @@ class MockController extends Controller
             [
                 'date' => '2023/04/19',
                 'dayOfWeek' => 3,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
@@ -112,13 +112,13 @@ class MockController extends Controller
             [
                 'date' => '2023/04/20',
                 'dayOfWeek' => 4,
-                'isHoliday' => 'true',
+                'isHoliday' => true,
                 'holidayTitle' => '憲法記念日'
             ],
             [
                 'date' => '2023/04/21',
                 'dayOfWeek' => 5,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
@@ -150,7 +150,7 @@ class MockController extends Controller
             [
                 'date' => '2023/04/22',
                 'dayOfWeek' => 6,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
@@ -182,7 +182,7 @@ class MockController extends Controller
             [
                 'date' => '2023/04/23',
                 'dayOfWeek' => 0,
-                'isHoliday' => 'false',
+                'isHoliday' => false,
                 'lessons' =>
                 [
                     [
