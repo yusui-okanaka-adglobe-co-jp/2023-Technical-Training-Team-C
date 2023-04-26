@@ -1,18 +1,21 @@
-import ModalBase from './modal-base.vue'; import ModalBase from './modal-base.vue';
-
 <template>
-  <div>
-    <VueDatePicker
-      class="calendar"
-      v-model="date"
-      locale="jp"
-      :format="format"
-      :min-date="minDate"
-      :max-date="maxDate"
-      prevent-min-max-navigation
-      range
-    />
-  </div>
+  <modal-base class="modal" :is-shown="props.isShown">
+    <div>
+      <VueDatePicker
+        class="calendar"
+        id="auto"
+        v-model="date"
+        locale="jp"
+        :format="format"
+        :min-date="minDate"
+        :max-date="maxDate"
+        prevent-min-max-navigation
+        inline
+        auto-apply
+        range
+      />
+    </div>
+  </modal-base>
 </template>
 
 <script setup>
@@ -20,6 +23,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { ref } from 'vue'
 import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
+import ModalBase from './modal-base.vue'
 
 const date = ref()
 const format = (date) => {

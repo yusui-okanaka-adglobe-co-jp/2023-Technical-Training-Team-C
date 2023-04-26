@@ -1,5 +1,3 @@
-import ModalBase from './modal-base.vue'; import ModalBase from './modal-base.vue';
-
 <template>
   <modal-base class="modal" :is-shown="props.isShown">
     <div>
@@ -25,6 +23,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { ref } from 'vue'
 import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
+import ModalBase from './modal-base.vue'
 
 const date = ref()
 const format = (date) => {

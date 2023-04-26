@@ -2,8 +2,11 @@
   <default-layout page-name="教師用登録ページ">
     <body>
       <div class="date-set">
-        開始日、終了日：<calendar-modal-register> </calendar-modal-register>
-        <!-- @update:value="selectendDate" -->
+        <button class="usual-button start-end-date" @click="onclick">
+          <div class="dateselect">開始日終了日選択</div>
+        </button>
+        {{ view }}
+        <calendar-modal-register :is-shown="isShown" @update:value="selectDate"> </calendar-modal-register>
       </div>
 
       <p>
@@ -12,7 +15,7 @@
         </button>
       </p>
       <p>
-        <button class="usual-button studentHome" onclick="window.open('/studentHome')">
+        <button class="usual-button student-home" onclick="window.open('/studentHome')">
           <div>生徒用画面確認</div>
         </button>
       </p>
@@ -39,6 +42,30 @@
 <script lang="ts" setup>
 import ModalBase from '~~/components/modal-base.vue'
 import { format } from 'date-fns'
+
+const isShown = ref(false)
+
+function onclick() {
+  isShown.value = !isShown.value
+}
+
+const view = ref(null)
+
+function selectDate(e) {
+  // console.log(e)
+  // onsole.log(typeof e)
+  view.value = e
+
+  //カレンダーモーダルを閉じる
+  isShown.value = false
+
+  // return navigateTo({
+  //   path: '/studentHome',
+  //   query: {
+  //     view: format(view.value, 'yyyy-MM-dd'),
+  //   },
+  // })
+}
 
 const today = new Date()
 console.log(today)
@@ -220,7 +247,7 @@ input {
   font-size: 24px;
 }
 
-.studentHome {
+.student-home {
   color: #5160ae;
   font-size: 18px;
 }
@@ -242,6 +269,11 @@ input {
   position: fixed;
   left: 960px;
   top: 950px;
+}
+
+.start-end-date {
+  color: #5160ae;
+  font-size: 18px;
 }
 
 // カレンダーダイアログのscss
