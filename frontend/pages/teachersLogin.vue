@@ -42,7 +42,7 @@
             </label>
           </div>
           <button
-            type="submit"
+            type="button"
             class="inner-form__login-button main-color font-size-l"
             @click="onClick"
             formmethod="post"
@@ -84,11 +84,11 @@ const onClick = async () => {
     // 入力時のバリデーションチェック成功
     // api取得の処理
     try {
-      const { data: response } = await useFetch<TeachersLoginResponse>('http://localhost:8000/api/teachersLogin', {
+      const response = await $fetch<TeachersLoginResponse>('http://localhost:8000/api/teachersLogin', {
         method: 'POST',
         body: formData,
       })
-      if (response.value?.messages[0] === 'success') {
+      if (response.messages[0] === 'success') {
         // response:success
         // ページ遷移の処理
         navigateTo({ path: '/home' })
