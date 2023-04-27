@@ -2,8 +2,8 @@
   <default-layout page-name="生徒用ページ">
     <!-- html記述場所 -->
     <div>
-      <button @click="onclick">
-        <div class="dateselect">日付選択</div>
+      <button class="usual-button" @click="onclick">
+        <div class="date-select">日付選択</div>
       </button>
       <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
     </div>
@@ -38,18 +38,11 @@ function selectDate(e) {
 </script>
 
 <style scoped lang="scss">
-button {
-  background-color: white;
-  margin-top: 24px;
-  padding: 8px 16px;
-  font-weight: bold;
-  border-radius: 10px;
-  border: solid 3px #5160ae;
-  margin: 20px;
+body {
+  padding-left: 20px;
 }
-
-.dateselect {
+.date-select {
   color: #5160ae;
-  font-size: 14px;
+  font-size: 24px;
 }
 </style>
