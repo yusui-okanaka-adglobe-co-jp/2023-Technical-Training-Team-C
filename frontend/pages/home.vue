@@ -221,9 +221,12 @@ function displayRightButton() {
 
 //前週ボタン押下時
 function getLastWeekTimetable() {
+  console.log('old' + oldestDate)
+  console.log('display' + displayDate)
+
   if (oldestDate <= displayDate) {
     displayDate.setDate(displayDate.getDate() - 7)
-    const lastWeekDate = format(displayDate, 'yyyyMMdd')
+    const lastWeekDate = format(displayDate, 'yyyy-MM-dd')
     navigateTo({
       path: '/home',
       query: {
@@ -238,7 +241,7 @@ function getLastWeekTimetable() {
 function getNextWeekTimetable() {
   if (latestDate >= displayDate) {
     displayDate.setDate(displayDate.getDate() + 7)
-    const nextWeekDate = format(displayDate, 'yyyyMMdd')
+    const nextWeekDate = format(displayDate, 'yyyy-MM-dd')
     navigateTo({
       path: '/home',
       query: {
@@ -256,7 +259,7 @@ function getTimetableData() {
     view = getMonday(new Date())
   } else {
     //渡されたクエリを一度月曜判定入れる
-    view = getMonday(parse(String(route.query.date), 'yyyyMMdd', new Date()))
+    view = getMonday(parse(String(route.query.date), 'yyyy-MM-dd', new Date()))
     //月曜じゃなかったらURL変更、再度読み込み
     if (!(view === String(route.query.date))) {
       navigateTo({
@@ -267,7 +270,7 @@ function getTimetableData() {
       })
     }
   }
-  displayDate = parse(view, 'yyyyMMdd', new Date())
+  displayDate = parse(view, 'yyyy-MM-dd', new Date())
   const { data: response } = useFetch<Timetable[]>(' http://localhost:8000/api/timetablesAcquire?date=' + view, {})
 
   if (response.value != null) {
@@ -303,7 +306,7 @@ function getMonday(date: Date) {
     if (date.getDay() == 1) break
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1)
   }
-  const thisWeekMonday = format(date, 'yyyyMMdd')
+  const thisWeekMonday = format(date, 'yyyy-MM-dd')
   return thisWeekMonday
 }
 
