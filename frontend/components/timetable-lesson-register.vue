@@ -1,19 +1,23 @@
 <template>
   <td class="lesson-cell horizontal-writing" :class="{ 'lesson-holiday-cell': isHoliday }">
-    <div>
-      <button>
-        <div class="register-button">登</div>
-      </button>
-      <button>
-        <div class="delete-button">消</div>
-      </button>
-      <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
-      <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
+    <div class="register-buttons">
+      <button class="register-modal-button" @click="onclick"><div class="abc">登</div></button>
+      <subject-teacher-register-modal :is-shown="isShown" @update:value="selectDate"> </subject-teacher-register-modal>
+
+      <button class="delete-button">消</button>
     </div>
+    <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
+    <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
   </td>
 </template>
 
 <script lang="ts" setup>
+const isShown = ref(false)
+
+function onclick() {
+  isShown.value = !isShown.value
+}
+
 const props = defineProps({
   subject: {
     type: String,
@@ -22,9 +26,6 @@ const props = defineProps({
   teacherName: {
     type: String,
     default: () => '',
-  },
-  isHoliday: {
-    type: Boolean,
   },
 })
 /* 科目名／教師名の文字の大きさを決める */
@@ -51,13 +52,23 @@ function fontSizeClass(msg: string) {
 <style lang="scss">
 @import '../assets/scss/timetable.scss';
 
-.register-button {
-  font-size: 15px;
-  background: #15ff00;
+.register-buttons {
+  text-align: right;
+  text-align: top;
+  // vertical-align: top;
+  margin-bottom: auto;
+}
+
+.abc {
+  vertical-align: top;
+}
+.register-modal-button {
+  font-size: 16px;
+  background: #03ff36;
 }
 
 .delete-button {
-  font-size: 15px;
+  font-size: 16px;
   background: #fc01ca;
 }
 </style>

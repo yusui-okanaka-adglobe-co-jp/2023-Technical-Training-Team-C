@@ -5,7 +5,7 @@
         <button class="usual-button start-end-date" @click="onclick">
           <div class="dateselect">開始日終了日選択</div>
         </button>
-        {{ view }}
+        {{ start }}~{{ end }}
         <calendar-modal-register :is-shown="isShown" @update:value="selectDate"> </calendar-modal-register>
       </div>
 
@@ -42,43 +42,32 @@
 <script lang="ts" setup>
 import ModalBase from '~~/components/modal-base.vue'
 import { format } from 'date-fns'
+import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
 
 const isShown = ref(false)
 
 function onclick() {
   isShown.value = !isShown.value
 }
-
-const view = ref(null)
+const start = ref(null)
+const end = ref(null)
 
 function selectDate(e) {
-  // console.log(e)
-  // onsole.log(typeof e)
-  view.value = e
-
+  start.value = format(e[0], 'yyyy-MM-dd')
+  end.value = format(e[1], 'yyyy-MM-dd')
   //カレンダーモーダルを閉じる
   isShown.value = false
-
-  // return navigateTo({
-  //   path: '/studentHome',
-  //   query: {
-  //     view: format(view.value, 'yyyy-MM-dd'),
-  //   },
-  // })
 }
 
 const today = new Date()
 console.log(today)
 
-import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 // import { TimetableComponentRegister } from '~~/.nuxt/components'
 // import TimetableComponentRegister from '~~/components/timetable-component-register.vue'
 /* 検証用オブジェクト */
-const timetables: Timetable[] = [
+const timetables: TimetableRegister[] = [
   {
-    date: '2023-04-17',
     dayOfWeek: 1,
-    isHoliday: false,
     lessons: [
       {
         subject: '国語',
@@ -107,9 +96,7 @@ const timetables: Timetable[] = [
     ],
   },
   {
-    date: '2023-04-18',
     dayOfWeek: 2,
-    isHoliday: false,
     lessons: [
       {
         subject: '数学数学数学',
@@ -138,9 +125,7 @@ const timetables: Timetable[] = [
     ],
   },
   {
-    date: '2023-04-19',
     dayOfWeek: 3,
-    isHoliday: false,
     lessons: [
       {
         subject: '国語国語国語国語国語',
@@ -169,27 +154,94 @@ const timetables: Timetable[] = [
     ],
   },
   {
-    date: '2023-04-20',
     dayOfWeek: 4,
-    isHoliday: true,
-    holidayTitle: '○○の日',
+    lessons: [
+      {
+        subject: '国語',
+        teacher: '佐藤',
+      },
+      {
+        subject: '数学',
+        teacher: '鈴木鈴木',
+      },
+      {
+        subject: '理科',
+        teacher: '高橋高橋高橋',
+      },
+      {
+        subject: '社会',
+        teacher: '田中田中田中田中',
+      },
+      {
+        subject: '音楽',
+        teacher: '伊藤伊藤伊藤伊藤伊藤',
+      },
+      {
+        subject: '道徳',
+        teacher: '中村',
+      },
+    ],
   },
   {
-    date: '2023-04-21',
     dayOfWeek: 5,
-    isHoliday: true,
-    holidayTitle: '○○○○○の日',
+    lessons: [
+      {
+        subject: '国語',
+        teacher: '佐藤',
+      },
+      {
+        subject: '数学',
+        teacher: '鈴木鈴木',
+      },
+      {
+        subject: '理科',
+        teacher: '高橋高橋高橋',
+      },
+      {
+        subject: '社会',
+        teacher: '田中田中田中田中',
+      },
+      {
+        subject: '音楽',
+        teacher: '伊藤伊藤伊藤伊藤伊藤',
+      },
+      {
+        subject: '道徳',
+        teacher: '中村',
+      },
+    ],
   },
   {
-    date: '2023-04-22',
     dayOfWeek: 6,
-    isHoliday: true,
-    holidayTitle: '天皇誕生日 振替休日',
+    lessons: [
+      {
+        subject: '国語',
+        teacher: '佐藤',
+      },
+      {
+        subject: '数学',
+        teacher: '鈴木鈴木',
+      },
+      {
+        subject: '理科',
+        teacher: '高橋高橋高橋',
+      },
+      {
+        subject: '社会',
+        teacher: '田中田中田中田中',
+      },
+      {
+        subject: '音楽',
+        teacher: '伊藤伊藤伊藤伊藤伊藤',
+      },
+      {
+        subject: '道徳',
+        teacher: '中村',
+      },
+    ],
   },
   {
-    date: '2023-04-23',
     dayOfWeek: 0,
-    isHoliday: false,
     lessons: [
       {
         subject: '国語',
@@ -239,7 +291,7 @@ input {
 .date-set {
   padding-left: 300px;
   font-size: 24px;
-  margin-top: 46px;
+  margin-top: 28px;
 }
 
 .home {

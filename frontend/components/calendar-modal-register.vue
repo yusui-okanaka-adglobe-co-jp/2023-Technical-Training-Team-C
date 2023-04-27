@@ -10,9 +10,9 @@
         :min-date="minDate"
         :max-date="maxDate"
         prevent-min-max-navigation
+        range
         inline
         auto-apply
-        range
       />
     </div>
   </modal-base>
@@ -43,10 +43,11 @@ const emit = defineEmits()
 
 watch(date, () => {
   console.log(date.value[0])
+  console.log(date.value)
   if (!date.value) {
     return
   }
-  emit('update:value', date.value[0])
+  emit('update:value', date.value)
 })
 
 watch(props.isShown, () => {
@@ -58,13 +59,4 @@ watch(props.isShown, () => {
 div {
   padding: 1%;
 }
-
-.calendar {
-  position: fixed;
-  left: 200px;
-}
-
-$dp__button_height: 100px !important;
-
-@import '@vuepic/vue-datepicker/src/VueDatePicker/style/main.scss';
 </style>
