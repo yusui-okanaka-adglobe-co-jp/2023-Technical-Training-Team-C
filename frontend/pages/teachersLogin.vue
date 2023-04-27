@@ -86,15 +86,21 @@ const onClick = async () => {
     try {
       const response = await $fetch<TeachersLoginResponse>('http://localhost:8000/api/teachersLogin', {
         method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json',
+        //     'Authorization': 'Bearer your_token'
+        //   },
         body: formData,
       })
       if (response.messages[0] === 'success') {
         // response:success
         // ページ遷移の処理
+        console.log(response)
         navigateTo({ path: '/home' })
       } else {
         // response:failure
         boxColor.value = 'errbox'
+        isValidPass.value = false
       }
     } catch (e) {
       throw createError({
