@@ -17,15 +17,11 @@ const props = defineProps({
 header {
   height: 100px;
   background-color: #89929b;
+  h1 {
+    font-style: normal;
+  }
   div {
     padding: 15px 0px 15px 100px;
-    h1 {
-      margin: 0;
-      font-style: normal;
-    }
-    h2 {
-      margin: 0;
-    }
   }
 }
 </style>

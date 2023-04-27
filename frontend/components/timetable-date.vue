@@ -5,7 +5,7 @@
     <!--祝日-->
     <th class="horizontal-writing date-holiday-cell">
       <p class="font-size-l">{{ props.date }}</p>
-      <p :class="[fontSizeHolodayTitle()]">{{ props.holidayTitle }}</p>
+      <p :class="[fontSizeHolidayTitle()]">{{ props.holidayTitle }}</p>
     </th>
   </template>
   <template v-else>
@@ -43,7 +43,7 @@ const props = defineProps({
   },
 })
 /* 祝日名の文字の大きさを決める */
-function fontSizeHolodayTitle() {
+function fontSizeHolidayTitle() {
   const holidayTitleLength = props.holidayTitle?.length
   if (holidayTitleLength >= 9) {
     return 'font-size-s'

@@ -7,31 +7,32 @@ $base-color: #eaeaea;
 $font: 'Noto Sans JP';
 $font-weight: 400;
 
+// 背景色設定
 body {
   background-color: $base-color;
-  margin: 0;
 }
 
 .main-color {
-  color: $main-color;
+  background-color: $main-color;
 }
 
 .accent-color {
-  color: $accent-color;
+  background-color: $accent-color;
 }
 
 .link-color {
-  color: $link-color;
+  background-color: $link-color;
 }
 
 .board-color {
-  color: $board-color;
+  background-color: $board-color;
 }
 
 .base-color {
-  color: $base-color;
+  background-color: $base-color;
 }
 
+// 文字設定
 .font-size-xs {
   font-family: $font;
   font-weight: $font-weight;
@@ -60,4 +61,12 @@ body {
   font-family: $font;
   font-weight: $font-weight;
   font-size: 36px;
+}
+
+.white {
+  color: #fff;
+}
+
+.red {
+  color: #f00;
 }
