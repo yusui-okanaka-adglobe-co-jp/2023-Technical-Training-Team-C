@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
+use Mockery\Undefined;
 
 class MockController extends Controller
 {
@@ -12,206 +13,410 @@ class MockController extends Controller
     // GET ex) http://localhost:8000/api/timetablesAcquire?date=
     public function getTimetables(Request $request)
     {
-        $timetables = [
-            [
-                'date' => '2023/04/17',
-                'dayOfWeek' => 1,
-                'isHoliday' => false,
-                'lessons' =>
+        $date = $request->date;
+        if ($date === "20230424") {
+            $timetables = [
                 [
+                    'date' => '2023/04/24',
+                    'dayOfWeek' => 1,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/25',
+                    'dayOfWeek' => 2,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/26',
+                    'dayOfWeek' => 3,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/27',
+                    'dayOfWeek' => 4,
+                    'isHoliday' => true,
+                    'holidayTitle' => '憲法記念日'
+                ],
+                [
+                    'date' => '2023/04/28',
+                    'dayOfWeek' => 5,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/29',
+                    'dayOfWeek' => 6,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/30',
+                    'dayOfWeek' => 0,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ]
                     ]
                 ]
-            ],
-            [
-                'date' => '2023/04/18',
-                'dayOfWeek' => 2,
-                'isHoliday' => false,
-                'lessons' =>
+            ];
+        } else {
+            $timetables = [
                 [
+                    'date' => '2023/04/17',
+                    'dayOfWeek' => 1,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/18',
+                    'dayOfWeek' => 2,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/19',
+                    'dayOfWeek' => 3,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/20',
+                    'dayOfWeek' => 4,
+                    'isHoliday' => true,
+                    'holidayTitle' => '憲法記念日'
+                ],
+                [
+                    'date' => '2023/04/21',
+                    'dayOfWeek' => 5,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ],
+                        [
+                            'subject' => '国語',
+                            'teacher' => '佐藤'
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/22',
+                    'dayOfWeek' => 6,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ]
+                    ]
+                ],
+                [
+                    'date' => '2023/04/23',
+                    'dayOfWeek' => 0,
+                    'isHoliday' => false,
+                    'lessons' =>
                     [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ],
+                        [
+                            'subject' => '',
+                            'teacher' => ''
+                        ]
                     ]
                 ]
-            ],
-            [
-                'date' => '2023/04/19',
-                'dayOfWeek' => 3,
-                'isHoliday' => false,
-                'lessons' =>
-                [
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ]
-                ]
-            ],
-            [
-                'date' => '2023/04/20',
-                'dayOfWeek' => 4,
-                'isHoliday' => true,
-                'holidayTitle' => '憲法記念日'
-            ],
-            [
-                'date' => '2023/04/21',
-                'dayOfWeek' => 5,
-                'isHoliday' => false,
-                'lessons' =>
-                [
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ],
-                    [
-                        'subject' => '国語',
-                        'teacher' => '佐藤'
-                    ]
-                ]
-            ],
-            [
-                'date' => '2023/04/22',
-                'dayOfWeek' => 6,
-                'isHoliday' => false,
-                'lessons' =>
-                [
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ]
-                ]
-            ],
-            [
-                'date' => '2023/04/23',
-                'dayOfWeek' => 0,
-                'isHoliday' => false,
-                'lessons' =>
-                [
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ],
-                    [
-                        'subject' => '',
-                        'teacher' => ''
-                    ]
-                ]
-            ]
-        ];
+            ];
+        }
 
         return Response::json($timetables);
     }

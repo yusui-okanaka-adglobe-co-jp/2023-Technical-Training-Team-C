@@ -1,15 +1,14 @@
 <template>
   <default-layout page-name="教師用ページ">
-    <div :class="timeconsole()"></div>
     <section class="container">
       <!-- html記述場所 -->
       <!--三角ボタン-->
       <div class="triangle-button-area">
         <div class="triangle-button">
           <!--先週-->
-          <button class="triangle-left" href="#"></button>
+          <button class="triangle-left" :disabled="displayLeftButton()" @click="getLastWeekTimetable()"></button>
           <!--来週-->
-          <a class="triangle-right" href="#"></a>
+          <button class="triangle-right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
         </div>
       </div>
       <div class="main">
@@ -23,7 +22,9 @@
         </div>
         <!--時間割-->
         <div>
-          <TimetableComponent :timetables="timetables"></TimetableComponent>
+          <div v-show="loadingDisplay" :class="displayToggle()">
+            <TimetableComponent :timetables="timetables"></TimetableComponent>
+          </div>
         </div>
       </div>
     </section>
@@ -31,11 +32,13 @@
 </template>
 
 <script lang="ts" setup>
-import { Timetable, Lesson } from '~~/types/response/timetablesAcquireResponse'
+import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format } from 'date-fns'
-import { onMounted } from 'vue'
+import { parse } from 'date-fns'
 
 const route = useRoute()
+const timetables = ref<Timetable[]>([])
+
 /* 検証用オブジェクト */
 const timetables2: Timetable[] = [
   {
@@ -183,18 +186,93 @@ const timetables2: Timetable[] = [
   },
 ]
 
+//createdのときに行う処理
+let view: string
+let loadingDisplay = false
+let displayDate: Date
+const oldestDate = parse('20150104', 'yyyyMMdd', new Date())
+const nextYear = String(new Date().getFullYear() + 1)
+const latestString = nextYear + '1225'
+const latestDate = parse(latestString, 'yyyyMMdd', new Date())
+
+getTimetableData()
+
+//以下function
+
+//データ取得が完了すれば時間割を表示する
+function displayToggle() {
+  loadingDisplay = !loadingDisplay
+}
+
+//前週ボタン表示
+function displayLeftButton() {
+  if (oldestDate >= displayDate) {
+    return true
+  }
+  return false
+}
+//次週ボタン表示
+function displayRightButton() {
+  if (latestDate <= displayDate) {
+    return true
+  }
+  return false
+}
+
+//前週ボタン押下時
+function getLastWeekTimetable() {
+  if (oldestDate <= displayDate) {
+    displayDate.setDate(displayDate.getDate() - 7)
+    const lastWeekDate = format(displayDate, 'yyyyMMdd')
+    navigateTo({
+      path: '/home',
+      query: {
+        date: lastWeekDate,
+      },
+    })
+  } else {
+    alert('2014年の時間割は表示できません')
+  }
+}
+//次週ボタン押下時
+function getNextWeekTimetable() {
+  if (latestDate >= displayDate) {
+    displayDate.setDate(displayDate.getDate() + 7)
+    const nextWeekDate = format(displayDate, 'yyyyMMdd')
+    navigateTo({
+      path: '/home',
+      query: {
+        date: nextWeekDate,
+      },
+    })
+  } else {
+    alert('再来年の時間割は表示できません')
+  }
+}
 //APIから時間割取得
-console.log(' http://localhost:8000/api/timetablesAcquire?date=' + route.query.date)
+function getTimetableData() {
+  //クエリなしなら今週表示
+  if (route.query.date == null) {
+    view = getMonday(new Date())
+  } else {
+    //渡されたクエリを一度月曜判定入れる
+    view = getMonday(parse(String(route.query.date), 'yyyyMMdd', new Date()))
+    //月曜じゃなかったらURL変更、再度読み込み
+    if (!(view === String(route.query.date))) {
+      navigateTo({
+        path: '/home',
+        query: {
+          date: view,
+        },
+      })
+    }
+  }
+  displayDate = parse(view, 'yyyyMMdd', new Date())
+  const { data: response } = useFetch<Timetable[]>(' http://localhost:8000/api/timetablesAcquire?date=' + view, {})
 
-const { data: response } = useFetch<Timetable[]>(
-  ' http://localhost:8000/api/timetablesAcquire?date=' + route.query.date,
-  {}
-)
-
-const timetables = ref<Timetable[]>([])
-
-if (response.value != null) {
-  timetables.value = response.value
+  if (response.value != null) {
+    timetables.value = response.value
+  }
 }
 
 //登録画面遷移
@@ -209,27 +287,36 @@ function goToStudentPage() {
 
 //今週の時間割表示
 function getThisWeekTimetables() {
-  //月曜日を求める
   let date = new Date()
-  while (true) {
-    if (date.getDay() == 1) break
-    date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1)
-  }
-  const dateMonday = format(date, 'yyyyMMdd')
+  const dateMonday: string = getMonday(date)
   navigateTo({
     path: '/home',
     query: {
-      date: 2021,
+      date: dateMonday,
     },
   })
 }
 
-//ログアウト
+//与えられた日付から月曜日を求める
+function getMonday(date: Date) {
+  while (true) {
+    if (date.getDay() == 1) break
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1)
+  }
+  const thisWeekMonday = format(date, 'yyyyMMdd')
+  return thisWeekMonday
+}
+
+//ログアウト処理 ログインAPIが出来次第記述
 function logout() {}
 
-function timeconsole() {
-  console.log('表示')
-}
+//パラメータの監視。変化があればリロード
+watch(
+  () => route.query,
+  () => {
+    location.reload()
+  }
+)
 </script>
 
 <style scoped lang="scss">
@@ -248,6 +335,7 @@ function timeconsole() {
   height: 56px;
 }
 .triangle-left {
+  background: transparent;
   width: 0;
   height: 0;
   border-style: solid;
@@ -256,15 +344,30 @@ function timeconsole() {
   position: absolute;
 }
 .triangle-right {
-  // margin: 30px 0 0px 90px;
+  background: transparent;
   margin-left: 104px;
   margin-right: 0;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 21px 0 21px 48px;
+  border-width: 25px 0 25px 48px;
   border-color: transparent transparent transparent #5160ae;
   position: absolute;
+}
+
+.triangle-left:hover,
+.triangle-right:hover {
+  filter: brightness(1.1);
+}
+.triangle-left:disabled {
+  border-color: transparent gray transparent transparent;
+  opacity: 0.3;
+  filter: brightness(0.8);
+}
+.triangle-right:disabled {
+  border-color: transparent transparent transparent gray;
+  opacity: 0.3;
+  filter: brightness(0.8);
 }
 /* 下部 */
 .main {
