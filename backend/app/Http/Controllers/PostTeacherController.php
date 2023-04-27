@@ -41,7 +41,10 @@ class PostTeacherController extends Controller
             $message = [
                 'messages' => [
                     'success'
-                ]
+                ],
+                // 'token' => [
+                //     $user->api_token
+                // ]
             ];
         } else {
             // email or pass fuilure
@@ -52,6 +55,15 @@ class PostTeacherController extends Controller
             ];
         }
 
-        return Response::json($message);
+        // レスポンスを作成する
+        $response = response()->json($message);
+
+        // AuthorizationヘッダーにBearerトークンを追加する
+        $response->header('Authorization', 'Bearer ' . $token['accessToken']);
+
+        // レスポンスを返す
+        return $response;
+
+        // return Response::json($message);
     }
 }
