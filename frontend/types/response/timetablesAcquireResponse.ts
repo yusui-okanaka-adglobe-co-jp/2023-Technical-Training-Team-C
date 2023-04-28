@@ -6,7 +6,7 @@ export interface Timetable {
   holidayTitle?: string
 }
 
-interface Lesson {
+export interface Lesson {
   subject: string
   teacher: string
 }
