@@ -1,8 +1,12 @@
-# fly.toml file generated for technical-training-frontend on 2023-02-10T15:32:04+09:00
+# fly.toml app configuration file generated for technical-training-frontend-team-c on 2023-04-18T14:09:20+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "technical-training-frontend-team-c"
 kill_signal = "SIGINT"
 kill_timeout = 5
+primary_region = "nrt"
 processes = []
 
 [build]
