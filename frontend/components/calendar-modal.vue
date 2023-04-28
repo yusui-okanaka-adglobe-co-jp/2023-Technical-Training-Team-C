@@ -45,6 +45,6 @@ watch(date, () => {
 
 <style lang="scss" scoped>
 div {
-  padding: 1%;
+  margin: 6px 2.5px;
 }
 </style>
