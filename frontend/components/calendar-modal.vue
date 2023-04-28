@@ -22,12 +22,12 @@ import ModalBase from './modal-base.vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { ref } from 'vue'
-import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
+import { getYear } from 'date-fns'
 
 const date = ref()
 
 const minDate = computed(() => new Date(2015, 0, 5))
-const maxDate = computed(() => addMonths(new Date(getYear(new Date()) + 1, 11, 25), 0))
+const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
 
 const props = defineProps({
   isShown: false,

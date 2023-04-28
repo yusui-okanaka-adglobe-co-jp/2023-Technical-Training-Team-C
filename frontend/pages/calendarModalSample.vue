@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import ModalBase from '~~/components/modal-base.vue'
 import { format } from 'date-fns'
 
 const isShown = ref(false)
