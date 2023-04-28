@@ -14,7 +14,7 @@ class MockController extends Controller
     public function getTimetables(Request $request)
     {
         $date = $request->date;
-        if ($date === "20230424") {
+        if ($date === "2023-04-24") {
             $timetables = [
                 [
                     'date' => '2023/04/24',

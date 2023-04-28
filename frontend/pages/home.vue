@@ -22,7 +22,7 @@
         </div>
         <!--時間割-->
         <div>
-          <div v-show="loadingDisplay" :class="displayToggle()">
+          <div v-show="loadingDisplay">
             <TimetableComponent :timetables="timetables"></TimetableComponent>
           </div>
         </div>
@@ -33,8 +33,7 @@
 
 <script lang="ts" setup>
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
-import { format } from 'date-fns'
-import { parse } from 'date-fns'
+import { format, parse } from 'date-fns'
 
 const route = useRoute()
 const timetables = ref<Timetable[]>([])
@@ -187,43 +186,35 @@ const timetables2: Timetable[] = [
 ]
 
 //createdのときに行う処理
-let view: string
-let loadingDisplay = false
+const view = ref()
+const loadingDisplay = ref(false)
 let displayDate: Date
 const oldestDate = parse('20150104', 'yyyyMMdd', new Date())
 const nextYear = String(new Date().getFullYear() + 1)
 const latestString = nextYear + '1225'
 const latestDate = parse(latestString, 'yyyyMMdd', new Date())
 
-getTimetableData()
+await getTimetableData()
 
+displayToggle()
 //以下function
 
 //データ取得が完了すれば時間割を表示する
 function displayToggle() {
-  loadingDisplay = !loadingDisplay
+  loadingDisplay.value = !loadingDisplay.value
 }
 
 //前週ボタン表示
 function displayLeftButton() {
-  if (oldestDate >= displayDate) {
-    return true
-  }
-  return false
+  return oldestDate >= displayDate
 }
 //次週ボタン表示
 function displayRightButton() {
-  if (latestDate <= displayDate) {
-    return true
-  }
-  return false
+  return latestDate <= displayDate
 }
 
 //前週ボタン押下時
 function getLastWeekTimetable() {
-  console.log('old' + oldestDate)
-  console.log('display' + displayDate)
-
   if (oldestDate <= displayDate) {
     displayDate.setDate(displayDate.getDate() - 7)
     const lastWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -253,25 +244,29 @@ function getNextWeekTimetable() {
   }
 }
 //APIから時間割取得
-function getTimetableData() {
+async function getTimetableData() {
   //クエリなしなら今週表示
   if (route.query.date == null) {
-    view = getMonday(new Date())
+    view.value = getMonday(new Date())
   } else {
     //渡されたクエリを一度月曜判定入れる
-    view = getMonday(parse(String(route.query.date), 'yyyy-MM-dd', new Date()))
+    view.value = getMonday(parse(String(route.query.date), 'yyyy-MM-dd', new Date()))
     //月曜じゃなかったらURL変更、再度読み込み
-    if (!(view === String(route.query.date))) {
+    if (!(view.value === String(route.query.date))) {
       navigateTo({
         path: '/home',
         query: {
-          date: view,
+          date: view.value,
         },
       })
+      return
     }
   }
-  displayDate = parse(view, 'yyyy-MM-dd', new Date())
-  const { data: response } = useFetch<Timetable[]>(' http://localhost:8000/api/timetablesAcquire?date=' + view, {})
+  displayDate = parse(view.value, 'yyyy-MM-dd', new Date())
+  const { data: response } = await useFetch<Timetable[]>(
+    ' http://localhost:8000/api/timetablesAcquire?date=' + view.value,
+    {}
+  )
 
   if (response.value != null) {
     timetables.value = response.value
@@ -285,7 +280,7 @@ function goToRegisterPage() {
 
 //生徒用画面遷移
 function goToStudentPage() {
-  window.open('/studentHome', '_blank')
+  window.open('/studentHome', '_blank', 'noreferrer')
 }
 
 //今週の時間割表示
