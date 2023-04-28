@@ -1,10 +1,9 @@
 <template>
   <modal-base class="modal" :is-shown="props.isShown">
-    <!-- :widthX="props.width" -->
     <div>
       <div class="register-base">
         <form class="form-example" @submit="registerform">
-          <div class="">月曜1時間目</div>
+          <div class="register-modal-header">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
           <div class="subject-form">
             <label for="subject">科目：</label>
             <input type="text" class="subject-input" name="subject" id="subject" required />
@@ -33,13 +32,19 @@ export interface Submit {
 
 interface ModalBaseProps {
   isShown: boolean
+  dayOfWeek: string
+  period: number
 }
 
 interface ModalBaseEmit {
   (e: 'submit', value: Submit): void
 }
 
-const props = withDefaults(defineProps<ModalBaseProps>(), { isShown: false })
+const props = withDefaults(defineProps<ModalBaseProps>(), {
+  isShown: false,
+  dayOfWeek: '',
+  period: 0,
+})
 
 const emit = defineEmits<ModalBaseEmit>()
 
@@ -71,12 +76,17 @@ div {
   height: 450px;
 }
 
+.register-modal-header {
+  font-size: 24px;
+  text-align: center;
+  padding-top: 12px;
+}
 .cancel-button {
   color: #5160ae;
   font-size: 24px;
   text-align: center;
   margin-left: 64px;
-  margin-top: 120px;
+  margin-top: 104px;
 }
 
 .register-button {

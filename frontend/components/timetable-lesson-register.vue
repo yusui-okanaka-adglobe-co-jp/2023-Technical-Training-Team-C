@@ -1,23 +1,38 @@
 <template>
-  <td class="lesson-cell horizontal-writing" :class="{ 'lesson-holiday-cell': isHoliday }">
-    <div class="register-buttons">
-      <button class="register-modal-button" @click="onclick"><div class="abc">登</div></button>
-      <subject-teacher-register-modal :is-shown="isShown" @submit="submit"> </subject-teacher-register-modal>
-      <button class="delete-button">消</button>
+  <td class="lesson-cell horizontal-writing">
+    <div class="cell">
+      <div class="register-buttons">
+        <button class="register-modal-button" @click="onclick">登</button>
+        <subject-teacher-register-modal
+          :is-shown="isShown"
+          @submit="submit"
+          :dayOfWeek="props.dayOfWeek"
+          :period="props.period"
+        >
+        </subject-teacher-register-modal>
+        <button class="delete-button" @click="deleteclick">消</button>
+      </div>
+      <div>
+        <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ updateSubject }}</p>
+        <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ updateTeacher }}</p>
+      </div>
     </div>
-    <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ updateSubject }}</p>
-    <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ updateTeacher }}</p>
   </td>
 </template>
 
 <script lang="ts" setup>
-import { sub } from 'date-fns'
-import { Submit } from './subject-teacher-register-modal.vue'
+import { eachMinuteOfInterval } from 'date-fns'
+// import { Submit } from './subject-teacher-register-modal.vue'
 
 const isShown = ref(false)
 
 function onclick() {
   isShown.value = !isShown.value
+}
+
+function deleteclick() {
+  updateSubject.value = ''
+  updateTeacher.value = ''
 }
 
 const props = defineProps({
@@ -29,7 +44,17 @@ const props = defineProps({
     type: String,
     default: () => '',
   },
+  dayOfWeek: {
+    type: String,
+    required: true,
+  },
+  period: {
+    type: Number,
+    required: true,
+  },
 })
+
+const emit = defineEmits()
 
 const updateSubject = ref('')
 const updateTeacher = ref('')
@@ -40,6 +65,8 @@ function submit(submit: Submit) {
   console.log(submit.subject)
   console.log(updateSubject.value)
   console.log(updateTeacher.value)
+
+  // emit('submit', { subject: updateSubject.value, teacher: updateTeacher })
   isShown.value = false
 }
 
@@ -67,16 +94,20 @@ function fontSizeClass(msg: string) {
 <style lang="scss">
 @import '../assets/scss/timetable.scss';
 
+.cell {
+  // position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
 .register-buttons {
-  text-align: right;
-
-  // vertical-align: top;
-  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
-.abc {
-  vertical-align: top;
-}
 .register-modal-button {
   font-size: 16px;
   background: #03ff36;

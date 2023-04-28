@@ -5,7 +5,7 @@
         <button class="usual-button start-end-date" @click="onclick">
           <div class="dateselect">開始日終了日選択</div>
         </button>
-        {{ start }}~{{ end }}
+        <label class="datetext">{{ start }}~{{ end }}</label>
         <calendar-modal-register :is-shown="isShown" @update:value="selectDate"> </calendar-modal-register>
       </div>
 
@@ -43,6 +43,7 @@
 import ModalBase from '~~/components/modal-base.vue'
 import { format } from 'date-fns'
 import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
+import { DAY_OF_WEEK } from '~~/util/constants'
 
 const isShown = ref(false)
 
@@ -62,216 +63,16 @@ function selectDate(e) {
 const today = new Date()
 console.log(today)
 
-const subject11 = '国語'
-
 // import { TimetableComponentRegister } from '~~/.nuxt/components'
 // import TimetableComponentRegister from '~~/components/timetable-component-register.vue'
 /* 検証用オブジェクト */
-const timetables: TimetableRegister[] = [
-  {
-    dayOfWeek: 1,
-    lessons: [
-      {
-        subject: subject11,
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '中村',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 2,
-    lessons: [
-      {
-        subject: '数学数学数学',
-        teacher: '鈴木',
-      },
-      {
-        subject: '国語国語国語',
-        teacher: '佐藤佐藤',
-      },
-      {
-        subject: '理科理科理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会社会社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '体育体育体育',
-        teacher: '大林大林大林大林大林',
-      },
-      {
-        subject: '',
-        teacher: '',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 3,
-    lessons: [
-      {
-        subject: '国語国語国語国語国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学数学数学数学数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科理科理科理科理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会社会社会社会社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽音楽音楽音楽音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '',
-        teacher: '',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 4,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '中村',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 5,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '中村',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 6,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '中村',
-      },
-    ],
-  },
-  {
-    dayOfWeek: 0,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '斎藤',
-      },
-    ],
-  },
-]
+const timetables: TimetableRegister[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => ({
+  dayOfWeek: value,
+  lessons: [...Array(6)].map((_) => ({
+    subject: '',
+    teacher: '',
+  })),
+}))
 </script>
 
 <style lang="scss" scoped>
@@ -294,6 +95,11 @@ input {
   padding-left: 300px;
   font-size: 24px;
   margin-top: 28px;
+}
+
+.datetext {
+  padding-left: 80px;
+  font-size: 24px;
 }
 
 .home {

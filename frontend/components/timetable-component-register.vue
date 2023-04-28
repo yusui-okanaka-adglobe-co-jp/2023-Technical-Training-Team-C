@@ -14,8 +14,9 @@
         <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
 
         <!--科目/教師のループ-->
-        <template v-for="lessons in timetable.lessons" :key="lessons">
-          <TimetableLessonRegister :subject="lessons.subject" :teacher-name="lessons.teacher">
+        <!-- <template v-for="lessons in timetable.lessons" :key="lessons"> -->
+        <template v-for="periodNumber of blankCell" :key="periodNumber">
+          <TimetableLessonRegister :dayOfWeek="dayOfWeekChangeString(timetable.dayOfWeek)" :period="periodNumber">
           </TimetableLessonRegister>
         </template>
       </tr>
@@ -40,6 +41,7 @@ const props = defineProps({
 })
 /* 6回回す用　*/
 const blankCell = 6
+const periodincre = 0
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
   switch (dayOfWeek) {
@@ -60,6 +62,11 @@ function dayOfWeekChangeString(dayOfWeek: number) {
   }
   return ''
 }
+
+function countup(number: number) {
+  return number + 1
+}
+
 /* dateのフォーマット整える */
 function dateFormat(date: string) {
   return format(new Date(date), 'M/d')
