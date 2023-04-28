@@ -62,6 +62,8 @@ function selectDate(e) {
 const today = new Date()
 console.log(today)
 
+const subject11 = '国語'
+
 // import { TimetableComponentRegister } from '~~/.nuxt/components'
 // import TimetableComponentRegister from '~~/components/timetable-component-register.vue'
 /* 検証用オブジェクト */
@@ -70,7 +72,7 @@ const timetables: TimetableRegister[] = [
     dayOfWeek: 1,
     lessons: [
       {
-        subject: '国語',
+        subject: subject11,
         teacher: '佐藤',
       },
       {

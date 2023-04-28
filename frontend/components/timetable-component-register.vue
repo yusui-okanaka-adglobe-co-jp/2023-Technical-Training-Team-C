@@ -15,7 +15,8 @@
 
         <!--科目/教師のループ-->
         <template v-for="lessons in timetable.lessons" :key="lessons">
-          <TimetableLessonRegister> </TimetableLessonRegister>
+          <TimetableLessonRegister :subject="lessons.subject" :teacher-name="lessons.teacher">
+          </TimetableLessonRegister>
         </template>
       </tr>
     </template>

@@ -37,8 +37,6 @@ const props = defineProps({
   isShown: false,
 })
 
-const isShown = ref(false)
-
 const emit = defineEmits()
 
 watch(date, () => {
@@ -56,6 +54,6 @@ watch(props.isShown, () => {
 
 <style lang="scss" scoped>
 div {
-  padding: 1%;
+  margin: 6px 3px;
 }
 </style>

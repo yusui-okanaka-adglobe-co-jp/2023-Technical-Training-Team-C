@@ -1,60 +1,68 @@
 <template>
-  <register-modal-base class="modal" :is-shown="props.isShown">
+  <modal-base class="modal" :is-shown="props.isShown">
+    <!-- :widthX="props.width" -->
     <div>
       <div class="register-base">
-        <form action="" method="get" class="form-example">
-          <div class="subject-teacher-form">
+        <form class="form-example" @submit="registerform">
+          <div class="">月曜1時間目</div>
+          <div class="subject-form">
             <label for="subject">科目：</label>
-            <input type="text" name="subject" id="subject" required />
+            <input type="text" class="subject-input" name="subject" id="subject" required />
           </div>
-          <div class="subject-teacher-form">
+          <div class="teacher-form">
             <label for="teacher">教師：</label>
-            <input type="text" name="teacher" id="teacher" required />
+            <input type="text" class="teacher-input" name="teacher" id="teacher" required />
           </div>
-          <div class="cancel-register-form">
-            <input @click="onclick" type="reset" value="キャンセル" /><input type="submit" value="登録" />
-          </div>
+
+          <button class="usual-button cancel-button" @click.stop="isShown = false">キャンセル</button>
+          <button class="unusual-button register-button">登録</button>
         </form>
       </div>
     </div>
-  </register-modal-base>
+  </modal-base>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
 import ModalBase from './modal-base.vue'
 
-const date = ref()
-
-const props = defineProps({
-  isShown: false,
-})
-
-const isShown = ref(false)
-
-const emit = defineEmits()
-
-function onclick() {
-  isShown.value = !isShown.value
+export interface Submit {
+  subject: string
+  teacher: string
 }
 
-watch(date, () => {
-  console.log(date.value[0])
-  console.log(date.value)
-  if (!date.value) {
-    return
-  }
-  emit('update:value', date.value)
-})
+interface ModalBaseProps {
+  isShown: boolean
+}
 
-watch(props.isShown, () => {
-  isShown.value = props.isShown
-})
+interface ModalBaseEmit {
+  (e: 'submit', value: Submit): void
+}
+
+const props = withDefaults(defineProps<ModalBaseProps>(), { isShown: false })
+
+const emit = defineEmits<ModalBaseEmit>()
+
+function registerform(e: Event) {
+  e.preventDefault()
+  e.target
+  if (!(e.target instanceof HTMLFormElement)) return
+  e.target.elements
+  const subject = e.target.elements.namedItem('subject')
+  if (!(subject instanceof HTMLInputElement)) return
+  console.log(subject.value)
+
+  const teacher = e.target.elements.namedItem('teacher')
+  if (!(teacher instanceof HTMLInputElement)) return
+  console.log(teacher.value)
+
+  emit('submit', { subject: subject.value, teacher: teacher.value })
+}
 </script>
 
 <style lang="scss" scoped>
 div {
-  padding: 1%;
+  margin: 6px 3px;
 }
 
 .register-base {
@@ -67,24 +75,42 @@ div {
   color: #5160ae;
   font-size: 24px;
   text-align: center;
-  bottom: 10px;
+  margin-left: 64px;
+  margin-top: 120px;
 }
 
 .register-button {
   color: white;
   font-size: 24px;
   text-align: center;
+  margin-left: 152px;
 }
 
-.subject-teacher-form {
+.subject-form {
   font-size: 24px;
   position: relative;
+  margin-left: 108px;
+  margin-top: 100px;
 }
 
+.teacher-form {
+  font-size: 24px;
+  position: relative;
+  margin-left: 108px;
+  margin-top: 40px;
+}
 .cancel-register-form {
   font-size: 24px;
   padding: 10px 20px;
   margin: 0 10px;
   border-radius: 10px;
+}
+
+.subject-input {
+  border: 1px solid black;
+}
+
+.teacher-input {
+  border: 1px solid black;
 }
 </style>

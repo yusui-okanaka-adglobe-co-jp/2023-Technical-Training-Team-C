@@ -2,16 +2,18 @@
   <td class="lesson-cell horizontal-writing" :class="{ 'lesson-holiday-cell': isHoliday }">
     <div class="register-buttons">
       <button class="register-modal-button" @click="onclick"><div class="abc">登</div></button>
-      <subject-teacher-register-modal :is-shown="isShown" @update:value="selectDate"> </subject-teacher-register-modal>
-
+      <subject-teacher-register-modal :is-shown="isShown" @submit="submit"> </subject-teacher-register-modal>
       <button class="delete-button">消</button>
     </div>
-    <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
-    <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
+    <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ updateSubject }}</p>
+    <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ updateTeacher }}</p>
   </td>
 </template>
 
 <script lang="ts" setup>
+import { sub } from 'date-fns'
+import { Submit } from './subject-teacher-register-modal.vue'
+
 const isShown = ref(false)
 
 function onclick() {
@@ -28,6 +30,19 @@ const props = defineProps({
     default: () => '',
   },
 })
+
+const updateSubject = ref('')
+const updateTeacher = ref('')
+function submit(submit: Submit) {
+  updateSubject.value = submit.subject
+  updateTeacher.value = submit.teacher
+  console.log(submit)
+  console.log(submit.subject)
+  console.log(updateSubject.value)
+  console.log(updateTeacher.value)
+  isShown.value = false
+}
+
 /* 科目名／教師名の文字の大きさを決める */
 function fontSizeClass(msg: string) {
   const subjectLength = props.subject.length
@@ -54,9 +69,9 @@ function fontSizeClass(msg: string) {
 
 .register-buttons {
   text-align: right;
-  text-align: top;
+
   // vertical-align: top;
-  margin-bottom: auto;
+  margin-bottom: 0;
 }
 
 .abc {

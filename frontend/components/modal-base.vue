@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body" v-if="props.isShown">
     <div class="modal-overlay" @click.stop="isShown = false">
-      <div class="modal-content" @click.stop="doNothing">
+      <div style="width: widthX" class="modal-content" @click.stop="doNothing">
         <slot> </slot>
       </div>
     </div>
@@ -31,7 +31,6 @@ function doNothing() {}
 
 .modal-content {
   background-color: #5160ae;
-  width: 270px;
   height: auto;
 }
 </style>
