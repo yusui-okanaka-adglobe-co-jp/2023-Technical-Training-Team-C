@@ -263,10 +263,9 @@ async function getTimetableData() {
     }
   }
   displayDate = parse(view.value, 'yyyy-MM-dd', new Date())
-  const { data: response } = await useFetch<Timetable[]>(
-    ' http://localhost:8000/api/timetablesAcquire?date=' + view.value,
-    {}
-  )
+  const { data: response } = await useFetch<Timetable[]>(' http://localhost:8000/api/timetablesAcquire/', {
+    query: { date: view.value },
+  })
 
   if (response.value != null) {
     timetables.value = response.value
