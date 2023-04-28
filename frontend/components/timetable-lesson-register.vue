@@ -61,10 +61,6 @@ const updateTeacher = ref('')
 function submit(submit: Submit) {
   updateSubject.value = submit.subject
   updateTeacher.value = submit.teacher
-  console.log(submit)
-  console.log(submit.subject)
-  console.log(updateSubject.value)
-  console.log(updateTeacher.value)
 
   // emit('submit', { subject: updateSubject.value, teacher: updateTeacher })
   isShown.value = false
@@ -72,8 +68,8 @@ function submit(submit: Submit) {
 
 /* 科目名／教師名の文字の大きさを決める */
 function fontSizeClass(msg: string) {
-  const subjectLength = props.subject.length
-  const teacherNameLength = props.teacherName.length
+  const subjectLength = updateSubject.value.length
+  const teacherNameLength = updateTeacher.value.length
   if (msg == 'subject') {
     if (subjectLength >= 9) {
       return 'font-size-s'

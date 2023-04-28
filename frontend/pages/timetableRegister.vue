@@ -14,6 +14,7 @@
           <div>ホーム</div>
         </button>
       </p>
+
       <p>
         <button class="usual-button student-home" onclick="window.open('/studentHome')">
           <div>生徒用画面確認</div>
@@ -50,8 +51,8 @@ const isShown = ref(false)
 function onclick() {
   isShown.value = !isShown.value
 }
-const start = ref(null)
-const end = ref(null)
+const start = ref()
+const end = ref()
 
 function selectDate(e) {
   start.value = format(e[0], 'yyyy-MM-dd')
@@ -80,10 +81,6 @@ const timetables: TimetableRegister[] = Object.entries(DAY_OF_WEEK).map(([_, val
 
 $background-color: #eaeaea;
 
-body {
-  padding-left: 20px;
-}
-
 input {
   margin-top: 40px;
   width: 224px;
@@ -92,9 +89,9 @@ input {
 }
 
 .date-set {
-  padding-left: 300px;
+  padding-left: 380px;
   font-size: 24px;
-  margin-top: 28px;
+  margin-top: 16px;
 }
 
 .datetext {
@@ -105,6 +102,7 @@ input {
 .home {
   color: #5160ae;
   font-size: 24px;
+  margin-top: 42px;
 }
 
 .student-home {

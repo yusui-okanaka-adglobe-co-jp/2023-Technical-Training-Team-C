@@ -55,11 +55,9 @@ function registerform(e: Event) {
   e.target.elements
   const subject = e.target.elements.namedItem('subject')
   if (!(subject instanceof HTMLInputElement)) return
-  console.log(subject.value)
 
   const teacher = e.target.elements.namedItem('teacher')
   if (!(teacher instanceof HTMLInputElement)) return
-  console.log(teacher.value)
 
   emit('submit', { subject: subject.value, teacher: teacher.value })
 }
