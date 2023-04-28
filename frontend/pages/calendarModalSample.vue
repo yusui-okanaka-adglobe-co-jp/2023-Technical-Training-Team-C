@@ -29,7 +29,7 @@ function selectDate(e) {
   isShown.value = false
 
   return navigateTo({
-    path: '/studentHome',
+    path: '/calendarModalSample',
     query: {
       view: format(view.value, 'yyyy-MM-dd'),
     },

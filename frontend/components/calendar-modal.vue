@@ -6,7 +6,6 @@
         id="auto"
         v-model="date"
         locale="jp"
-        :format="format"
         :min-date="minDate"
         :max-date="maxDate"
         prevent-min-max-navigation
@@ -26,9 +25,8 @@ import { ref } from 'vue'
 import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
 
 const date = ref()
-const format = (date) => {}
 
-const minDate = computed(() => subMonths(new Date(2015, 0, 5), 0))
+const minDate = computed(() => new Date(2015, 0, 5))
 const maxDate = computed(() => addMonths(new Date(getYear(new Date()) + 1, 11, 25), 0))
 
 const props = defineProps({
@@ -38,7 +36,6 @@ const props = defineProps({
 const emit = defineEmits()
 
 watch(date, () => {
-  console.log(date.value[0])
   if (!date.value) {
     return
   }
