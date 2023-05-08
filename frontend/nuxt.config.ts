@@ -5,7 +5,6 @@ export default defineNuxtConfig({
       apiUrl: process.env.API_URL,
     },
   },
-  modules: ['@nuxtjs/tailwindcss'],
   css: [
     // リセットcss
     '@/assets/css/reset.css',
