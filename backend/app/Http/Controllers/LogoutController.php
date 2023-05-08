@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cookie;
 
 class LogoutController extends Controller
 {
-    //ページ遷移の処理
+    //ログアウト処理
     public function __invoke(Request $request)
     {
         // Cookieの削除
