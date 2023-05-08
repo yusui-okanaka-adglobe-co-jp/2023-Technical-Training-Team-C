@@ -16,7 +16,7 @@ class PostTeacherController extends Controller
     public function __invoke(Request $request)
     {
         $message = [];
-        $token = [];
+        $token = '';
 
         // バック側バリデーションチェック
         $validated = $request->validate([
@@ -30,12 +30,10 @@ class PostTeacherController extends Controller
         if ($user && Hash::check($validated['password'], $user->password)) {
             // データベースにユーザーが存在して、パスワードが一致する時の処理
             // APIトークンの発行
-            $token = [
-                'accessToken' => $user->createToken(self::TOKEN_NAME)->plainTextToken
-            ];
+            $token = $user->createToken(self::TOKEN_NAME)->plainTextToken;
 
             // テーブルのAPIトークン更新
-            $user->api_token = $token['accessToken'];
+            $user->api_token = $token;
             $user->save();
 
             // message success
@@ -45,10 +43,10 @@ class PostTeacherController extends Controller
                 ]
             ];
         } else {
-            // email or pass fuilure
+            // email or pass failure
             $message = [
                 'messages' => [
-                    'fuilure'
+                    'failure'
                 ]
             ];
         }
@@ -57,7 +55,7 @@ class PostTeacherController extends Controller
         $response = response()->json($message);
 
         // cookieにトークンを持たせる
-        $response->cookie('api_token', $token['accessToken'], 60*24*30);
+        $response->cookie('api_token', $token, 60*24*30);
 
         // レスポンスを返す
         return $response;
