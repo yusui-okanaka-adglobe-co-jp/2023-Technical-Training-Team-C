@@ -11,7 +11,7 @@ class LogoutController extends Controller
     public function __invoke(Request $request)
     {
         // Cookieの削除
-        Cookie::queue(Cookie::forget('api_token'));
+        setcookie('api_token', '', 0,'/');
 
         return;
     }
