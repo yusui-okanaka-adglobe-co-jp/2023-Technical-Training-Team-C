@@ -1,6 +1,6 @@
 export interface TimetableRegister {
   dayOfWeek: number
-  lessons?: Array<Lesson>
+  lessons: Array<Lesson>
 }
 interface Lesson {
   subject: string

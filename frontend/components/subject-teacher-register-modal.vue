@@ -6,11 +6,11 @@
           <div class="register-modal-header">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
           <div class="subject-form">
             <label for="subject">科目：</label>
-            <input type="text" class="subject-input" name="subject" id="subject" required />
+            <input type="text" class="subject-input" name="subject" id="subject" maxlength="10" required />
           </div>
           <div class="teacher-form">
             <label for="teacher">教師：</label>
-            <input type="text" class="teacher-input" name="teacher" id="teacher" required />
+            <input type="text" class="teacher-input" name="teacher" id="teacher" maxlength="10" required />
           </div>
 
           <button class="usual-button cancel-button" @click.stop="isShown = false">キャンセル</button>

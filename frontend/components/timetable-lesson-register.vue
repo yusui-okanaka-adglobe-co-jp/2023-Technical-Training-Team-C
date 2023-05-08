@@ -21,8 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { eachMinuteOfInterval } from 'date-fns'
-// import { Submit } from './subject-teacher-register-modal.vue'
+import { Submit } from './subject-teacher-register-modal.vue'
 
 const isShown = ref(false)
 
@@ -54,15 +53,16 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits()
+const emit = defineEmits(['update:subject', 'update:teacherName'])
 
 const updateSubject = ref('')
 const updateTeacher = ref('')
 function submit(submit: Submit) {
   updateSubject.value = submit.subject
   updateTeacher.value = submit.teacher
-
-  // emit('submit', { subject: updateSubject.value, teacher: updateTeacher })
+  console.log(updateSubject.value)
+  emit('update:subject', updateSubject.value)
+  emit('update:teacherName', updateTeacher.value)
   isShown.value = false
 }
 
@@ -72,18 +72,18 @@ function fontSizeClass(msg: string) {
   const teacherNameLength = updateTeacher.value.length
   if (msg == 'subject') {
     if (subjectLength >= 9) {
-      return 'font-size-s'
+      return 'font-size-xs'
     } else if (subjectLength >= 7) {
-      return 'font-size-m'
+      return 'font-size-s'
     } else if (subjectLength >= 5) {
-      return 'font-size-l'
+      return 'font-size-m'
     }
-    return 'font-size-xl'
+    return 'font-size-l'
   }
   if (teacherNameLength >= 9) {
-    return 'font-size-s'
+    return 'font-size-xs'
   }
-  return 'font-size-m'
+  return 'font-size-s'
 }
 </script>
 

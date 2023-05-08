@@ -1,22 +1,20 @@
 <template>
   <table class="timetable">
     <!--最初の列 空白と時間割の時限を置く-->
-    <tr>
-      <th class="dayOfWeek-head horizontal-writing"></th>
-      <!--時限表示ループ-->
-      <template v-for="periodNumber of blankCell" :key="periodNumber">
-        <TimetablePeriod :period="periodNumber"></TimetablePeriod>
-      </template>
-    </tr>
     <!--配列をループ-->
     <template v-for="timetable in props.timetables" :key="timetable">
       <tr>
+        <!-- 曜日のループ -->
         <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
 
         <!--科目/教師のループ-->
-        <!-- <template v-for="lessons in timetable.lessons" :key="lessons"> -->
-        <template v-for="periodNumber of blankCell" :key="periodNumber">
-          <TimetableLessonRegister :dayOfWeek="dayOfWeekChangeString(timetable.dayOfWeek)" :period="periodNumber">
+        <template v-for="(lesson, index) of timetable.lessons" :key="lesson">
+          <TimetableLessonRegister
+            :dayOfWeek="dayOfWeekChangeString(timetable.dayOfWeek)"
+            :period="index + 1"
+            v-model:subject="lesson.subject"
+            v-model:teacher-name="lesson.teacher"
+          >
           </TimetableLessonRegister>
         </template>
       </tr>
@@ -27,6 +25,7 @@
 <script lang="ts" setup>
 import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
 import { format } from 'date-fns'
+import TimetableComponent from './timetable-component.vue'
 const props = defineProps({
   timetables: {
     type: Array as () => TimetableRegister[],
@@ -39,6 +38,16 @@ const props = defineProps({
     ],
   },
 })
+
+const emit = defineEmits(['update:timetables'])
+for (const timetable of props.timetables) {
+  for (const lesson of timetable.lessons) {
+    watch(lesson, () => {
+      emit('update:timetables', lesson)
+    })
+  }
+}
+
 /* 6回回す用　*/
 const blankCell = 6
 const periodincre = 0
@@ -70,6 +79,10 @@ function countup(number: number) {
 /* dateのフォーマット整える */
 function dateFormat(date: string) {
   return format(new Date(date), 'M/d')
+}
+
+function test() {
+  console.log(props.timetables)
 }
 </script>
 
