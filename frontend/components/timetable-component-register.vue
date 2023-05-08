@@ -1,5 +1,5 @@
 <template>
-  <table class="timetable">
+  <table class="timetable-register">
     <!--最初の列 空白と時間割の時限を置く-->
     <!--配列をループ-->
     <template v-for="timetable in props.timetables" :key="timetable">

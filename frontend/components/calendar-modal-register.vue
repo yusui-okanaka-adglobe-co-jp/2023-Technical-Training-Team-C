@@ -26,9 +26,6 @@ import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
 import ModalBase from './modal-base.vue'
 
 const date = ref()
-const format = (date) => {
-  // console.log(date.value)
-}
 
 const minDate = computed(() => subMonths(new Date(2015, 0, 5), 0))
 const maxDate = computed(() => addMonths(new Date(getYear(new Date()) + 1, 11, 25), 0))
@@ -40,8 +37,6 @@ const props = defineProps({
 const emit = defineEmits()
 
 watch(date, () => {
-  console.log(date.value[0])
-  console.log(date.value)
   if (!date.value) {
     return
   }

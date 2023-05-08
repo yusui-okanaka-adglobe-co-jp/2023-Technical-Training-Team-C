@@ -23,7 +23,7 @@
 
       <p>
         <!-- <button class="usual-button logout" onclick="location.href='./teachersLogin'"> -->
-        <button class="usual-button logout" @click="test">
+        <button class="usual-button logout" @click="() => navigateTo('/teachersLogin')">
           <div>ログアウト</div>
         </button>
       </p>
@@ -42,7 +42,6 @@
 </template>
 
 <script lang="ts" setup>
-import ModalBase from '~~/components/modal-base.vue'
 import { format } from 'date-fns'
 import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
 import { DAY_OF_WEEK } from '~~/util/constants'
@@ -64,13 +63,7 @@ function selectDate(e) {
   isShown.value = false
 }
 
-function test() {
-  useTimetables().lessons.value?.push({ subject: '国語', teacher: '佐藤', period: 1, dayOfWeek: 1 })
-  console.log(useTimetables().lessons.value)
-}
-
 function useState() {
-  // console.log(timetables)
   useTimetables().lessons.value = timetables
     .map((timetable) =>
       timetable.lessons
@@ -88,8 +81,6 @@ function useState() {
   console.log(useTimetables().lessons.value)
   useTimetables().time.value = { start: start.value, end: end.value }
   console.log(useTimetables().time.value)
-
-  console.log(useTimetables().lessons.value)
 
   if (start.value === undefined || end.value === undefined) {
     alert('開始日終了日を選択してください')

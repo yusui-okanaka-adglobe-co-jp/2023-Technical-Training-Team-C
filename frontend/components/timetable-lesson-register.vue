@@ -60,7 +60,6 @@ const updateTeacher = ref('')
 function submit(submit: Submit) {
   updateSubject.value = submit.subject
   updateTeacher.value = submit.teacher
-  console.log(updateSubject.value)
   emit('update:subject', updateSubject.value)
   emit('update:teacherName', updateTeacher.value)
   isShown.value = false
@@ -105,12 +104,12 @@ function fontSizeClass(msg: string) {
 }
 
 .register-modal-button {
-  font-size: 16px;
+  font-size: 20px;
   background: #03ff36;
 }
 
 .delete-button {
-  font-size: 16px;
+  font-size: 20px;
   background: #fc01ca;
 }
 </style>

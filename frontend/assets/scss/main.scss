@@ -4,34 +4,35 @@ $accent-color: #f4c9c9;
 $link-color: #6a53f9;
 $board-color: #ffffff;
 $base-color: #eaeaea;
-$font: 'Inter';
+$font: 'Noto Sans JP';
 $font-weight: 400;
 
+// 背景色設定
 body {
   background-color: $base-color;
-  margin: 0;
 }
 
 .main-color {
-  color: $main-color;
+  background-color: $main-color;
 }
 
 .accent-color {
-  color: $accent-color;
+  background-color: $accent-color;
 }
 
 .link-color {
-  color: $link-color;
+  background-color: $link-color;
 }
 
 .board-color {
-  color: $board-color;
+  background-color: $board-color;
 }
 
 .base-color {
-  color: $base-color;
+  background-color: $base-color;
 }
 
+// 文字設定
 .font-size-xs {
   font-family: $font;
   font-weight: $font-weight;
@@ -62,12 +63,18 @@ body {
   font-size: 36px;
 }
 
+.white {
+  color: #fff;
+}
+
+.red {
+  color: #f00;
+}
+
 .usual-button {
   background-color: white;
   width: 160px;
   height: 60px;
-
-  // font-weight: bold;
   border-radius: 10px;
   border: solid 3px #5160ae;
   margin-top: 24px;
