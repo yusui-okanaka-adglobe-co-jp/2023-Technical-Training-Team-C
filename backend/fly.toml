@@ -1,13 +1,17 @@
-# fly.toml file generated for technical-training-backend on 2023-02-10T15:06:46+09:00
+# fly.toml app configuration file generated for technical-training-backend-team-c on 2023-04-18T12:52:28+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = "technical-training-backend-team-c"
 kill_signal = "SIGINT"
 kill_timeout = 5
+primary_region = "nrt"
 processes = []
 
 [build]
   [build.args]
-    NODE_VERSION = "14"
+    NODE_VERSION = "18"
     PHP_VERSION = "8.2"
 
 [env]
