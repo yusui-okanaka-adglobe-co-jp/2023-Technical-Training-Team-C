@@ -4,10 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MockController;
-use App\Http\Controllers\PostSanctumTokenController;
-use App\Http\Controllers\GetFirstController;
 use App\Http\Controllers\PostTeacherController;
-use App\Http\Requests\PostTeacherRequest;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +37,7 @@ Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
 Route::post('/timetablesCreate', [MockController::class, 'createTimetables']);
 // Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
 
-// api認証テスト用
-Route::post('/sanctum/token', PostSanctumTokenController::class);
-Route::get('/first', GetFirstController::class)->middleware('auth:sanctum');
-
 // 本番用(モック用はコメントアウトにする)
 Route::post('/teachersLogin', PostTeacherController::class);
+Route::get('/auth', AuthController::class);
+Route::get('/logout', LogoutController::class);

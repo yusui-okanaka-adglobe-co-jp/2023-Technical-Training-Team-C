@@ -6,6 +6,10 @@
 </template>
 
 <script lang="ts" setup>
+// 認証用middleware
+definePageMeta({
+  middleware: 'auth'
+})
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 
 /* 検証用オブジェクト */

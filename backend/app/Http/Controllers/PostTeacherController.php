@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\Teacher;
@@ -37,14 +38,11 @@ class PostTeacherController extends Controller
             $user->api_token = $token['accessToken'];
             $user->save();
 
-            // message success & APIトークン送信
+            // message success
             $message = [
                 'messages' => [
                     'success'
-                ],
-                // 'token' => [
-                //     $user->api_token
-                // ]
+                ]
             ];
         } else {
             // email or pass fuilure
@@ -58,12 +56,10 @@ class PostTeacherController extends Controller
         // レスポンスを作成する
         $response = response()->json($message);
 
-        // AuthorizationヘッダーにBearerトークンを追加する
-        $response->header('Authorization', 'Bearer ' . $token['accessToken']);
+        // cookieにトークンを持たせる
+        $response->cookie('api_token', $token['accessToken'], 60*24*30);
 
         // レスポンスを返す
         return $response;
-
-        // return Response::json($message);
     }
 }
