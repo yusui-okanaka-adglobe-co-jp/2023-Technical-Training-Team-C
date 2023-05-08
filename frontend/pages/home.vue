@@ -14,12 +14,16 @@
       <div class="main">
         <!--ボタン-->
         <div class="timetable-button-area">
-          <button @click="getThisWeekTimetables">今週の時間割</button>
-          <button>日付選択</button>
-          <button @click="goToRegisterPage">時間割登録</button>
-          <button @click="goToStudentPage">生徒用画面確認</button>
-          <button @click="logout">ログアウト</button>
+          <button class="button-font-color usual-button font-size-l" @click="getThisWeekTimetables">
+            今週の時間割
+          </button>
+          <button class="button-font-color usual-button font-size-l" @click="openCalendarModal">日付選択</button>
+          <button class="button-font-color usual-button font-size-l" @click="goToRegisterPage">時間割登録</button>
+          <button class="button-font-color usual-button font-size-m" @click="goToStudentPage">生徒用画面確認</button>
+          <button class="button-font-color usual-button font-size-l" @click="logout">ログアウト</button>
         </div>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" />
+
         <!--時間割-->
         <div>
           <div v-show="loadingDisplay">
@@ -37,6 +41,8 @@ import { format, parse } from 'date-fns'
 
 const route = useRoute()
 const timetables = ref<Timetable[]>([])
+//calendar用
+const isShown = ref(false)
 
 /* 検証用オブジェクト */
 const timetables2: Timetable[] = [
@@ -278,16 +284,6 @@ async function getTimetableData() {
   }
 }
 
-//登録画面遷移
-function goToRegisterPage() {
-  navigateTo({ path: '/timetableRegister' })
-}
-
-//生徒用画面遷移
-function goToStudentPage() {
-  window.open('/studentHome', '_blank', 'noreferrer')
-}
-
 //今週の時間割表示
 function getThisWeekTimetables() {
   let date = new Date()
@@ -299,6 +295,37 @@ function getThisWeekTimetables() {
     },
   })
 }
+//日付選択
+function openCalendarModal() {
+  isShown.value = !isShown.value
+}
+//日付選択後の処理
+function selectDate(e: String) {
+  view.value = e
+
+  //カレンダーモーダルを閉じる
+  isShown.value = false
+
+  return navigateTo({
+    path: '/home',
+    query: {
+      date: format(view.value, 'yyyy-MM-dd'),
+    },
+  })
+}
+
+//登録画面遷移
+function goToRegisterPage() {
+  navigateTo({ path: '/timetableRegister' })
+}
+
+//生徒用画面遷移
+function goToStudentPage() {
+  window.open('/studentHome', '_blank', 'noreferrer')
+}
+
+//ログアウト処理 ログインAPIが出来次第記述
+function logout() {}
 
 //与えられた日付から月曜日を求める
 function getMonday(date: Date) {
@@ -309,9 +336,6 @@ function getMonday(date: Date) {
   const thisWeekMonday = format(date, 'yyyy-MM-dd')
   return thisWeekMonday
 }
-
-//ログアウト処理 ログインAPIが出来次第記述
-function logout() {}
 
 //パラメータの監視。変化があればリロード
 watch(
@@ -385,5 +409,9 @@ button {
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+//遷移ボタン関連
+.button-font-color {
+  color: #5160ae;
 }
 </style>
