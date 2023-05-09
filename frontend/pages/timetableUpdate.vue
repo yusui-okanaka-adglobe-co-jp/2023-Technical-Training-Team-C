@@ -18,44 +18,42 @@
         <button class="left-button button-font-color usual-button font-size-l" @click="logout">ログアウト</button>
       </div>
       <!--時間割-->
-      <div>
+      <div class="right-area">
         <!-- <div v-show="loadingDisplay"> -->
-        <div class="right-area">
-          <table class="timetable-update">
-            <!-- <th class="vertical-head horizontal-writing"></th> -->
-            <!-- <th> -->
-            <!--時限-->
-            <!-- <template v-for="periodNumber of blankCell" :key="periodNumber">
+        <table class="timetable-update">
+          <!-- <th class="vertical-head horizontal-writing"></th> -->
+          <!-- <th> -->
+          <!--時限-->
+          <!-- <template v-for="periodNumber of blankCell" :key="periodNumber">
                 <TimetablePeriod :period="periodNumber"></TimetablePeriod>
               </template> -->
-            <!-- 曜日のループ -->
-            <!-- </th> -->
+          <!-- 曜日のループ -->
+          <!-- </th> -->
 
-            <!--時間割-->
-            <!-- <template v-for="period in periodCount" :key="period"> -->
-            <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
-              <tr>
-                <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dow[dayOfWeek - 1])"></TimetableDayOfWeek>
-                <template v-for="period in periodCount" :key="period">
-                  <template v-if="lessonExist(period, dayOfWeek)">
-                    <!--データある時-->
-                    <TimetableLesson
-                      :is-holiday="false"
-                      :subject="getSubject(period, dayOfWeek)"
-                      :teacher-name="getTeacher(period, dayOfWeek)"
-                    />
-                  </template>
-
-                  <template v-else>
-                    <TimetableLesson :is-holiday="false" />
-                    <!--データないとき-->
-                  </template>
+          <!--時間割-->
+          <!-- <template v-for="period in periodCount" :key="period"> -->
+          <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
+            <tr>
+              <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dow[dayOfWeek - 1])"></TimetableDayOfWeek>
+              <template v-for="period in periodCount" :key="period">
+                <template v-if="lessonExist(period, dayOfWeek)">
+                  <!--データある時-->
+                  <TimetableLesson
+                    :is-holiday="false"
+                    :subject="getSubject(period, dayOfWeek)"
+                    :teacher-name="getTeacher(period, dayOfWeek)"
+                  />
                 </template>
-              </tr>
-            </template>
-            <tr></tr>
-          </table>
-        </div>
+
+                <template v-else>
+                  <TimetableLesson :is-holiday="false" />
+                  <!--データないとき-->
+                </template>
+              </template>
+            </tr>
+          </template>
+        </table>
+
         <div class="bottom">
           <div class="bottom-button-area">
             <div class="bottom-left-button">
@@ -341,6 +339,9 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 }
 /* メイン */
 .main {
+  display: flex;
+}
+.right_area {
   display: flex;
 }
 .left-button {
