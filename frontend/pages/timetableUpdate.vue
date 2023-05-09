@@ -11,23 +11,25 @@
     <div class="main">
       <!--ボタン-->
       <div class="timetable-button-area">
-        <button @click="goToHome">ホーム</button>
-        <button @click="goToStudentPage">生徒用画面確認</button>
-        <button @click="logout">ログアウト</button>
+        <button class="left-button button-font-color usual-button font-size-l" @click="goToHome">ホーム</button>
+        <button class="left-button button-font-color usual-button font-size-m" @click="goToStudentPage">
+          生徒用画面確認
+        </button>
+        <button class="left-button button-font-color usual-button font-size-l" @click="logout">ログアウト</button>
       </div>
       <!--時間割-->
       <div>
         <!-- <div v-show="loadingDisplay"> -->
         <div class="right-area">
-          <table class="timetable">
-            <th class="vertical-head horizontal-writing"></th>
-            <th>
-              <!--時限-->
-              <template v-for="periodNumber of blankCell" :key="periodNumber">
+          <table class="timetable-update">
+            <!-- <th class="vertical-head horizontal-writing"></th> -->
+            <!-- <th> -->
+            <!--時限-->
+            <!-- <template v-for="periodNumber of blankCell" :key="periodNumber">
                 <TimetablePeriod :period="periodNumber"></TimetablePeriod>
-              </template>
-              <!-- 曜日のループ -->
-            </th>
+              </template> -->
+            <!-- 曜日のループ -->
+            <!-- </th> -->
 
             <!--時間割-->
             <!-- <template v-for="period in periodCount" :key="period"> -->
@@ -53,7 +55,23 @@
             </template>
             <tr></tr>
           </table>
-          <div class="bottom">ボタンエリア</div>
+        </div>
+        <div class="bottom">
+          <div class="bottom-button-area">
+            <div class="bottom-left-button">
+              <button
+                class="usual-button button-font-color font-size-l"
+                @click="() => navigateTo('/timetableRegister')"
+              >
+                <div>戻る</div>
+              </button>
+            </div>
+            <div class="bottom-right-button">
+              <button class="usual-button button-font-color font-size-l">
+                <div>更新確定</div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +92,7 @@ let subjectData: string = ''
 let teacherData: string = ''
 
 const dow = [1, 2, 3, 4, 5, 6, 0]
+
 /* 検証用オブジェクト */
 const timetables2: Timetable[] = [
   {
@@ -281,6 +300,8 @@ function dayOfWeekChangeString(dayOfWeek: number) {
 function lessonExist(periodNumber: number, dayOfWeekNumber: number) {
   return lessons.filter(({ period }) => period === periodNumber).some(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
 }
+
+//教科名取得
 function getSubject(periodNumber: number, dayOfWeekNumber: number) {
   subjectData = String(
     lessons.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
@@ -288,6 +309,7 @@ function getSubject(periodNumber: number, dayOfWeekNumber: number) {
   )
   return subjectData
 }
+//教師名取得
 function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   teacherData = String(
     lessons.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
@@ -299,6 +321,14 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 
 <style scoped lang="scss">
 @import '../assets/scss/timetable.scss';
+.timetable-update {
+  writing-mode: vertical-lr;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px #333 inset;
+}
 .time-area {
   height: 180px;
 }
@@ -313,11 +343,11 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 .main {
   display: flex;
 }
-button {
+.left-button {
+  margin-left: 24px;
   margin-bottom: 24px;
 }
 .timetable-button-area {
-  // width: 204px;
   width: 14%;
   display: flex;
   flex-direction: column;
@@ -325,6 +355,21 @@ button {
 }
 /*下部 */
 .bottom {
-  // text-align: center;
+  width: 100%;
+  padding: 0 80px;
+}
+.button-font-color {
+  color: #5160ae;
+}
+.bottom-button-area {
+  position: relative;
+}
+.bottom-left-button {
+  position: absolute;
+  left: 24px;
+}
+.bottom-right-button {
+  position: absolute;
+  right: 24px;
 }
 </style>
