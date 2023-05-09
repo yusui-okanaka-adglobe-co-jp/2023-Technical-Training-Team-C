@@ -321,7 +321,7 @@ watch(
 
 <style scoped lang="scss">
 .container_ori {
-  width: 1415px;
+  width: 428px;
   margin: 0;
   // margin: 0 36px 0 0;
   // display: flex;
