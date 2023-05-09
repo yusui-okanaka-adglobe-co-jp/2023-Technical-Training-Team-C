@@ -28,7 +28,7 @@ class GetTimetablesAcquireController extends Controller
         //月曜の年の祝日データを取る
         $yearHolidayDatas = $this->getHolidays($holidaydDataYear);
 
-        list($filtered_timetables, $timetables) = $this->setDateDatas($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas);
+        list($filtered_timetables, $timetables) = $this->setDateData($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas);
 
         //rankedtimetable:created_atでsortdesc
         $ranked_timetable = $filtered_timetables->sortByDesc('created_at');
@@ -52,12 +52,12 @@ class GetTimetablesAcquireController extends Controller
     }
 
     //date関連のtimetablesの設定
-    function setDateDatas($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas)
+    function setDateData($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas)
     {
         //for文のループ変数の0で月曜、6で日曜を処理
-        for ($loopWeekCount = 0; $loopWeekCount < 7; $loopWeekCount++) {
+        for ($loopWeekCount = 1; $loopWeekCount <= 7; $loopWeekCount++) {
             $setData = [];
-            $getDate = date("Y-m-d", strtotime("$dateMonday $loopWeekCount day"));
+            $getDate = date("Y-m-d", strtotime($dateMonday . $loopWeekCount - 1 . ' day'));
             $setData['date'] = $getDate;
             $getDateYear = explode("-", ($getDate))[0];
 
@@ -67,6 +67,10 @@ class GetTimetablesAcquireController extends Controller
                 $yearHolidayDatas = $this->getHolidays($getDateYear);
                 $holidaydDataYear = $getDateYear;
             }
+            //曜日設定
+            $setData['dayOfWeek'] = $loopWeekCount % 7;
+            //DBからデータ取得
+            $getDBData = $this->getTimetablesFromDB($getDate, $setData['dayOfWeek']);
 
             //祝日判定
             if (array_key_exists($getDate, $yearHolidayDatas)) {
@@ -75,21 +79,6 @@ class GetTimetablesAcquireController extends Controller
                 $setData['holidayTitle'] = $yearHolidayDatas[$getDate];
             } else {
                 $setData['isHoliday'] = false;
-            }
-
-            //日曜判定
-            if ($loopWeekCount === 6) {
-                //日曜のとき
-                $setData['dayOfWeek'] = 0;
-            } else {
-                $setData['dayOfWeek'] = $loopWeekCount + 1;
-            }
-            //DBからデータ取得
-            $getDBData = $this->getTimetablesFromDB($getDate, $setData['dayOfWeek']);
-
-            //isHoliday false判定
-            if (!($setData['isHoliday'])) {
-                //時間割用の配列用意
                 $setData['lessons'] = array();
             }
 
@@ -104,7 +93,7 @@ class GetTimetablesAcquireController extends Controller
     //DBから時間割取得
     function getTimetablesFromDB($getDate, $dayOfWeekNumber)
     {
-        $getTimetables = DB::table('timetables')->where('start_date', '<=', $getDate)
+        $getTimetables = Timetable::where('start_date', '<=', $getDate)
             ->where('end_date', '>=', $getDate)->where('day_of_week', '=', $dayOfWeekNumber)->get();
 
         return $getTimetables;
@@ -114,10 +103,11 @@ class GetTimetablesAcquireController extends Controller
     function setTimetables($ranked_timetable, $timetables)
     {
         //収納時に利用する変数設定
-        $timetableCount = 0;
+        //$timetableCount = 0;
 
         //timetablesのforeach文で月曜から日曜の1~6まで繰り返す。
-        foreach ($timetables as $timetable) {
+        foreach ($timetables as $timetableCount => $timetable) {
+
             //isHolidayがfalseだったら授業データを入れる
             if (!($timetable['isHoliday'])) {
                 for ($periodCount = 1; $periodCount < 7; $periodCount++) {
