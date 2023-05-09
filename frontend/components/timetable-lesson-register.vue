@@ -24,12 +24,11 @@
 import { ref } from 'vue'
 import { Submit } from './subject-teacher-register-modal.vue'
 
-const SuBject = ref('')
-
 const isShown = ref(false)
 
 function onclick() {
   isShown.value = !isShown.value
+  console.log('onclick')
 }
 
 function deleteClass() {

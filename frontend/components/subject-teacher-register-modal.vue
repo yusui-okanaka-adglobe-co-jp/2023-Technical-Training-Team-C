@@ -2,15 +2,31 @@
   <modal-base class="modal" :is-shown="props.isShown">
     <div>
       <div class="register-base board-color">
-        <form class="form-example" @submit="submit">
+        <form class="form-example" @submit="regist">
           <div class="register-modal-header font-size-l">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
           <div class="subject-form font-size-l">
             <label for="subject">科目：</label>
-            <input type="text" class="subject-input" name="subject" id="subject" maxlength="10" required />
+            <input
+              type="text"
+              v-model="subject"
+              class="subject-input"
+              name="subject"
+              id="subject"
+              maxlength="10"
+              required
+            />
           </div>
           <div class="teacher-form font-size-l">
             <label for="teacher">教師：</label>
-            <input type="text" class="teacher-input" name="teacher" id="teacher" maxlength="10" required />
+            <input
+              type="text"
+              v-model="teacher"
+              class="teacher-input"
+              name="teacher"
+              id="teacher"
+              maxlength="10"
+              required
+            />
           </div>
 
           <button class="usual-button cancel-button font-size-l main-color" @click.stop="isShown = false">
@@ -51,33 +67,12 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
   period: 0,
 })
 
-const emit = defineEmits(['update:subject', 'update:teacher'])
-const updateSubject = ref('')
-const updateTeacher = ref('')
-console.log()
+const emit = defineEmits(['submit'])
 
-function submit(submit: Submit) {
-  updateSubject.value = submit.subject
-  updateTeacher.value = submit.teacher
-  console.log(updateSubject.value)
-  emit('update:subject', updateSubject.value)
-  emit('update:teacher', updateTeacher.value)
+function regist(e: Event) {
+  e.preventDefault()
+  emit('submit', { subject: subject.value, teacher: teacher.value })
 }
-// const emit = defineEmits<ModalBaseEmit>()
-
-// function registerform(e: Event) {
-//   e.preventDefault()
-//   e.target
-//   if (!(e.target instanceof HTMLFormElement)) return
-//   e.target.elements
-//   const subject = e.target.elements.namedItem('subject')
-//   if (!(subject instanceof HTMLInputElement)) return
-
-//   const teacher = e.target.elements.namedItem('teacher')
-//   if (!(teacher instanceof HTMLInputElement)) return
-
-//   emit('submit', { subject: subject.value, teacher: teacher.value })
-// }
 </script>
 
 <style lang="scss" scoped>

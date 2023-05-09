@@ -23,7 +23,9 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import { ref } from 'vue'
 import { getYear } from 'date-fns'
 import ModalBase from './modal-base.vue'
+// import Calendar from './calendar.vue'
 
+// Vue.mixin(Calendar)
 const date = ref()
 
 const minDate = computed(() => new Date(2015, 0, 5))
