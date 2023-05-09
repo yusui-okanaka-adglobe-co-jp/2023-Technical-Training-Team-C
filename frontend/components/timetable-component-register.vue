@@ -23,12 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
-import { format } from 'date-fns'
-import TimetableComponent from './timetable-component.vue'
+import { Timetable } from '~~/types/response/timetablesAcquireResponse'
+
 const props = defineProps({
   timetables: {
-    type: Array as () => TimetableRegister[],
+    type: Array as () => Timetable[],
     required: true,
     default: () => [
       {

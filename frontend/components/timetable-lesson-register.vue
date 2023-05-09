@@ -71,6 +71,7 @@ function submit(submit: Submit) {
 function fontSizeClass(msg: string) {
   const subjectLength = updateSubject.value.length
   const teacherNameLength = updateTeacher.value.length
+
   if (msg == 'subject') {
     if (subjectLength >= 9) {
       return 'font-size-xs'

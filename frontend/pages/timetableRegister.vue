@@ -43,10 +43,9 @@
 
 <script lang="ts" setup>
 import { format } from 'date-fns'
-import { TimetableRegister } from '~~/types/response/timetablesRegisterResponse'
 import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
-import { Lesson } from '~~/types/request/timetablesRegisterRequest'
+import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 
 const isShown = ref(false)
 
@@ -97,7 +96,7 @@ console.log(today)
 // import { TimetableComponentRegister } from '~~/.nuxt/components'
 // import TimetableComponentRegister from '~~/components/timetable-component-register.vue'
 /* 検証用オブジェクト */
-const timetables: TimetableRegister[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => ({
+const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => ({
   dayOfWeek: value,
   lessons: [...Array(6)].map((_) => ({
     subject: '',
