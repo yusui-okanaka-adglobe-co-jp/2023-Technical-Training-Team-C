@@ -102,8 +102,6 @@ class GetTimetablesAcquireController extends Controller
     //オブジェクトに時間割を設定する
     function setTimetables($ranked_timetable, $timetables)
     {
-        //収納時に利用する変数設定
-        //$timetableCount = 0;
 
         //timetablesのforeach文で月曜から日曜の1~6まで繰り返す。
         foreach ($timetables as $timetableCount => $timetable) {
@@ -129,7 +127,6 @@ class GetTimetablesAcquireController extends Controller
                     array_push($timetables[$timetableCount]['lessons'], $lesson);
                 }
             }
-            $timetableCount++;
         }
         return $timetables;
     }
