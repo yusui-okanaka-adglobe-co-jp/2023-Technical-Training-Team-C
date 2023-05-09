@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Timetable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class GetTimetablesAcquireController extends Controller
 {
-    //
+    //main
     public function getTimetables(Request $request)
     {
         $date = $request->date;
@@ -25,9 +26,34 @@ class GetTimetablesAcquireController extends Controller
         $holidaydDataYear = explode("-", ($date))[0];
 
         //月曜の年の祝日データを取る
-        $YearHolidayDatas = $this->getHolidays($holidaydDataYear);
+        $yearHolidayDatas = $this->getHolidays($holidaydDataYear);
 
-        //7回繰り返すfor文
+        list($filtered_timetables, $timetables) = $this->setDateDatas($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas);
+
+        //rankedtimetable:created_atでsortdesc
+        $ranked_timetable = $filtered_timetables->sortByDesc('created_at');
+
+        $timetables = $this->setTimetables($ranked_timetable, $timetables);
+
+        return Response::json($timetables);
+    }
+
+
+    //holidayAPIに関する処理
+    function getHolidays($date)
+    {
+        $baseUrl = 'https://holidays-jp.github.io/api/v1';
+        $dateUrl = 'date.json';
+        $url = urldecode("$baseUrl/$date/$dateUrl");
+        $response = file_get_contents($url);
+
+        $holidayDatas = json_decode($response, true);
+        return $holidayDatas;
+    }
+
+    //date関連のtimetablesの設定
+    function setDateDatas($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas)
+    {
         //for文のループ変数の0で月曜、6で日曜を処理
         for ($loopWeekCount = 0; $loopWeekCount < 7; $loopWeekCount++) {
             $setData = [];
@@ -37,17 +63,16 @@ class GetTimetablesAcquireController extends Controller
 
             //年が異なるかの判定
             if ($holidaydDataYear !== $getDateYear) {
-
                 //新しい祝日データ取得
-                $YearHolidayDatas = $this->getHolidays($getDateYear);
+                $yearHolidayDatas = $this->getHolidays($getDateYear);
                 $holidaydDataYear = $getDateYear;
             }
 
             //祝日判定
-            if (array_key_exists($getDate, $YearHolidayDatas)) {
+            if (array_key_exists($getDate, $yearHolidayDatas)) {
                 //祝日のとき
                 $setData['isHoliday'] = true;
-                $setData['holidayTitle'] = $YearHolidayDatas[$getDate];
+                $setData['holidayTitle'] = $yearHolidayDatas[$getDate];
             } else {
                 $setData['isHoliday'] = false;
             }
@@ -56,13 +81,11 @@ class GetTimetablesAcquireController extends Controller
             if ($loopWeekCount === 6) {
                 //日曜のとき
                 $setData['dayOfWeek'] = 0;
-                $getDbData = DB::table('timetables')->where('start_date', '<=', $getDate)
-                    ->where('end_date', '>=', $getDate)->where('day_of_week', '=', 0)->get();
             } else {
                 $setData['dayOfWeek'] = $loopWeekCount + 1;
-                $getDbData = DB::table('timetables')->where('start_date', '<=', $getDate)
-                    ->where('end_date', '>=', $getDate)->where('day_of_week', '=', $loopWeekCount + 1)->get();
             }
+            //DBからデータ取得
+            $getDBData = $this->getTimetablesFromDB($getDate, $setData['dayOfWeek']);
 
             //isHoliday false判定
             if (!($setData['isHoliday'])) {
@@ -73,13 +96,23 @@ class GetTimetablesAcquireController extends Controller
             array_push($timetables, $setData);
 
             //曜日ごとのデータをcollectionにmergeしていく
-            $filtered_timetables = collect($filtered_timetables)->merge($getDbData);
+            $filtered_timetables = collect($filtered_timetables)->merge($getDBData);
         }
+        return array($filtered_timetables, $timetables);
+    }
 
-        //DB関連処理
-        //rankedtimetable:rankの代わりにcreated_atでsortdesc
-        $ranked_timetable = $filtered_timetables->sortByDesc('created_at');
+    //DBから時間割取得
+    function getTimetablesFromDB($getDate, $dayOfWeekNumber)
+    {
+        $getTimetables = DB::table('timetables')->where('start_date', '<=', $getDate)
+            ->where('end_date', '>=', $getDate)->where('day_of_week', '=', $dayOfWeekNumber)->get();
 
+        return $getTimetables;
+    }
+
+    //オブジェクトに時間割を設定する
+    function setTimetables($ranked_timetable, $timetables)
+    {
         //収納時に利用する変数設定
         $timetableCount = 0;
 
@@ -108,18 +141,6 @@ class GetTimetablesAcquireController extends Controller
             }
             $timetableCount++;
         }
-        return Response::json($timetables);
-    }
-
-    //holidayAPIに関する処理
-    function getHolidays($date)
-    {
-        $baseUrl = 'https://holidays-jp.github.io/api/v1';
-        $dateUrl = 'date.json';
-        $url = urldecode("$baseUrl/$date/$dateUrl");
-        $response = file_get_contents($url);
-
-        $holidayDatas = json_decode($response, true);
-        return $holidayDatas;
+        return $timetables;
     }
 }
