@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body" v-if="props.isShown">
     <div class="modal-overlay" @click.stop="isShown = false">
-      <div style="width: widthX" class="modal-content" @click.stop="doNothing">
+      <div class="modal-content" @click.stop="doNothing">
         <slot> </slot>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <default-layout page-name="教師用登録ページ">
     <body>
       <div class="date-set">
-        <button class="usual-button start-end-date" @click="onclick">
+        <button class="usual-button start-end-date" type="button" @click="onclick">
           <div class="dateselect">開始日終了日選択</div>
         </button>
         <label class="datetext">{{ start }}~{{ end }}</label>
@@ -10,30 +10,29 @@
       </div>
 
       <p>
-        <button class="usual-button home" onclick="location.href='./home'">
+        <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
           <div>ホーム</div>
         </button>
       </p>
 
       <p>
-        <button class="usual-button student-home" onclick="window.open('/studentHome')">
+        <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
           <div>生徒用画面確認</div>
         </button>
       </p>
 
       <p>
-        <!-- <button class="usual-button logout" onclick="location.href='./teachersLogin'"> -->
-        <button class="usual-button logout" @click="() => navigateTo('/teachersLogin')">
+        <button class="usual-button logout" type="button" @click="() => navigateTo('/teachersLogin')">
           <div>ログアウト</div>
         </button>
       </p>
 
       <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
       <p>
-        <button class="usual-button back-home" @click="() => navigateTo('/home')">
+        <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
           <div>戻る</div>
         </button>
-        <button class="unusual-button timetable-update" @click="useState">
+        <button class="unusual-button timetable-update" type="button" @click="useState">
           <div>時間割更新</div>
         </button>
       </p>
@@ -82,7 +81,7 @@ function useState() {
   useTimetables().time.value = { start: start.value, end: end.value }
   console.log(useTimetables().time.value)
 
-  if (start.value === undefined || end.value === undefined) {
+  if (start.value == undefined || end.value == undefined) {
     alert('開始日終了日を選択してください')
   } else if (useTimetables().lessons.value.length === 0) {
     alert('授業を登録してください')

@@ -1,5 +1,5 @@
 <template>
-  <table class="timetable-register">
+  <table class="timetable register">
     <!--最初の列 空白と時間割の時限を置く-->
     <!--配列をループ-->
     <template v-for="timetable in props.timetables" :key="timetable">
@@ -48,9 +48,6 @@ for (const timetable of props.timetables) {
   }
 }
 
-/* 6回回す用　*/
-const blankCell = 6
-const periodincre = 0
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
   switch (dayOfWeek) {
@@ -70,19 +67,6 @@ function dayOfWeekChangeString(dayOfWeek: number) {
       return '土'
   }
   return ''
-}
-
-function countup(number: number) {
-  return number + 1
-}
-
-/* dateのフォーマット整える */
-function dateFormat(date: string) {
-  return format(new Date(date), 'M/d')
-}
-
-function test() {
-  console.log(props.timetables)
 }
 </script>
 

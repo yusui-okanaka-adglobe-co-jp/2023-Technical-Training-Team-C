@@ -60,6 +60,7 @@
 <script lang="ts" setup>
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format } from 'date-fns'
+
 const props = defineProps({
   timetables: {
     type: Array as () => Timetable[],
@@ -77,6 +78,7 @@ const props = defineProps({
 })
 /* 6回回す用　*/
 const blankCell = 6
+
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
   switch (dayOfWeek) {
@@ -97,6 +99,7 @@ function dayOfWeekChangeString(dayOfWeek: number) {
   }
   return ''
 }
+
 /* dateのフォーマット整える */
 function dateFormat(date: string) {
   return format(new Date(date), 'M/d')

@@ -6,7 +6,6 @@
         id="auto"
         v-model="date"
         locale="jp"
-        :format="format"
         :min-date="minDate"
         :max-date="maxDate"
         prevent-min-max-navigation
@@ -22,13 +21,13 @@
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { ref } from 'vue'
-import { addMonths, getMonth, getYear, subMonths } from 'date-fns'
+import { getYear } from 'date-fns'
 import ModalBase from './modal-base.vue'
 
 const date = ref()
 
-const minDate = computed(() => subMonths(new Date(2015, 0, 5), 0))
-const maxDate = computed(() => addMonths(new Date(getYear(new Date()) + 1, 11, 25), 0))
+const minDate = computed(() => new Date(2015, 0, 5))
+const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
 
 const props = defineProps({
   isShown: false,
@@ -50,6 +49,6 @@ watch(props.isShown, () => {
 
 <style lang="scss" scoped>
 div {
-  margin: 6px 3px;
+  margin: 6px 2.5px;
 }
 </style>

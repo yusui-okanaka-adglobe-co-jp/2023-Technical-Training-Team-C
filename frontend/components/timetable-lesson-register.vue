@@ -2,15 +2,16 @@
   <td class="lesson-cell horizontal-writing">
     <div class="cell">
       <div class="register-buttons">
-        <button class="register-modal-button" @click="onclick">登</button>
+        <button class="register-modal-button font-size-m" @click="onclick">登</button>
         <subject-teacher-register-modal
           :is-shown="isShown"
           @submit="submit"
+          v-model="SuBject"
           :dayOfWeek="props.dayOfWeek"
           :period="props.period"
         >
         </subject-teacher-register-modal>
-        <button class="delete-button" @click="deleteclick">消</button>
+        <button class="delete-button font-size-m" @click="deleteClass">消</button>
       </div>
       <div>
         <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ updateSubject }}</p>
@@ -21,7 +22,10 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { Submit } from './subject-teacher-register-modal.vue'
+
+const SuBject = ref('')
 
 const isShown = ref(false)
 
@@ -29,7 +33,7 @@ function onclick() {
   isShown.value = !isShown.value
 }
 
-function deleteclick() {
+function deleteClass() {
   updateSubject.value = ''
   updateTeacher.value = ''
 }
@@ -90,7 +94,6 @@ function fontSizeClass(msg: string) {
 @import '../assets/scss/timetable.scss';
 
 .cell {
-  // position: relative;
   display: flex;
   width: 100%;
   height: 100%;
@@ -104,12 +107,10 @@ function fontSizeClass(msg: string) {
 }
 
 .register-modal-button {
-  font-size: 20px;
   background: #03ff36;
 }
 
 .delete-button {
-  font-size: 20px;
   background: #fc01ca;
 }
 </style>

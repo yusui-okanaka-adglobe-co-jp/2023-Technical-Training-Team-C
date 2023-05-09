@@ -1,20 +1,38 @@
 <template>
   <modal-base class="modal" :is-shown="props.isShown">
     <div>
-      <div class="register-base">
+      <div class="register-base board-color">
         <form class="form-example" @submit="registerform">
-          <div class="register-modal-header">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
-          <div class="subject-form">
+          <div class="register-modal-header font-size-l">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
+          <div class="subject-form font-size-l">
             <label for="subject">科目：</label>
-            <input type="text" class="subject-input" name="subject" id="subject" maxlength="10" required />
+            <input
+              type="text"
+              v-model="subject"
+              class="subject-input"
+              name="subject"
+              id="subject"
+              maxlength="10"
+              required
+            />
           </div>
-          <div class="teacher-form">
+          <div class="teacher-form font-size-l">
             <label for="teacher">教師：</label>
-            <input type="text" class="teacher-input" name="teacher" id="teacher" maxlength="10" required />
+            <input
+              type="text"
+              v-model="teacher"
+              class="teacher-input"
+              name="teacher"
+              id="teacher"
+              maxlength="10"
+              required
+            />
           </div>
 
-          <button class="usual-button cancel-button" @click.stop="isShown = false">キャンセル</button>
-          <button class="unusual-button register-button">登録</button>
+          <button class="usual-button cancel-button font-size-l main-color" @click.stop="isShown = false">
+            キャンセル
+          </button>
+          <button class="unusual-button register-button font-size-l">登録</button>
         </form>
       </div>
     </div>
@@ -24,6 +42,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import ModalBase from './modal-base.vue'
+
+const subject = ref('')
+const teacher = ref('')
 
 export interface Submit {
   subject: string
@@ -69,19 +90,15 @@ div {
 }
 
 .register-base {
-  background-color: white;
   width: 600px;
   height: 450px;
 }
 
 .register-modal-header {
-  font-size: 24px;
   text-align: center;
   padding-top: 12px;
 }
 .cancel-button {
-  color: #5160ae;
-  font-size: 24px;
   text-align: center;
   margin-left: 64px;
   margin-top: 104px;
@@ -89,31 +106,21 @@ div {
 
 .register-button {
   color: white;
-  font-size: 24px;
   text-align: center;
   margin-left: 152px;
 }
 
 .subject-form {
-  font-size: 24px;
   position: relative;
   margin-left: 108px;
   margin-top: 100px;
 }
 
 .teacher-form {
-  font-size: 24px;
   position: relative;
   margin-left: 108px;
   margin-top: 40px;
 }
-.cancel-register-form {
-  font-size: 24px;
-  padding: 10px 20px;
-  margin: 0 10px;
-  border-radius: 10px;
-}
-
 .subject-input {
   border: 1px solid black;
 }
