@@ -7,6 +7,7 @@ use App\Http\Controllers\MockController;
 use App\Http\Controllers\PostTeacherController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,7 @@ Route::post("/sample", function (Request $request) {
 
 // モック用
 Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
-Route::post('/timetablesCreate', [MockController::class, 'createTimetables']);
+Route::post('/timetablesCreate', [RegisterController::class, 'createTimetables']);
 // Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
 
 // 本番用(モック用はコメントアウトにする)
