@@ -6,7 +6,6 @@
         <subject-teacher-register-modal
           :is-shown="isShown"
           @submit="submit"
-          v-model="SuBject"
           :dayOfWeek="props.dayOfWeek"
           :period="props.period"
         >
