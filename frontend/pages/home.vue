@@ -154,6 +154,7 @@ const timetables2: Timetable[] = [
     date: '2023-04-22',
     dayOfWeek: 6,
     isHoliday: true,
+
     holidayTitle: '天皇誕生日 振替休日',
   },
   {

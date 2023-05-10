@@ -65,7 +65,6 @@ function useState() {
   useTimetables().lessons.value = timetables
     .map((timetable) =>
       timetable.lessons
-        .filter((lesson) => lesson.subject.length || lesson.teacher.length)
         .map((lesson, index) => {
           return {
             subject: lesson.subject,
@@ -74,6 +73,7 @@ function useState() {
             dayOfWeek: timetable.dayOfWeek,
           }
         })
+        .filter((lesson) => lesson.subject.length || lesson.teacher.length)
     )
     .flat()
   console.log(useTimetables().lessons.value)
@@ -92,8 +92,6 @@ function useState() {
 const today = new Date()
 console.log(today)
 
-// import { TimetableComponentRegister } from '~~/.nuxt/components'
-// import TimetableComponentRegister from '~~/components/timetable-component-register.vue'
 /* 検証用オブジェクト */
 const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => ({
   dayOfWeek: value,
@@ -102,18 +100,17 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => 
     teacher: '',
   })),
 }))
+
+definePageMeta({
+  middleware: 'auth',
+})
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/timetable.scss';
-
-$background-color: #eaeaea;
-
 input {
   margin-top: 40px;
   width: 224px;
   height: 40px;
-  // padding-right: 160px;
 }
 
 .date-set {
