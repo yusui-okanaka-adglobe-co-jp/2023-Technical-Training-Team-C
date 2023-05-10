@@ -31,7 +31,6 @@ function doNothing() {}
 
 .modal-content {
   background-color: #5160ae;
-  width: 270px;
   height: auto;
 }
 </style>

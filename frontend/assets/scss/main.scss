@@ -60,7 +60,6 @@ body {
 .font-size-xl {
   font-family: $font;
   font-weight: $font-weight;
-  font-size: 36px;
 }
 
 .white {
@@ -72,11 +71,28 @@ body {
 }
 
 .usual-button {
-  background-color: white;
+  background-color: $board-color;
+  color: $main-color;
   width: 160px;
   height: 60px;
   border-radius: 10px;
-  border: solid 3px #5160ae;
+  border: solid 3px $main-color;
   margin-top: 24px;
   margin-left: 20px;
+}
+
+.unusual-button {
+  background-color: $main-color;
+  color: $board-color;
+  width: 160px;
+  height: 60px;
+  border-radius: 10px;
+  border: solid 3px $main-color;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+@media screen and (min-width: 768px) {
+  .font-size-xl {
+    font-size: 36px;
+  }
 }
