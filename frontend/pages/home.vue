@@ -36,9 +36,14 @@
 </template>
 
 <script lang="ts" setup>
+// 認証用middleware
+definePageMeta({
+  middleware: 'auth',
+})
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format, parse } from 'date-fns'
 
+const config = useRuntimeConfig()
 const route = useRoute()
 const timetables = ref<Timetable[]>([])
 //calendar用
@@ -269,7 +274,6 @@ async function getTimetableData() {
     }
   }
   displayDate = parse(view.value, 'yyyy-MM-dd', new Date())
-  const config = useRuntimeConfig()
   try {
     const { data: response } = await useFetch<Timetable[]>('/api/timetablesAcquire/', {
       baseURL: config.public.apiUrl,
@@ -324,8 +328,15 @@ function goToStudentPage() {
   window.open('/studentHome', '_blank', 'noreferrer')
 }
 
-//ログアウト処理 ログインAPIが出来次第記述
-function logout() {}
+//ログアウト処理
+async function logout() {
+  const router = useRouter()
+  await useFetch('/api/logout', {
+    baseURL: config.public.apiUrl,
+    credentials: 'include',
+  })
+  return router.push('/teachersLogin')
+}
 
 //与えられた日付から月曜日を求める
 function getMonday(date: Date) {
