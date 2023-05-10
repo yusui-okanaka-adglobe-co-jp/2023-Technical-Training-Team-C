@@ -72,11 +72,23 @@ body {
 }
 
 .usual-button {
-  background-color: white;
+  background-color: $board-color;
+  color: $main-color;
   width: 160px;
   height: 60px;
   border-radius: 10px;
-  border: solid 3px #5160ae;
+  border: solid 3px $main-color;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+
+.unusual-button {
+  background-color: $main-color;
+  color: $board-color;
+  width: 160px;
+  height: 60px;
+  border-radius: 10px;
+  border: solid 3px $main-color;
   margin-top: 24px;
   margin-left: 20px;
 }
