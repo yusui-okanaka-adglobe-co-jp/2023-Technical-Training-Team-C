@@ -37,7 +37,7 @@
               <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dow[dayOfWeek - 1])"></TimetableDayOfWeek>
               <template v-for="period in periodCount" :key="period">
                 <template v-if="lessonExist(period, dayOfWeek)">
-                  <!--データある時-->
+                  <!--データがある時-->
                   <TimetableLesson
                     :is-holiday="false"
                     :subject="getSubject(period, dayOfWeek)"
@@ -47,7 +47,7 @@
 
                 <template v-else>
                   <TimetableLesson :is-holiday="false" />
-                  <!--データないとき-->
+                  <!--データがないとき-->
                 </template>
               </template>
             </tr>
@@ -65,7 +65,7 @@
               </button>
             </div>
             <div class="bottom-right-button">
-              <button class="usual-button button-font-color font-size-l">
+              <button class="important-button important-button-font-color font-size-l" @click="registerTimetables">
                 <div>更新確定</div>
               </button>
             </div>
@@ -77,7 +77,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format, parse } from 'date-fns'
 
 /* 6回回す用　*/
@@ -92,151 +91,7 @@ let teacherData: string = ''
 const dow = [1, 2, 3, 4, 5, 6, 0]
 
 /* 検証用オブジェクト */
-const timetables2: Timetable[] = [
-  {
-    date: '2023-04-17',
-    dayOfWeek: 1,
-    isHoliday: false,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '中村',
-      },
-    ],
-  },
-  {
-    date: '2023-04-18',
-    dayOfWeek: 2,
-    isHoliday: false,
-    lessons: [
-      {
-        subject: '数学数学数学',
-        teacher: '鈴木',
-      },
-      {
-        subject: '国語国語国語',
-        teacher: '佐藤佐藤',
-      },
-      {
-        subject: '理科理科理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会社会社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '体育体育体育',
-        teacher: '大林大林大林大林大林',
-      },
-      {
-        subject: '',
-        teacher: '',
-      },
-    ],
-  },
-  {
-    date: '2023-04-19',
-    dayOfWeek: 3,
-    isHoliday: false,
-    lessons: [
-      {
-        subject: '国語国語国語国語国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学数学数学数学数学',
-        teacher: '鈴木鈴木',
-      },
-      {
-        subject: '理科理科理科理科理科',
-        teacher: '高橋高橋高橋',
-      },
-      {
-        subject: '社会社会社会社会社会',
-        teacher: '田中田中田中田中',
-      },
-      {
-        subject: '音楽音楽音楽音楽音楽',
-        teacher: '伊藤伊藤伊藤伊藤伊藤',
-      },
-      {
-        subject: '',
-        teacher: '',
-      },
-    ],
-  },
-  {
-    date: '2023-04-20',
-    dayOfWeek: 4,
-    isHoliday: true,
-    holidayTitle: '○○の日',
-  },
-  {
-    date: '2023-04-21',
-    dayOfWeek: 5,
-    isHoliday: true,
-    holidayTitle: '○○○○○の日',
-  },
-  {
-    date: '2023-04-22',
-    dayOfWeek: 6,
-    isHoliday: true,
 
-    holidayTitle: '天皇誕生日 振替休日',
-  },
-  {
-    date: '2023-04-23',
-    dayOfWeek: 0,
-    isHoliday: false,
-    lessons: [
-      {
-        subject: '国語',
-        teacher: '佐藤',
-      },
-      {
-        subject: '数学',
-        teacher: '鈴木',
-      },
-      {
-        subject: '理科',
-        teacher: '高橋',
-      },
-      {
-        subject: '社会',
-        teacher: '田中',
-      },
-      {
-        subject: '音楽',
-        teacher: '伊藤',
-      },
-      {
-        subject: '道徳',
-        teacher: '斎藤',
-      },
-    ],
-  },
-]
 const lessons = [
   {
     subject: '数学',
@@ -274,6 +129,23 @@ function goToStudentPage() {
 //ログアウト処理 ログインAPIが出来次第記述
 function logout() {}
 
+function registerTimetables() {
+  const config = useRuntimeConfig()
+  //登録処理
+  try {
+    const { data: response } = useFetch('/api/timetablesCreate/', {
+      method: 'POST',
+      body: ,
+      baseURL: config.public.apiUrl,
+    })
+
+    if (response.value != null) {
+      timetables.value = response.value
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
   switch (dayOfWeek) {
@@ -372,5 +244,19 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 .bottom-right-button {
   position: absolute;
   right: 24px;
+}
+.important-button {
+  background-color: #5160ae;
+  width: 160px;
+  height: 60px;
+  border-radius: 10px;
+  border: solid 3px #5160ae;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+.important-button-font-color {
+  color: #ffffff;
+}
+@media screen and (max-width: 1366px) {
 }
 </style>
