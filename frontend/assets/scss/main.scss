@@ -60,7 +60,6 @@ body {
 .font-size-xl {
   font-family: $font;
   font-weight: $font-weight;
-  font-size: 36px;
 }
 
 .white {
@@ -79,4 +78,9 @@ body {
   border: solid 3px #5160ae;
   margin-top: 24px;
   margin-left: 20px;
+}
+@media screen and (min-width: 768px) {
+  .font-size-xl {
+    font-size: 36px;
+  }
 }

@@ -15,13 +15,28 @@ const props = defineProps({
 
 <style scoped lang="scss">
 header {
+  width: 100%;
   height: 100px;
   background-color: #89929b;
-  h1 {
-    font-style: normal;
-  }
   div {
     padding: 15px 0px 15px 100px;
+    h1 {
+      font-style: normal;
+    }
+  }
+}
+
+// モバイル用スタイル
+@media only screen and (max-width: 767px) {
+  header {
+    height: auto;
+    div {
+      margin: 0 auto;
+      padding: 15px 0px 15px 0px;
+      h1 {
+        text-align: center;
+      }
+    }
   }
 }
 </style>
