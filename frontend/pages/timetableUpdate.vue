@@ -5,7 +5,7 @@
     <div class="time-area">
       <div class="time-area-text">
         <div class="font-size-xl">この時間割を登録しますか？</div>
-        <div class="time-area-text-margin font-size-l">{{ time.start }} ~ {{ time.end }}</div>
+        <div class="time-area-text-margin font-size-l">{{ time?.start }} ~ {{ time?.end }}</div>
       </div>
     </div>
     <div class="main">
@@ -17,21 +17,10 @@
         </button>
         <button class="left-button button-font-color usual-button font-size-l" @click="logout">ログアウト</button>
       </div>
-      <!--時間割-->
+      <!--時間割エリア-->
       <div class="right-area">
-        <!-- <div v-show="loadingDisplay"> -->
         <table class="timetable-update">
-          <!-- <th class="vertical-head horizontal-writing"></th> -->
-          <!-- <th> -->
-          <!--時限-->
-          <!-- <template v-for="periodNumber of blankCell" :key="periodNumber">
-                <TimetablePeriod :period="periodNumber"></TimetablePeriod>
-              </template> -->
-          <!-- 曜日のループ -->
-          <!-- </th> -->
-
           <!--時間割-->
-          <!-- <template v-for="period in periodCount" :key="period"> -->
           <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
             <tr>
               <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dow[dayOfWeek - 1])"></TimetableDayOfWeek>
@@ -46,8 +35,8 @@
                 </template>
 
                 <template v-else>
-                  <TimetableLesson :is-holiday="false" />
                   <!--データがないとき-->
+                  <TimetableLesson :is-holiday="false" />
                 </template>
               </template>
             </tr>
@@ -77,53 +66,35 @@
 </template>
 
 <script lang="ts" setup>
-import { format, parse } from 'date-fns'
 import { useTimetables } from '~~/composables/useTimetables'
+import { messagesResponse } from '~~/types/response/messagesResponse'
 
 definePageMeta({
   middleware: 'auth',
 })
 
-/* 6回回す用　*/
-const blankCell = 6
-
+/* 固定の変数　*/
 const periodCount: number = 6
 const dayOfWeekCount = 7
 
 let subjectData: string = ''
 let teacherData: string = ''
 
-const dow = [1, 2, 3, 4, 5, 6, 0]
+const config = useRuntimeConfig()
 
-set
+const { time, lessons } = useTimetables()
 
-/* 検証用オブジェクト */
+const timetableInfo = lessons.value
 
-const lessons = [
-  {
-    subject: '数学',
-    teacher: '佐々木XXX',
-    dayOfWeek: 1,
-    period: 2,
-  },
-  {
-    subject: '家庭科',
-    teacher: '岩崎XXX',
-    dayOfWeek: 1,
-    period: 5,
-  },
-  {
-    subject: '音楽',
-    teacher: '青木XXX',
-    dayOfWeek: 4,
-    period: 5,
-  },
-]
-const time = {
-  start: '2023-04-01',
-  end: '2023-07-31',
+//POST用データ
+const timetablesData = {
+  time: time.value,
+  lessons: lessons.value,
 }
 
+const dow = [1, 2, 3, 4, 5, 6, 0]
+
+//ホーム画面遷移
 function goToHome() {
   navigateTo({ path: '/home' })
 }
@@ -133,27 +104,48 @@ function goToStudentPage() {
   window.open('/studentHome', '_blank', 'noreferrer')
 }
 
-//ログアウト処理 ログインAPIが出来次第記述
-function logout() {}
-
-function registerTimetables() {
-  const config = useRuntimeConfig()
-
-  //登録処理
-  // try {
-  //   const { data: response } = useFetch('/api/timetablesCreate/', {
-  //     method: 'POST',
-  //     body: formData,
-  //     baseURL: config.public.apiUrl,
-  //   })
-
-  //   if (response.value != null) {
-  //     timetables.value = response.value
-  //   }
-  // } catch (e) {
-  //   console.error(e)
-  // }
+//ログアウト処理
+async function logout() {
+  const router = useRouter()
+  await useFetch('/api/logout', {
+    baseURL: config.public.apiUrl,
+    credentials: 'include',
+  })
+  return router.push('/teachersLogin')
 }
+
+async function registerTimetables() {
+  //登録処理
+  try {
+    console.log(timetablesData)
+    const response = await $fetch<messagesResponse>('/api/timetablesCreate/', {
+      method: 'POST',
+      body: timetablesData,
+      baseURL: config.public.apiUrl,
+    })
+
+    if (response.messages[0] === 'success') {
+      // response:success
+      alert('登録に成功しました')
+
+      navigateTo({ path: '/home' })
+      return
+    } else if (response.messages[0] === 'failure') {
+      // response:failure
+      alert('登録に失敗しました')
+    } else {
+      //validationerror
+      let errorMessage = []
+      for (let index = 1; index < response.messages.length; index++) {
+        errorMessage.push('\n' + response.messages[index])
+      }
+      alert(errorMessage)
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
   switch (dayOfWeek) {
@@ -176,13 +168,15 @@ function dayOfWeekChangeString(dayOfWeek: number) {
 }
 //存在するか調べる
 function lessonExist(periodNumber: number, dayOfWeekNumber: number) {
-  return lessons.filter(({ period }) => period === periodNumber).some(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
+  return timetableInfo
+    .filter(({ period }) => period === periodNumber)
+    .some(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
 }
 
 //教科名取得
 function getSubject(periodNumber: number, dayOfWeekNumber: number) {
   subjectData = String(
-    lessons.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
+    timetableInfo.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
       ?.subject
   )
   return subjectData
@@ -190,7 +184,7 @@ function getSubject(periodNumber: number, dayOfWeekNumber: number) {
 //教師名取得
 function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   teacherData = String(
-    lessons.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
+    timetableInfo.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
       ?.teacher
   )
   return teacherData
@@ -264,7 +258,5 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 }
 .important-button-font-color {
   color: #ffffff;
-}
-@media screen and (max-width: 1366px) {
 }
 </style>

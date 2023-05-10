@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { TeachersLoginResponse } from '~~/types/response/TeachersLoginResponse'
+import { messagesResponse } from '~~/types/response/messagesResponse'
 // パスワード表示切り替え部分
 const isChecked = ref(false)
 const passwordType = computed(function () {
@@ -83,15 +83,15 @@ const onClick = async () => {
   // バリデーションチェック
   isValidEmail.value = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
   isValidPass.value = /^[a-zA-Z\d]{8,100}$/.test(formData.password)
-  
+
   if (isValidEmail.value && isValidPass.value) {
     // 入力時のバリデーションチェック成功
     // api取得の処理
     try {
-      const response = await $fetch<TeachersLoginResponse>('/api/teachersLogin', {
+      const response = await $fetch<messagesResponse>('/api/teachersLogin', {
         baseURL: config.public.apiUrl,
         method: 'POST',
-        credentials: "include",
+        credentials: 'include',
         body: formData,
       })
       if (response.messages[0] === 'success') {
@@ -99,7 +99,6 @@ const onClick = async () => {
         // ページ遷移の処理
         route.push('/home')
         return
-
       } else {
         // response:failure
         boxColor.value = 'errbox'
