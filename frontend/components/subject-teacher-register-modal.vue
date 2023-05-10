@@ -29,10 +29,12 @@
             />
           </div>
 
-          <button class="usual-button cancel-button font-size-l main-color" @click.stop="isShown = false">
-            キャンセル
+          <button class="usual-button cancel-button" @click.stop="isShown = false">
+            <div class="font-size-l">キャンセル</div>
           </button>
-          <button class="unusual-button register-button font-size-l">登録</button>
+          <button class="unusual-button register-button">
+            <div class="font-size-l">登録</div>
+          </button>
         </form>
       </div>
     </div>
@@ -96,7 +98,6 @@ div {
 }
 
 .register-button {
-  color: white;
   text-align: center;
   margin-left: 152px;
 }

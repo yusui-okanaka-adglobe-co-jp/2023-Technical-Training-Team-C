@@ -73,6 +73,7 @@ body {
 
 .usual-button {
   background-color: $board-color;
+  color: $main-color;
   width: 160px;
   height: 60px;
   border-radius: 10px;
@@ -83,6 +84,7 @@ body {
 
 .unusual-button {
   background-color: $main-color;
+  color: $board-color;
   width: 160px;
   height: 60px;
   border-radius: 10px;

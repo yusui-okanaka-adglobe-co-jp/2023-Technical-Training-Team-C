@@ -3,7 +3,7 @@
     <body>
       <div class="date-set">
         <button class="usual-button start-end-date" type="button" @click="onclick">
-          <div class="dateselect">開始日終了日選択</div>
+          <div class="font-size-m">開始日終了日選択</div>
         </button>
         <label class="datetext">{{ start }}~{{ end }}</label>
         <calendar-modal-register :is-shown="isShown" @update:value="selectDate" selection-type="range">
@@ -12,29 +12,29 @@
 
       <p>
         <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
-          <div>ホーム</div>
+          <div class="font-size-l">ホーム</div>
         </button>
       </p>
 
       <p>
         <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
-          <div>生徒用画面確認</div>
+          <div class="font-size-m">生徒用画面確認</div>
         </button>
       </p>
 
       <p>
         <button class="usual-button logout" type="button" @click="() => navigateTo('/teachersLogin')">
-          <div>ログアウト</div>
+          <div class="font-size-l">ログアウト</div>
         </button>
       </p>
 
       <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
       <p>
         <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
-          <div>戻る</div>
+          <div class="font-size-l">戻る</div>
         </button>
         <button class="unusual-button timetable-update" type="button" @click="useState">
-          <div>時間割更新</div>
+          <div class="font-size-l">時間割更新</div>
         </button>
       </p>
     </body>
@@ -129,38 +129,18 @@ input {
 }
 
 .home {
-  color: #5160ae;
-  font-size: 24px;
   margin-top: 66px;
 }
 
-.student-home {
-  color: #5160ae;
-  font-size: 18px;
-}
-.logout {
-  color: #5160ae;
-  font-size: 24px;
-}
-
 .back-home {
-  color: #5160ae;
-  font-size: 24px;
   position: fixed;
   left: 320px;
   top: 888px;
 }
 .timetable-update {
-  color: white;
-  font-size: 24px;
   position: fixed;
   left: 960px;
   top: 888px;
-}
-
-.start-end-date {
-  color: #5160ae;
-  font-size: 18px;
 }
 
 // カレンダーダイアログのscss
