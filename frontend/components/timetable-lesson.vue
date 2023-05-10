@@ -22,11 +22,9 @@ const props = defineProps({
   },
 })
 /* 科目名／教師名の文字の大きさを決める */
-
 function fontSizeClass(msg: string) {
   const subjectLength = props.subject.length
   const teacherNameLength = props.teacherName.length
-
   if (msg == 'subject') {
     if (subjectLength >= 9) {
       return 'font-size-s'
