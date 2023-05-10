@@ -9,7 +9,7 @@
         :min-date="minDate"
         :max-date="maxDate"
         prevent-min-max-navigation
-        week-picker
+        :[selectionType]="''"
         inline
         auto-apply
       />
@@ -31,6 +31,11 @@ const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
 
 const props = defineProps({
   isShown: false,
+  selectionType: {
+    type: String,
+    default: () => 'week-picker',
+    validator: (value) => ['week-picker', 'range'].includes(value),
+  },
 })
 
 const emit = defineEmits()
@@ -39,7 +44,12 @@ watch(date, () => {
   if (!date.value) {
     return
   }
-  emit('update:value', date.value[0])
+  console.log(date.value)
+  if (props.selectionType === 'week-picker') {
+    emit('update:value', date.value[0])
+  } else {
+    emit('update:value', date.value)
+  }
 })
 </script>
 

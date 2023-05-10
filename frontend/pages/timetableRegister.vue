@@ -6,8 +6,7 @@
           <div class="font-size-m">開始日終了日選択</div>
         </button>
         <label class="datetext">{{ start }}~{{ end }}</label>
-        <calendar-modal-register :is-shown="isShown" @update:value="selectDate" selection-type="range">
-        </calendar-modal-register>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" selection-type="range"> </calendar-modal>
       </div>
 
       <p>
