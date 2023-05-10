@@ -107,8 +107,6 @@ definePageMeta({
 </script>
 
 <style lang="scss" scoped>
-$background-color: #eaeaea;
-
 input {
   margin-top: 40px;
   width: 224px;
