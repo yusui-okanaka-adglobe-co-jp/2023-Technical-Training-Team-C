@@ -37,7 +37,6 @@ function fontSizeClass(msg: string) {
     }
     return 'font-size-xl'
   }
-
   if (teacherNameLength >= 9) {
     return 'font-size-s'
   }

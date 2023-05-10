@@ -78,6 +78,11 @@
 
 <script lang="ts" setup>
 import { format, parse } from 'date-fns'
+import { useTimetables } from '~~/composables/useTimetables'
+
+definePageMeta({
+  middleware: 'auth',
+})
 
 /* 6回回す用　*/
 const blankCell = 6
@@ -89,6 +94,8 @@ let subjectData: string = ''
 let teacherData: string = ''
 
 const dow = [1, 2, 3, 4, 5, 6, 0]
+
+set
 
 /* 検証用オブジェクト */
 
@@ -131,20 +138,21 @@ function logout() {}
 
 function registerTimetables() {
   const config = useRuntimeConfig()
-  //登録処理
-  try {
-    const { data: response } = useFetch('/api/timetablesCreate/', {
-      method: 'POST',
-      body: ,
-      baseURL: config.public.apiUrl,
-    })
 
-    if (response.value != null) {
-      timetables.value = response.value
-    }
-  } catch (e) {
-    console.error(e)
-  }
+  //登録処理
+  // try {
+  //   const { data: response } = useFetch('/api/timetablesCreate/', {
+  //     method: 'POST',
+  //     body: formData,
+  //     baseURL: config.public.apiUrl,
+  //   })
+
+  //   if (response.value != null) {
+  //     timetables.value = response.value
+  //   }
+  // } catch (e) {
+  //   console.error(e)
+  // }
 }
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
