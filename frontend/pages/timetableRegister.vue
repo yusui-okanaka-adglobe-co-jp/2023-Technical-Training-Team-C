@@ -65,7 +65,6 @@ function useState() {
   useTimetables().lessons.value = timetables
     .map((timetable) =>
       timetable.lessons
-        .filter((lesson) => lesson.subject.length || lesson.teacher.length)
         .map((lesson, index) => {
           return {
             subject: lesson.subject,
@@ -74,6 +73,7 @@ function useState() {
             dayOfWeek: timetable.dayOfWeek,
           }
         })
+        .filter((lesson) => lesson.subject.length || lesson.teacher.length)
     )
     .flat()
   console.log(useTimetables().lessons.value)
