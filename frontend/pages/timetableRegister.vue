@@ -100,6 +100,10 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => 
     teacher: '',
   })),
 }))
+
+definePageMeta({
+  middleware: 'auth',
+})
 </script>
 
 <style lang="scss" scoped>
