@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(TimetableSeeder::class);
+        $this->call(TeacherSeeder::class);
     }
 }

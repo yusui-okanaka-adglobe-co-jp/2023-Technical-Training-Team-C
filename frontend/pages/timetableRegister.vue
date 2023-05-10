@@ -25,6 +25,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth'
+})
 import '@/assets/css/common.css'
 </script>
 

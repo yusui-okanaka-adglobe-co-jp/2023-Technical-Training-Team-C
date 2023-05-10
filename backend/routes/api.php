@@ -5,6 +5,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MockController;
+use App\Http\Controllers\PostTeacherController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,13 @@ Route::post("/sample", function (Request $request) {
 // モック用
 Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
 Route::post('/timetablesCreate', [MockController::class, 'createTimetables']);
-Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
+
 
 Route::get('/timetablesAcquire', [GetTimetablesAcquireController::class, 'getTimetables']);
+
+// Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
+
+// 本番用(モック用はコメントアウトにする)
+Route::post('/teachersLogin', PostTeacherController::class);
+Route::get('/auth', AuthController::class);
+Route::get('/logout', LogoutController::class);
