@@ -23,7 +23,9 @@
           <!--時間割-->
           <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
             <tr>
-              <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dow[dayOfWeek - 1])"></TimetableDayOfWeek>
+              <TimetableDayOfWeek
+                :day-of-week="dayOfWeekChangeString(dayOfWeekNumber[dayOfWeek - 1])"
+              ></TimetableDayOfWeek>
               <template v-for="period in periodCount" :key="period">
                 <template v-if="lessonExist(period, dayOfWeek)">
                   <!--データがある時-->
@@ -68,12 +70,12 @@
 <script lang="ts" setup>
 import { useTimetables } from '~~/composables/useTimetables'
 import { messagesResponse } from '~~/types/response/messagesResponse'
+import { DAY_OF_WEEK } from '~~/util/constants'
+import { commonLogout } from '~~/util/logout'
 
 definePageMeta({
   middleware: 'auth',
 })
-
-//登録画面を介さずに来たら登録画面に飛ばす
 
 /* 固定の変数　*/
 const periodCount: number = 6
@@ -86,7 +88,6 @@ const config = useRuntimeConfig()
 
 const { time, lessons } = useTimetables()
 
-//
 const timetableInfo = lessons.value
 
 useTimetablesExists()
@@ -103,7 +104,8 @@ const timetablesData = {
   lessons: lessons.value,
 }
 
-const dow = [1, 2, 3, 4, 5, 6, 0]
+//曜日用
+const dayOfWeekNumber = Object.values(DAY_OF_WEEK)
 
 //ホーム画面遷移
 function goToHome() {
@@ -118,10 +120,7 @@ function goToStudentPage() {
 //ログアウト処理
 async function logout() {
   const router = useRouter()
-  await useFetch('/api/logout', {
-    baseURL: config.public.apiUrl,
-    credentials: 'include',
-  })
+  commonLogout()
   return router.push('/teachersLogin')
 }
 

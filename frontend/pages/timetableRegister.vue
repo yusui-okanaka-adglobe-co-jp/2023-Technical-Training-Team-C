@@ -22,7 +22,7 @@
       </p>
 
       <p>
-        <button class="usual-button logout" type="button" @click="() => navigateTo('/teachersLogin')">
+        <button class="usual-button logout" type="button" @click="logout">
           <div class="font-size-l">ログアウト</div>
         </button>
       </p>
@@ -45,9 +45,15 @@ import { format } from 'date-fns'
 import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
+import { commonLogout } from '~~/util/logout'
 
 const isShown = ref(false)
 
+async function logout() {
+  const router = useRouter()
+  commonLogout()
+  return router.push('/teachersLogin')
+}
 function onclick() {
   isShown.value = !isShown.value
 }

@@ -34,10 +34,11 @@
 <script lang="ts" setup>
 // 認証用middleware
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format, parse } from 'date-fns'
+import { commonLogout } from '~~/util/logout'
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -317,10 +318,7 @@ function getMonday(date: Date) {
 //ログアウト処理
 async function logout() {
   const router = useRouter()
-  await useFetch('/api/logout', {
-    baseURL: config.public.apiUrl,
-    credentials: 'include',
-  })
+  commonLogout()
   return router.push('/teachersLogin')
 }
 
