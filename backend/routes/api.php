@@ -38,11 +38,6 @@ Route::post("/sample", function (Request $request) {
 Route::post('/timetablesCreate', [MockController::class, 'createTimetables']);
 
 
-Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
-
-Route::get('/timetablesAcquire', [GetTimetablesAcquireController::class, 'getTimetables']);
-
-
 // Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
 
 Route::get('/timetablesAcquire', [GetTimetablesAcquireController::class, 'getTimetables']);
