@@ -22,7 +22,7 @@
       </p>
 
       <p>
-        <button class="usual-button logout" type="button" @click="logout">
+        <button class="usual-button logout" type="button" @click="commonLogout">
           <div class="font-size-l">ログアウト</div>
         </button>
       </p>
@@ -49,11 +49,6 @@ import { commonLogout } from '~~/util/logout'
 
 const isShown = ref(false)
 
-async function logout() {
-  const router = useRouter()
-  commonLogout()
-  return router.push('/teachersLogin')
-}
 function onclick() {
   isShown.value = !isShown.value
 }

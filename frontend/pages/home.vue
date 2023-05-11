@@ -18,7 +18,7 @@
           <button>日付選択</button>
           <button @click="goToRegisterPage">時間割登録</button>
           <button @click="goToStudentPage">生徒用画面確認</button>
-          <button @click="logout">ログアウト</button>
+          <button @click="commonLogout">ログアウト</button>
         </div>
         <!--時間割-->
         <div>
@@ -313,13 +313,6 @@ function getMonday(date: Date) {
   }
   const thisWeekMonday = format(date, 'yyyy-MM-dd')
   return thisWeekMonday
-}
-
-//ログアウト処理
-async function logout() {
-  const router = useRouter()
-  commonLogout()
-  return router.push('/teachersLogin')
 }
 
 //パラメータの監視。変化があればリロード

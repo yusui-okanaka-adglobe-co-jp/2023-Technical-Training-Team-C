@@ -15,7 +15,9 @@
         <button class="left-button button-font-color usual-button font-size-m" @click="goToStudentPage">
           生徒用画面確認
         </button>
-        <button class="left-button button-font-color usual-button font-size-l" @click="logout">ログアウト</button>
+        <button class="left-button button-font-color usual-button font-size-l" @click="commonLogout()">
+          ログアウト
+        </button>
       </div>
       <!--時間割エリア-->
       <div class="right-area">
@@ -117,13 +119,6 @@ function goToStudentPage() {
   window.open('/studentHome', '_blank', 'noreferrer')
 }
 
-//ログアウト処理
-async function logout() {
-  const router = useRouter()
-  commonLogout()
-  return router.push('/teachersLogin')
-}
-
 async function registerTimetables() {
   //登録処理
   try {
@@ -149,11 +144,7 @@ async function registerTimetables() {
       alert('登録に失敗しました')
     } else {
       //validationerror
-      let errorMessage = []
-      for (let index = 1; index < response.messages.length; index++) {
-        errorMessage.push('\n' + response.messages[index])
-      }
-      alert(errorMessage)
+      alert(response.messages.slice(1).join('\n'))
     }
   } catch (e) {
     console.error(e)
