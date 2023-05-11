@@ -19,8 +19,6 @@ class RegisterController extends Controller
         $start = $request->input('time.start');
         $end = $request->input('time.end');
         $lessons = $request->collect('lessons');
-        // return response()->json(['lessons[0]' => $lessons[0]['subject']]);
-        // return response()->json(['dayOfWeek' => $dayOfWeek]);
 
         foreach ($lessons as $i => $class) {
             $post = new Timetable();
@@ -36,17 +34,24 @@ class RegisterController extends Controller
             $post->teacher_name = $teacher;
             $post->save();
         }
+        if ($start && $end && $lessons) {
+            $message = [
+                'messages' => [
+                    'success'
+                    // その他のパターン例
+                    // 'failure'
+                    // 'validationError',
+                    // '教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。'
+                ]
+            ];
+        } else {
 
-        $message = [
-            'messages' => [
-                'success'
-                // その他のパターン例
-                // 'failure'
-                // 'validationError',
-                // '教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。'
-            ]
-        ];
-
+            $message = [
+                'messages' => [
+                    'failure'
+                ]
+            ];
+        }
         return Response::json($message);
     }
 }
