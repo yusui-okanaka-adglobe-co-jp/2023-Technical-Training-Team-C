@@ -73,6 +73,8 @@ definePageMeta({
   middleware: 'auth',
 })
 
+//登録画面を介さずに来たら登録画面に飛ばす
+
 /* 固定の変数　*/
 const periodCount: number = 6
 const dayOfWeekCount = 7
@@ -84,7 +86,16 @@ const config = useRuntimeConfig()
 
 const { time, lessons } = useTimetables()
 
+//
 const timetableInfo = lessons.value
+
+useTimetablesExists()
+
+function useTimetablesExists() {
+  if (time.value == null || timetableInfo == null) {
+    navigateTo({ path: '/timetableRegister' })
+  }
+}
 
 //POST用データ
 const timetablesData = {
@@ -126,6 +137,10 @@ async function registerTimetables() {
 
     if (response.messages[0] === 'success') {
       // response:success
+
+      //useTimetables削除
+      useTimetables().clear()
+
       alert('登録に成功しました')
 
       navigateTo({ path: '/home' })
