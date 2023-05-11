@@ -16,6 +16,17 @@ class RegisterController extends Controller
     // POST ex) http://localhost:8000/api/timetablesCreate
     public function createTimetables(Request $request)
     {
+        $validated = $request->validate([
+            'time.start' => 'required|date_format:"Y-m-d"',
+            'time.end' => 'required|date_format:"Y-m-d"',
+            'lessons' => 'required|array',
+            'lessons.*.subject' => 'required_with:lessons.*.subject|string|max:10',
+            'lessons.*.teacher' => 'required_with:lessons.*.teacher|string|max:10',
+            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|min:0|max:6',
+            'lessons.*.period' => 'required_with:lessons.*.period|min:1|max:6'
+        ]);
+
+
         $start = $request->input('time.start');
         $end = $request->input('time.end');
         $lessons = $request->collect('lessons');
