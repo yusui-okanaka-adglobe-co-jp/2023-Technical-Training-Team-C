@@ -36,7 +36,7 @@ Route::post("/sample", function (Request $request) {
 // モック用
 Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
 Route::post('/timetablesCreate', [RegisterController::class, 'createTimetables']);
-// Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
+Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
 
 // 本番用(モック用はコメントアウトにする)
 Route::post('/teachersLogin', PostTeacherController::class);

@@ -16,27 +16,26 @@ class RegisterController extends Controller
     // POST ex) http://localhost:8000/api/timetablesCreate
     public function createTimetables(Request $request)
     {
-        // $timetables = new Timetable();
-        // echo $timetables;
-        // $timetables->teacher_name = '山田';
-        // echo $timetables;
-        // echo $request;
-        echo $request->time->subject;
+        $start = $request->input('time.start');
+        $end = $request->input('time.end');
+        $lessons = $request->collect('lessons');
+        // return response()->json(['lessons[0]' => $lessons[0]['subject']]);
+        // return response()->json(['dayOfWeek' => $dayOfWeek]);
 
-        // $post = new Timetable();
-        // $post->time->subject = $request->time->subject;
-        // $post->lessons = $request->lessons;
-
-        // $post->period = 3;
-        // $post->subject = '国語';
-        // $post->teacher_name = '佐藤';
-        // $post->start_date = '2023-05-05';
-        // $post->end_date = '2023-05-06';
-
-        // $post->save();
-        // echo $post;
-
-        // DB::insert('insert into reviews (day_of_week) values (:day_of_week)', $param);
+        foreach ($lessons as $i => $class) {
+            $post = new Timetable();
+            $post->start_date = $start;
+            $post->end_date = $end;
+            $dayOfWeek = $lessons[$i]['dayOfWeek'];
+            $period = $lessons[$i]['period'];
+            $subject = $lessons[$i]['subject'];
+            $teacher = $lessons[$i]['teacher'];
+            $post->day_of_week = $dayOfWeek;
+            $post->period = $period;
+            $post->subject = $subject;
+            $post->teacher_name = $teacher;
+            $post->save();
+        }
 
         $message = [
             'messages' => [
