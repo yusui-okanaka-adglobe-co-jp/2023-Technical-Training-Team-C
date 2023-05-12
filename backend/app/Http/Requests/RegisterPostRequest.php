@@ -44,12 +44,12 @@ class RegisterPostRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $errors = $validator->errors();
-        // echo $errors->time . start;
+        $errors = $validator->errors()->all();
+        $message = ['validationError'];
+        $array = array_merge($message, $errors);
         $response = response()->json([
             'messages' => [
-                'validationError',
-                $errors,
+                $array
             ]
         ], Response::HTTP_BAD_REQUEST);
         throw new HttpResponseException($response);
