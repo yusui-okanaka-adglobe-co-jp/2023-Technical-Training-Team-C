@@ -92,6 +92,12 @@ class GetTimetablesAcquireController extends Controller
                 $setData['isHoliday'] = false;
                 $setData['lessons'] = array();
             }
+            //範囲外判定
+            if ($getDateYear <= '2014' || $getDateYear >= $yearAfterNext) {
+                $setData['isunavailable'] = true;
+            } else {
+                $setData['isunavailable'] = false;
+            }
 
             array_push($timetables, $setData);
 
