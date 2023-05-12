@@ -14,7 +14,6 @@ class GetTimetablesAcquireController extends Controller
     public function getTimetables(Request $request)
     {
         $date = $request->date;
-
         //responseの用意
         $timetables = [];
         $filtered_timetables = collect();
@@ -22,13 +21,20 @@ class GetTimetablesAcquireController extends Controller
         //基準となる月曜日を変数に
         $dateMonday = $date;
 
+        //再来年取得
+        $yearAfterNext = date("Y", strtotime(today() . +2 . ' year'));
+
+
         //年だけ取得
-        $holidaydDataYear = explode("-", ($date))[0];
+        $holidayDataYear = explode("-", ($date))[0];
+        if ($holidayDataYear <= '2014' || $holidayDataYear >= $yearAfterNext) {
+            $yearHolidayDatas = [];
+        } else {
 
-        //月曜の年の祝日データを取る
-        $yearHolidayDatas = $this->getHolidays($holidaydDataYear);
-
-        list($filtered_timetables, $timetables) = $this->setDateData($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas);
+            //月曜の年の祝日データを取る
+            $yearHolidayDatas = $this->getHolidays($holidayDataYear);
+        }
+        list($filtered_timetables, $timetables) = $this->setDateData($yearAfterNext, $timetables, $dateMonday, $holidayDataYear, $filtered_timetables, $yearHolidayDatas);
 
         //rankedtimetable:created_atでsortdesc
         $ranked_timetable = $filtered_timetables->sortByDesc('created_at');
@@ -52,7 +58,7 @@ class GetTimetablesAcquireController extends Controller
     }
 
     //date関連のtimetablesの設定
-    function setDateData($timetables, $dateMonday, $holidaydDataYear, $filtered_timetables, $yearHolidayDatas)
+    function setDateData($yearAfterNext, $timetables, $dateMonday, $holidayDataYear, $filtered_timetables, $yearHolidayDatas)
     {
         //for文のループ変数の0で月曜、6で日曜を処理
         for ($loopWeekCount = 1; $loopWeekCount <= 7; $loopWeekCount++) {
@@ -62,10 +68,15 @@ class GetTimetablesAcquireController extends Controller
             $getDateYear = explode("-", ($getDate))[0];
 
             //年が異なるかの判定
-            if ($holidaydDataYear !== $getDateYear) {
-                //新しい祝日データ取得
-                $yearHolidayDatas = $this->getHolidays($getDateYear);
-                $holidaydDataYear = $getDateYear;
+            if ($holidayDataYear !== $getDateYear) {
+                //取得できない年になってないか確認
+                if ($getDateYear <= '2014' || $getDateYear >= $yearAfterNext) {
+                    $yearHolidayDatas = [];
+                } else {
+                    //新しい祝日データ取得
+                    $yearHolidayDatas = $this->getHolidays($getDateYear);
+                }
+                $holidayDataYear = $getDateYear;
             }
             //曜日設定
             $setData['dayOfWeek'] = $loopWeekCount % 7;
