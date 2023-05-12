@@ -19,14 +19,14 @@ class RegisterController extends Controller
         $end = $request->input('time.end');
         $lessons = $request->collect('lessons');
 
-        foreach ($lessons as $i => $class) {
+        foreach ($lessons as $class) {
             $post = new Timetable();
             $post->start_date = $start;
             $post->end_date = $end;
-            $dayOfWeek = $lessons[$i]['dayOfWeek'];
-            $period = $lessons[$i]['period'];
-            $subject = $lessons[$i]['subject'];
-            $teacher = $lessons[$i]['teacher'];
+            $dayOfWeek = $class['dayOfWeek'];
+            $period = $class['period'];
+            $subject = $class['subject'];
+            $teacher = $class['teacher'];
             $post->day_of_week = $dayOfWeek;
             $post->period = $period;
             $post->subject = $subject;

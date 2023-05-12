@@ -36,19 +36,18 @@ class RegisterPostRequest extends FormRequest
             'lessons' => 'required|array',
             'lessons.*.subject' => 'required_with:lessons.*.subject|string|max:10',
             'lessons.*.teacher' => 'required_with:lessons.*.teacher|string|max:10',
-            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|min:0|max:6',
-            'lessons.*.period' => 'required_with:lessons.*.period|min:1|max:6'
+            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|numeric|min:0|max:6',
+            'lessons.*.period' => 'required_with:lessons.*.period|numeric|min:1|max:6'
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
+        $errors = $validator->errors();
         $response = response()->json([
-            // 'status' => Response::HTTP_BAD_REQUEST,
-            // 'errors' => $validator->errors(),
             'messages' => [
                 'validationError',
-                $validator->errors(),
+                $errors,
             ]
         ], Response::HTTP_BAD_REQUEST);
         throw new HttpResponseException($response);
