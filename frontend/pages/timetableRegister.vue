@@ -130,12 +130,12 @@ input {
 }
 
 .back-home {
-  position: fixed;
+  position: absolute;
   left: 320px;
   top: 888px;
 }
 .timetable-update {
-  position: fixed;
+  position: absolute;
   left: 960px;
   top: 888px;
 }
