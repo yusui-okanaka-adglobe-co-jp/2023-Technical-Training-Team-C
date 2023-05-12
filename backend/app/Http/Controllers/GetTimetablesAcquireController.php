@@ -17,23 +17,41 @@ class GetTimetablesAcquireController extends Controller
         //responseの用意
         $timetables = [];
         $filtered_timetables = collect();
-
-        //基準となる月曜日を変数に
-        $dateMonday = $date;
+        //比較用
+        $oldestDate = strtotime('20141226');
+        $latestDate = strtotime(date("Y", strtotime(today() . +1 . ' year')) . '1231');
 
         //再来年取得
         $yearAfterNext = date("Y", strtotime(today() . +2 . ' year'));
 
-
         //年だけ取得
         $holidayDataYear = explode("-", ($date))[0];
+
         if ($holidayDataYear <= '2014' || $holidayDataYear >= $yearAfterNext) {
             $yearHolidayDatas = [];
-        } else {
+            //範囲外の場合
+            if (strtotime($date) < $oldestDate || $latestDate <= strtotime($date)) {
+                //今日のものに変更
+                $date = date("Y-m-d", strtotime(today()));
 
+                //月曜日判定
+                $dateDayOfWeek = date("w", strtotime(today()));
+                if ($dateDayOfWeek !== 1) {
+                    $date = date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
+                }
+                //値取り直し
+                $yearAfterNext = date("Y", strtotime(today() . +2 . ' year'));
+                $holidayDataYear = explode("-", ($date))[0];
+                $yearHolidayDatas = $this->getHolidays($holidayDataYear);
+            }
+        } else {
             //月曜の年の祝日データを取る
             $yearHolidayDatas = $this->getHolidays($holidayDataYear);
         }
+
+        //基準となる月曜日を変数に
+        $dateMonday = $date;
+
         list($filtered_timetables, $timetables) = $this->setDateData($yearAfterNext, $timetables, $dateMonday, $holidayDataYear, $filtered_timetables, $yearHolidayDatas);
 
         //rankedtimetable:created_atでsortdesc

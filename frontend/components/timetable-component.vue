@@ -15,6 +15,7 @@
         <!--日付、曜日表示-->
         <TimetableDate
           :is-holiday="timetable.isHoliday"
+          :is-unavailable="timetable.isunavailable"
           :date="dateFormat(timetable.date)"
           :holiday-title="timetable.holidayTitle"
           :day-of-week="timetable.dayOfWeek"
@@ -26,7 +27,10 @@
           <!--祝日処理-->
           <!--6回ループさせる-->
           <template v-for="holidayCell of blankCell" :key="holidayCell">
-            <TimetableLesson :is-holiday="timetable.isHoliday"></TimetableLesson>
+            <TimetableLesson
+              :is-holiday="timetable.isHoliday"
+              :is-unavailable="timetable.isunavailable"
+            ></TimetableLesson>
           </template>
         </template>
         <template v-else>
@@ -35,7 +39,12 @@
           <template v-if="timetable.dayOfWeek === 0">
             <!--日曜の処理-->
             <template v-for="lessons in timetable.lessons" :key="lessons">
-              <TimetableLesson :is-holiday="true" :subject="lessons.subject" :teacher-name="lessons.teacher">
+              <TimetableLesson
+                :is-holiday="true"
+                :is-unavailable="timetable.isunavailable"
+                :subject="lessons.subject"
+                :teacher-name="lessons.teacher"
+              >
               </TimetableLesson>
             </template>
           </template>
@@ -45,6 +54,7 @@
             <template v-for="lessons in timetable.lessons" :key="lessons">
               <TimetableLesson
                 :is-holiday="timetable.isHoliday"
+                :is-unavailable="timetable.isunavailable"
                 :subject="lessons.subject"
                 :teacher-name="lessons.teacher"
               >
@@ -70,6 +80,7 @@ const props = defineProps({
         date: '',
         dayOfWeek: 0,
         isHoliday: false,
+        isunavailable: true,
         lessons: () => [],
         holidayTitle: '',
       },

@@ -4,23 +4,31 @@
       <!-- html記述場所 -->
       <!--ボタン-->
       <div class="button-wrapper">
-            <button class="font-size-xs button-wrapper__button" @click="getThisWeekTimetables">今週の時間割</button>
-            <button class="font-size-xs button-wrapper__button" @click="openCarendar">日付選択</button>
-            <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
+        <button class="font-size-xs button-wrapper__button" @click="getThisWeekTimetables">今週の時間割</button>
+        <button class="font-size-xs button-wrapper__button" @click="openCarendar">日付選択</button>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
       </div>
-        <!--三角ボタン-->
-        <div class="triangle-wrapper">
-          <div class="triangle-wrapper__inner">
-            <!--先週-->
-            <button class="triangle-wrapper__inner__left" :disabled="displayLeftButton()" @click="getLastWeekTimetable()"></button>
-            <!--来週-->
-            <button class="triangle-wrapper__inner__right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
-          </div>
+      <!--三角ボタン-->
+      <div class="triangle-wrapper">
+        <div class="triangle-wrapper__inner">
+          <!--先週-->
+          <button
+            class="triangle-wrapper__inner__left"
+            :disabled="displayLeftButton()"
+            @click="getLastWeekTimetable()"
+          ></button>
+          <!--来週-->
+          <button
+            class="triangle-wrapper__inner__right"
+            :disabled="displayRightButton()"
+            @click="getNextWeekTimetable()"
+          ></button>
         </div>
-        <!--時間割-->
-        <div v-show="loadingDisplay" class="table-wrapper">
-          <TimetableComponent :timetables="timetables"></TimetableComponent>
-        </div>
+      </div>
+      <!--時間割-->
+      <div v-show="loadingDisplay" class="table-wrapper">
+        <TimetableComponent :timetables="timetables"></TimetableComponent>
+      </div>
     </section>
   </default-layout>
 </template>
@@ -37,7 +45,7 @@ const view = ref()
 const calendarView = view
 const loadingDisplay = ref(false)
 let displayDate: Date
-const oldestDate = parse('20150104', 'yyyyMMdd', new Date())
+const oldestDate = parse('20150101', 'yyyyMMdd', new Date())
 const nextYear = String(new Date().getFullYear() + 1)
 const latestString = nextYear + '1225'
 const latestDate = parse(latestString, 'yyyyMMdd', new Date())
@@ -140,7 +148,15 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
-
+    //クエリの日付と渡されている日付が同じか確認
+    if (response.value?.[0].date !== view.value) {
+      navigateTo({
+        path: '/home',
+        query: {
+          date: response.value?.[0].date,
+        },
+      })
+    }
     if (response.value != null) {
       timetables.value = response.value
     }
@@ -185,7 +201,7 @@ watch(
   margin: 0 auto;
 }
 // 時間割テーブル
-.table-wrapper{
+.table-wrapper {
   overflow-x: auto;
   margin-top: 16px;
 }

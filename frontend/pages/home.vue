@@ -200,7 +200,7 @@ const timetables2: Timetable[] = [
 const view = ref()
 const loadingDisplay = ref(false)
 let displayDate: Date
-const oldestDate = parse('20150104', 'yyyyMMdd', new Date())
+const oldestDate = parse('20150101', 'yyyyMMdd', new Date())
 const nextYear = String(new Date().getFullYear() + 1)
 const latestString = nextYear + '1225'
 const latestDate = parse(latestString, 'yyyyMMdd', new Date())
@@ -279,7 +279,15 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
-
+    //クエリの日付と渡されている日付が同じか確認
+    if (response.value?.[0].date !== view.value) {
+      navigateTo({
+        path: '/home',
+        query: {
+          date: response.value?.[0].date,
+        },
+      })
+    }
     if (response.value != null) {
       timetables.value = response.value
     }
@@ -352,7 +360,7 @@ function getMonday(date: Date) {
 watch(
   () => route.query,
   () => {
-    location.reload()
+    getTimetableData()
   }
 )
 </script>
