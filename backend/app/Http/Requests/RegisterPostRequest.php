@@ -41,9 +41,11 @@ class RegisterPostRequest extends FormRequest
         ];
     }
 
+
     protected function failedValidation(Validator $validator)
     {
         $errors = $validator->errors();
+        // echo $errors->time . start;
         $response = response()->json([
             'messages' => [
                 'validationError',

@@ -34,19 +34,12 @@ class RegisterController extends Controller
             $post->save();
         }
 
-        if ($start && $end && $lessons) {
-            $message = [
-                'messages' => [
-                    'success'
-                ]
-            ];
-        } else {
-            $message = [
-                'messages' => [
-                    'failure'
-                ]
-            ];
-        }
+        $message = [
+            'messages' => [
+                'success'
+            ]
+        ];
+
         return Response::json($message);
     }
 }
