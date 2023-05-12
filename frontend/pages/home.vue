@@ -133,12 +133,15 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
+    if (response.value == null) {
+      return
+    }
     //クエリの日付と渡されている日付が同じか確認
-    if (response.value?.[0].date !== view.value) {
+    if (response.value[0].date !== view.value) {
       navigateTo({
         path: '/home',
         query: {
-          date: response.value?.[0].date,
+          date: response.value[0].date,
         },
       })
     }

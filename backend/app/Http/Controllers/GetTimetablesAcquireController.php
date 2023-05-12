@@ -18,11 +18,12 @@ class GetTimetablesAcquireController extends Controller
         $timetables = [];
         $filtered_timetables = collect();
         //比較用
+        $today = today();
         $oldestDate = strtotime('20141226');
-        $latestDate = strtotime(date("Y", strtotime(today() . +1 . ' year')) . '1231');
+        $latestDate = strtotime(date("Y", strtotime($today . +1 . ' year')) . '1231');
 
         //再来年取得
-        $yearAfterNext = date("Y", strtotime(today() . +2 . ' year'));
+        $yearAfterNext = date("Y", strtotime($today . +2 . ' year'));
 
         //年だけ取得
         $holidayDataYear = explode("-", ($date))[0];
@@ -32,15 +33,15 @@ class GetTimetablesAcquireController extends Controller
             //範囲外の場合
             if (strtotime($date) < $oldestDate || $latestDate <= strtotime($date)) {
                 //今日のものに変更
-                $date = date("Y-m-d", strtotime(today()));
+                $date = date("Y-m-d", strtotime($today));
 
                 //月曜日判定
-                $dateDayOfWeek = date("w", strtotime(today()));
+                $dateDayOfWeek = date("w", strtotime($date));
                 if ($dateDayOfWeek !== 1) {
                     $date = date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
                 }
                 //値取り直し
-                $yearAfterNext = date("Y", strtotime(today() . +2 . ' year'));
+                $yearAfterNext = date("Y", strtotime($date . +2 . ' year'));
                 $holidayDataYear = explode("-", ($date))[0];
                 $yearHolidayDatas = $this->getHolidays($holidayDataYear);
             }
