@@ -9,6 +9,7 @@
         :min-date="minDate"
         :max-date="maxDate"
         prevent-min-max-navigation
+        :enable-time-picker="false"
         :[selectionType]="''"
         inline
         auto-apply
@@ -27,7 +28,7 @@ import { getYear } from 'date-fns'
 const date = ref()
 
 const minDate = computed(() => new Date(2015, 0, 5))
-const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
+const maxDate = computed(() => new Date(getYear(new Date()) + 2, 0, 1))
 
 const props = defineProps({
   isShown: false,

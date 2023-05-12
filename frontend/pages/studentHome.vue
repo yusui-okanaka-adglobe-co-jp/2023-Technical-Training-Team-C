@@ -65,7 +65,7 @@ function selectDate(e: any) {
   return navigateTo({
     path: '/studentHome',
     query: {
-      view: format(calendarView.value, 'yyyy-MM-dd'),
+      date: format(calendarView.value, 'yyyy-MM-dd'),
     },
   })
 }
@@ -175,7 +175,7 @@ function getMonday(date: Date) {
 watch(
   () => route.query,
   () => {
-    location.reload()
+    getTimetableData()
   }
 )
 </script>
