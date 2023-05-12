@@ -2,30 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterPostRequest;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\DB;
 use App\Models\Timetable;
-
-use PDOException;
-use Ramsey\Uuid\Type\Time;
 
 class RegisterController extends Controller
 {
     //時間割登録API
     // POST ex) http://localhost:8000/api/timetablesCreate
-    public function createTimetables(Request $request)
+    public function createTimetables(RegisterPostRequest $request)
     {
-        $validated = $request->validate([
-            'time.start' => 'required|date_format:"Y-m-d"',
-            'time.end' => 'required|date_format:"Y-m-d"',
-            'lessons' => 'required|array',
-            'lessons.*.subject' => 'required_with:lessons.*.subject|string|max:10',
-            'lessons.*.teacher' => 'required_with:lessons.*.teacher|string|max:10',
-            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|min:0|max:6',
-            'lessons.*.period' => 'required_with:lessons.*.period|min:1|max:6'
-        ]);
-
+        //バリデーションチェック
+        $validated = $request->validate([]);
 
         $start = $request->input('time.start');
         $end = $request->input('time.end');
@@ -45,18 +33,14 @@ class RegisterController extends Controller
             $post->teacher_name = $teacher;
             $post->save();
         }
+
         if ($start && $end && $lessons) {
             $message = [
                 'messages' => [
                     'success'
-                    // その他のパターン例
-                    // 'failure'
-                    // 'validationError',
-                    // '教師を入力した場合、科目は必須項目です。月曜3時間目の科目を入力してください。'
                 ]
             ];
         } else {
-
             $message = [
                 'messages' => [
                     'failure'
