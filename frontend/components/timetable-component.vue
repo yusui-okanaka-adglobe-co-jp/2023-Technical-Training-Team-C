@@ -1,59 +1,61 @@
 <template>
   <table class="timetable">
-    <!--最初の列 空白と時間割の時限を置く-->
-    <tr>
-      <th class="vertical-head horizontal-writing"></th>
-      <th class="dayOfWeek-head horizontal-writing"></th>
-      <!--時限表示ループ-->
-      <template v-for="periodNumber of blankCell" :key="periodNumber">
-        <TimetablePeriod :period="periodNumber"></TimetablePeriod>
-      </template>
-    </tr>
-    <!--配列をループ-->
-    <template v-for="timetable in props.timetables" :key="timetable">
+    <tbody>
+      <!--最初の列 空白と時間割の時限を置く-->
       <tr>
-        <!--日付、曜日表示-->
-        <TimetableDate
-          :is-holiday="timetable.isHoliday"
-          :date="dateFormat(timetable.date)"
-          :holiday-title="timetable.holidayTitle"
-          :day-of-week="timetable.dayOfWeek"
-        >
-        </TimetableDate>
-        <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
-        <!--祝日フラグで分岐-->
-        <template v-if="timetable.isHoliday">
-          <!--祝日処理-->
-          <!--6回ループさせる-->
-          <template v-for="holidayCell of blankCell" :key="holidayCell">
-            <TimetableLesson :is-holiday="timetable.isHoliday"></TimetableLesson>
-          </template>
-        </template>
-        <template v-else>
-          <!--祝日以外処理-->
-          <!--日曜判定-->
-          <template v-if="timetable.dayOfWeek === 0">
-            <!--日曜の処理-->
-            <template v-for="lessons in timetable.lessons" :key="lessons">
-              <TimetableLesson :is-holiday="true" :subject="lessons.subject" :teacher-name="lessons.teacher">
-              </TimetableLesson>
-            </template>
-          </template>
-          <!--日曜以外の処理-->
-          <template v-else>
-            <!--科目/教師のループ-->
-            <template v-for="lessons in timetable.lessons" :key="lessons">
-              <TimetableLesson
-                :is-holiday="timetable.isHoliday"
-                :subject="lessons.subject"
-                :teacher-name="lessons.teacher"
-              >
-              </TimetableLesson>
-            </template>
-          </template>
+        <th class="vertical-head horizontal-writing"></th>
+        <th class="dayOfWeek-head horizontal-writing"></th>
+        <!--時限表示ループ-->
+        <template v-for="periodNumber of blankCell" :key="periodNumber">
+          <TimetablePeriod :period="periodNumber"></TimetablePeriod>
         </template>
       </tr>
-    </template>
+      <!--配列をループ-->
+      <template v-for="timetable in props.timetables" :key="timetable">
+        <tr>
+          <!--日付、曜日表示-->
+          <TimetableDate
+            :is-holiday="timetable.isHoliday"
+            :date="dateFormat(timetable.date)"
+            :holiday-title="timetable.holidayTitle"
+            :day-of-week="timetable.dayOfWeek"
+          >
+          </TimetableDate>
+          <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
+          <!--祝日フラグで分岐-->
+          <template v-if="timetable.isHoliday">
+            <!--祝日処理-->
+            <!--6回ループさせる-->
+            <template v-for="holidayCell of blankCell" :key="holidayCell">
+              <TimetableLesson :is-holiday="timetable.isHoliday"></TimetableLesson>
+            </template>
+          </template>
+          <template v-else>
+            <!--祝日以外処理-->
+            <!--日曜判定-->
+            <template v-if="timetable.dayOfWeek === 0">
+              <!--日曜の処理-->
+              <template v-for="lessons in timetable.lessons" :key="lessons">
+                <TimetableLesson :is-holiday="true" :subject="lessons.subject" :teacher-name="lessons.teacher">
+                </TimetableLesson>
+              </template>
+            </template>
+            <!--日曜以外の処理-->
+            <template v-else>
+              <!--科目/教師のループ-->
+              <template v-for="lessons in timetable.lessons" :key="lessons">
+                <TimetableLesson
+                  :is-holiday="timetable.isHoliday"
+                  :subject="lessons.subject"
+                  :teacher-name="lessons.teacher"
+                >
+                </TimetableLesson>
+              </template>
+            </template>
+          </template>
+        </tr>
+      </template>
+    </tbody>
   </table>
 </template>
 
