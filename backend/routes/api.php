@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GetTimetablesAcquireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,7 @@ Route::get('/timetablesAcquire', [MockController::class, 'getTimetables']);
 Route::post('/timetablesCreate', [RegisterController::class, 'createTimetables']);
 Route::post('/teachersLogin', [MockController::class, 'loginTeachers']);
 
+Route::get('/timetablesAcquire', [GetTimetablesAcquireController::class, 'getTimetables']);
 // 本番用(モック用はコメントアウトにする)
 Route::post('/teachersLogin', PostTeacherController::class);
 Route::get('/auth', AuthController::class);
