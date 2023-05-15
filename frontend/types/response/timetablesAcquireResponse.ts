@@ -2,6 +2,7 @@ export interface Timetable {
   date: string
   dayOfWeek: number
   isHoliday: boolean
+  isunavailable: boolean
   lessons?: Array<Lesson>
   holidayTitle?: string
 }

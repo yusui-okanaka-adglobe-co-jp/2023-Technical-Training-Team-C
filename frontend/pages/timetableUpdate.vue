@@ -35,12 +35,13 @@
                     :is-holiday="false"
                     :subject="getSubject(period, dayOfWeek)"
                     :teacher-name="getTeacher(period, dayOfWeek)"
+                    :is-unavailable="false"
                   />
                 </template>
 
                 <template v-else>
                   <!--データがないとき-->
-                  <TimetableLesson :is-holiday="false" />
+                  <TimetableLesson :is-holiday="false" :is-unavailable="false" />
                 </template>
               </template>
             </tr>
@@ -81,7 +82,7 @@ definePageMeta({
 
 /* 固定の変数　*/
 const periodCount: number = 6
-const dayOfWeekCount = 7
+const dayOfWeekCount = [1, 2, 3, 4, 5, 6, 0]
 
 let subjectData: string = ''
 let teacherData: string = ''

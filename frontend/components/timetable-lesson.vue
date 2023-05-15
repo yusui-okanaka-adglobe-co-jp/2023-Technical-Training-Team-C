@@ -1,5 +1,8 @@
 <template>
-  <td class="lesson-cell horizontal-writing" :class="{ 'lesson-holiday-cell': isHoliday }">
+  <td
+    class="lesson-cell horizontal-writing"
+    :class="[isUnavailable ? 'unavailable-cell' : isHoliday ? 'date-holiday-cell' : '']"
+  >
     <div>
       <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ props.subject }}</p>
       <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ props.teacherName }}</p>
@@ -19,6 +22,10 @@ const props = defineProps({
   },
   isHoliday: {
     type: Boolean,
+  },
+  isUnavailable: {
+    type: Boolean,
+    required: true,
   },
 })
 /* 科目名／教師名の文字の大きさを決める */
