@@ -15,6 +15,9 @@
               maxlength="10"
               required
             />
+            <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
+              科目名を入力してください
+            </div>
           </div>
           <div class="teacher-form font-size-l">
             <label for="teacher">教師：</label>
@@ -27,12 +30,15 @@
               maxlength="10"
               required
             />
+            <div v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">
+              教師名を入力してください
+            </div>
           </div>
 
-          <button type="button" class="usual-button cancel-button" @click.stop="onClose">
+          <button type="button" class="usual-button cancel-button" @click.stop="isShown = false">
             <div class="font-size-l">キャンセル</div>
           </button>
-          <button type="submit" class="unusual-button register-button">
+          <button type="button" class="unusual-button register-button" @click="regist">
             <div class="font-size-l">登録</div>
           </button>
         </form>
@@ -47,6 +53,9 @@ import ModalBase from './modal-base.vue'
 
 const subject = ref('')
 const teacher = ref('')
+
+const isValidSubject = ref(true)
+const isValidTeacher = ref(true)
 
 export interface Submit {
   subject: string
@@ -73,7 +82,11 @@ const emit = defineEmits(['submit', 'onClose'])
 
 function regist(e: Event) {
   e.preventDefault()
-  emit('submit', { subject: subject.value, teacher: teacher.value })
+  isValidSubject.value = subject.value.length !== 0
+  isValidTeacher.value = teacher.value.length !== 0
+  if (isValidSubject.value && isValidTeacher.value) {
+    emit('submit', { subject: subject.value, teacher: teacher.value })
+  }
 }
 
 function onClose() {
@@ -101,6 +114,10 @@ div {
   margin-top: 104px;
 }
 
+.validate {
+  margin-left: 72px;
+  position: absolute;
+}
 .register-button {
   text-align: center;
   margin-left: 152px;

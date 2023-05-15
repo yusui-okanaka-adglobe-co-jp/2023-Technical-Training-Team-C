@@ -15,7 +15,7 @@
     </p>
 
     <p>
-      <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
+      <button class="usual-button student-home" type="button" @click="open">
         <div class="font-size-m">生徒用画面確認</div>
       </button>
     </p>
@@ -50,6 +50,11 @@ const isShown = ref(false)
 function onclick() {
   isShown.value = !isShown.value
 }
+
+function open() {
+  window.open('/studentHome', '_blank', 'noreferrer')
+}
+
 const start = ref()
 const end = ref()
 
@@ -95,6 +100,7 @@ console.log(today)
 const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, value]) => ({
   dayOfWeek: value,
   isHoliday: false,
+  isunavailable: false,
   date: '',
   lessons: [...Array(6)].map<Lesson>((_) => ({
     subject: '',
