@@ -16,7 +16,7 @@
       </p>
 
       <p>
-        <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
+        <button class="usual-button student-home" type="button" @click="open">
           <div class="font-size-m">生徒用画面確認</div>
         </button>
       </p>
@@ -52,6 +52,12 @@ const isShown = ref(false)
 function onclick() {
   isShown.value = !isShown.value
 }
+
+function open() {
+  const url = '/studentHome'
+  window.open(url, '_blank')
+}
+
 const start = ref()
 const end = ref()
 
