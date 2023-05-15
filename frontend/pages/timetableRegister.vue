@@ -54,8 +54,7 @@ function onclick() {
 }
 
 function open() {
-  const url = '/studentHome'
-  window.open(url, '_blank')
+  window.open('/studentHome', '_blank', 'noreferrer')
 }
 
 const start = ref()
