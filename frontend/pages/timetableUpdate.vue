@@ -35,12 +35,13 @@
                     :is-holiday="false"
                     :subject="getSubject(period, dayOfWeek)"
                     :teacher-name="getTeacher(period, dayOfWeek)"
+                    :is-unavailable="false"
                   />
                 </template>
 
                 <template v-else>
                   <!--データがないとき-->
-                  <TimetableLesson :is-holiday="false" />
+                  <TimetableLesson :is-holiday="false" :is-unavailable="false" />
                 </template>
               </template>
             </tr>
