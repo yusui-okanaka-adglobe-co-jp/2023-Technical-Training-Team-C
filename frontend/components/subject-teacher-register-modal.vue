@@ -81,16 +81,8 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
 const emit = defineEmits(['submit'])
 
 function regist(e: Event) {
-  if (subject.value.length === 0) {
-    isValidSubject.value = false
-  } else {
-    isValidSubject.value = true
-  }
-  if (teacher.value.length === 0) {
-    isValidTeacher.value = false
-  } else {
-    isValidTeacher.value = true
-  }
+  isValidSubject.value = subject.value.length !== 0
+  isValidTeacher.value = teacher.value.length !== 0
   if (isValidSubject.value && isValidTeacher.value) {
     e.preventDefault()
     emit('submit', { subject: subject.value, teacher: teacher.value })
