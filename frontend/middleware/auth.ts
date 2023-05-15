@@ -7,7 +7,7 @@
 //   middleware: 'auth'
 // })
 // </script>
-export default defineNuxtRouteMiddleware(async () => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const config = useRuntimeConfig()
   const route = useRouter()
 
@@ -15,11 +15,24 @@ export default defineNuxtRouteMiddleware(async () => {
     baseURL: config.public.apiUrl,
     credentials: 'include',
   })
+
+  // ログイン画面にアクセスした時の処理
+  if(to.path === `/teachersLogin`){
+    if(status.value === 'success'){
+      // ログイン済み：一覧画面にリダイレクト
+      return route.push('/home')
+    } else {
+      // 未ログイン：画面を表示
+      return
+    }
+  }
+
+  // その他の画面にアクセスした時の処理
   if(status.value === 'success'){
-    // トークンが正しい場合にページの表示
+    // ログイン済みの場合：画面を表示
     return
   } else {
-    // トークンが正しくない場合はログイン画面にリダイレクト
+    // 未ログイン：ログイン画面にリダイレクト
     return route.push('/teachersLogin')
   }
 });
