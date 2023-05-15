@@ -81,7 +81,7 @@ definePageMeta({
 
 /* 固定の変数　*/
 const periodCount: number = 6
-const dayOfWeekCount = 7
+const dayOfWeekCount = [1, 2, 3, 4, 5, 6, 0]
 
 let subjectData: string = ''
 let teacherData: string = ''
