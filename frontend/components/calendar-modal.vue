@@ -1,5 +1,5 @@
 <template>
-  <modal-base class="modal" :is-shown="props.isShown">
+  <modal-base :is-shown="props.isShown">
     <div>
       <VueDatePicker
         class="calendar"

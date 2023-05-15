@@ -1,42 +1,40 @@
 <template>
   <default-layout page-name="教師用登録ページ">
-    <body>
-      <div class="date-set">
-        <button class="usual-button start-end-date" type="button" @click="onclick">
-          <div class="font-size-m">開始日終了日選択</div>
-        </button>
-        <label class="datetext">{{ start }}~{{ end }}</label>
-        <calendar-modal :is-shown="isShown" @update:value="selectDate" selection-type="range"> </calendar-modal>
-      </div>
+    <div class="date-set">
+      <button class="usual-button start-end-date" type="button" @click="onclick">
+        <div class="font-size-m">開始日終了日選択</div>
+      </button>
+      <label class="datetext">{{ start }}~{{ end }}</label>
+      <calendar-modal :is-shown="isShown" @update:value="selectDate" selection-type="range"> </calendar-modal>
+    </div>
 
-      <p>
-        <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
-          <div class="font-size-l">ホーム</div>
-        </button>
-      </p>
+    <p>
+      <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
+        <div class="font-size-l">ホーム</div>
+      </button>
+    </p>
 
-      <p>
-        <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
-          <div class="font-size-m">生徒用画面確認</div>
-        </button>
-      </p>
+    <p>
+      <button class="usual-button student-home" type="button" @click="() => navigateTo('/studentHome')">
+        <div class="font-size-m">生徒用画面確認</div>
+      </button>
+    </p>
 
-      <p>
-        <button class="usual-button logout" type="button" @click="commonLogout">
-          <div class="font-size-l">ログアウト</div>
-        </button>
-      </p>
+    <p>
+      <button class="usual-button logout" type="button" @click="commonLogout">
+        <div class="font-size-l">ログアウト</div>
+      </button>
+    </p>
 
-      <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
-      <p>
-        <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
-          <div class="font-size-l">戻る</div>
-        </button>
-        <button class="unusual-button timetable-update" type="button" @click="useState">
-          <div class="font-size-l">時間割更新</div>
-        </button>
-      </p>
-    </body>
+    <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
+    <p>
+      <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
+        <div class="font-size-l">戻る</div>
+      </button>
+      <button class="unusual-button timetable-update" type="button" @click="useState">
+        <div class="font-size-l">時間割更新</div>
+      </button>
+    </p>
   </default-layout>
 </template>
 
@@ -44,7 +42,7 @@
 import { format } from 'date-fns'
 import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
-import { Timetable } from '~~/types/response/timetablesAcquireResponse'
+import { Lesson, Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { commonLogout } from '~~/util/logout'
 
 const isShown = ref(false)
@@ -55,7 +53,7 @@ function onclick() {
 const start = ref()
 const end = ref()
 
-function selectDate(e) {
+function selectDate(e: Date[]) {
   start.value = format(e[0], 'yyyy-MM-dd')
   end.value = format(e[1], 'yyyy-MM-dd')
   //カレンダーモーダルを閉じる
@@ -65,7 +63,7 @@ function selectDate(e) {
 function useState() {
   useTimetables().lessons.value = timetables
     .map((timetable) =>
-      timetable.lessons
+      (timetable.lessons ?? [])
         .map((lesson, index) => {
           return {
             subject: lesson.subject,
@@ -94,9 +92,11 @@ const today = new Date()
 console.log(today)
 
 /* 検証用オブジェクト */
-const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map(([_, value]) => ({
+const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, value]) => ({
   dayOfWeek: value,
-  lessons: [...Array(6)].map((_) => ({
+  isHoliday: false,
+  date: '',
+  lessons: [...Array(6)].map<Lesson>((_) => ({
     subject: '',
     teacher: '',
   })),
