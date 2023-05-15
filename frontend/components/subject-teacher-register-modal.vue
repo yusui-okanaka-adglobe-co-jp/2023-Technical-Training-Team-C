@@ -15,6 +15,9 @@
               maxlength="10"
               required
             />
+            <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
+              科目名を入力してください
+            </div>
           </div>
           <div class="teacher-form font-size-l">
             <label for="teacher">教師：</label>
@@ -27,12 +30,13 @@
               maxlength="10"
               required
             />
+            <p v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">教師名を入力してください</p>
           </div>
 
-          <button class="usual-button cancel-button" @click.stop="isShown = false">
+          <button type="button" class="usual-button cancel-button" @click.stop="isShown = false">
             <div class="font-size-l">キャンセル</div>
           </button>
-          <button class="unusual-button register-button">
+          <button type="button" class="unusual-button register-button" @click="regist">
             <div class="font-size-l">登録</div>
           </button>
         </form>
@@ -47,6 +51,9 @@ import ModalBase from './modal-base.vue'
 
 const subject = ref('')
 const teacher = ref('')
+
+const isValidSubject = ref(true)
+const isValidTeacher = ref(true)
 
 export interface Submit {
   subject: string
@@ -72,9 +79,23 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
 const emit = defineEmits(['submit'])
 
 function regist(e: Event) {
-  e.preventDefault()
-  emit('submit', { subject: subject.value, teacher: teacher.value })
+  if (subject.value.length === 0) {
+    isValidSubject.value = false
+  } else {
+    isValidSubject.value = true
+  }
+  if (teacher.value.length === 0) {
+    isValidTeacher.value = false
+  } else {
+    isValidTeacher.value = true
+  }
+  if (isValidSubject.value && isValidTeacher.value) {
+    e.preventDefault()
+    emit('submit', { subject: subject.value, teacher: teacher.value })
+  }
 }
+
+const onclick = async () => {}
 </script>
 
 <style lang="scss" scoped>
@@ -97,6 +118,10 @@ div {
   margin-top: 104px;
 }
 
+.validate {
+  margin-left: 72px;
+  position: absolute;
+}
 .register-button {
   text-align: center;
   margin-left: 152px;
