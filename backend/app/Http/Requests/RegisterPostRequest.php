@@ -48,9 +48,7 @@ class RegisterPostRequest extends FormRequest
         $message = ['validationError'];
         $array = array_merge($message, $errors);
         $response = response()->json([
-            'messages' => [
-                $array
-            ]
+            'messages' => $array
         ], Response::HTTP_BAD_REQUEST);
         throw new HttpResponseException($response);
     }
