@@ -1,8 +1,8 @@
 <template>
   <Teleport to="body" v-if="props.isShown">
-    <div class="modal-overlay" @click.stop="isShown = false">
+    <div class="modal-overlay" @click.stop="onClose">
       <div class="modal-content" @click.stop="doNothing">
-        <slot> </slot>
+        <slot></slot>
       </div>
     </div>
   </Teleport>
@@ -12,8 +12,13 @@
 const props = defineProps({
   isShown: false,
 })
+const emit = defineEmits(['onClose'])
 
 function doNothing() {}
+
+function onClose() {
+  emit('onClose')
+}
 </script>
 
 <style>

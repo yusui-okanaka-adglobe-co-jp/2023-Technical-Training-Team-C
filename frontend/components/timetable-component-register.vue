@@ -1,24 +1,26 @@
 <template>
   <table class="timetable register">
-    <!--最初の列 空白と時間割の時限を置く-->
-    <!--配列をループ-->
-    <template v-for="timetable in props.timetables" :key="timetable">
-      <tr>
-        <!-- 曜日のループ -->
-        <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
+    <tbody>
+      <!--最初の列 空白と時間割の時限を置く-->
+      <!--配列をループ-->
+      <template v-for="timetable in props.timetables" :key="timetable">
+        <tr>
+          <!-- 曜日のループ -->
+          <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(timetable.dayOfWeek)"></TimetableDayOfWeek>
 
-        <!--科目/教師のループ-->
-        <template v-for="(lesson, index) of timetable.lessons" :key="lesson">
-          <TimetableLessonRegister
-            :dayOfWeek="dayOfWeekChangeString(timetable.dayOfWeek)"
-            :period="index + 1"
-            v-model:subject="lesson.subject"
-            v-model:teacher-name="lesson.teacher"
-          >
-          </TimetableLessonRegister>
-        </template>
-      </tr>
-    </template>
+          <!--科目/教師のループ-->
+          <template v-for="(lesson, index) of timetable.lessons" :key="lesson">
+            <TimetableLessonRegister
+              :dayOfWeek="dayOfWeekChangeString(timetable.dayOfWeek)"
+              :period="index + 1"
+              v-model:subject="lesson.subject"
+              v-model:teacher-name="lesson.teacher"
+            >
+            </TimetableLessonRegister>
+          </template>
+        </tr>
+      </template>
+    </tbody>
   </table>
 </template>
 
@@ -32,6 +34,8 @@ const props = defineProps({
     default: () => [
       {
         dayOfWeek: 0,
+        isHoliday: false,
+        date: new Date(),
         lessons: () => [],
       },
     ],
@@ -40,10 +44,13 @@ const props = defineProps({
 
 const emit = defineEmits(['update:timetables'])
 for (const timetable of props.timetables) {
-  for (const lesson of timetable.lessons) {
-    watch(lesson, () => {
-      emit('update:timetables', lesson)
-    })
+  for (const lesson of timetable.lessons ?? []) {
+    watch(
+      () => lesson,
+      () => {
+        emit('update:timetables', lesson)
+      }
+    )
   }
 }
 

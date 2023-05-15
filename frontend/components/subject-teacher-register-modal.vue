@@ -1,5 +1,5 @@
 <template>
-  <modal-base class="modal" :is-shown="props.isShown">
+  <modal-base :is-shown="props.isShown" @on-close="onClose">
     <div>
       <div class="register-base board-color">
         <form class="form-example" @submit="regist">
@@ -78,7 +78,7 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
   period: 0,
 })
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(['submit', 'onClose'])
 
 function regist(e: Event) {
   isValidSubject.value = subject.value.length !== 0
@@ -87,6 +87,10 @@ function regist(e: Event) {
     e.preventDefault()
     emit('submit', { subject: subject.value, teacher: teacher.value })
   }
+}
+
+function onClose() {
+  emit('onClose')
 }
 </script>
 
