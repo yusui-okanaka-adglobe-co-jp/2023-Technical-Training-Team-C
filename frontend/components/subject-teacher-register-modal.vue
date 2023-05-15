@@ -96,8 +96,6 @@ function regist(e: Event) {
     emit('submit', { subject: subject.value, teacher: teacher.value })
   }
 }
-
-const onclick = async () => {}
 </script>
 
 <style lang="scss" scoped>
