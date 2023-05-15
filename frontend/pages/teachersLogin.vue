@@ -57,6 +57,9 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth'
+})
 import { messagesResponse } from '~~/types/response/messagesResponse'
 // パスワード表示切り替え部分
 const isChecked = ref(false)
