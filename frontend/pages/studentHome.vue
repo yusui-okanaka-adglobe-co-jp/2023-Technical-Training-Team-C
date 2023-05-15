@@ -151,7 +151,7 @@ async function getTimetableData() {
     //クエリの日付と渡されている日付が同じか確認
     if (response.value?.[0].date !== view.value) {
       navigateTo({
-        path: '/home',
+        path: '/studentHome',
         query: {
           date: response.value?.[0].date,
         },
