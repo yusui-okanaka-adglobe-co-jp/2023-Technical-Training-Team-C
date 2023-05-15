@@ -1,5 +1,5 @@
 <template>
-  <modal-base :is-shown="props.isShown" @onclose="onclose">
+  <modal-base :is-shown="props.isShown" @on-close="onClose">
     <div>
       <div class="register-base board-color">
         <form class="form-example" @submit="regist">
@@ -29,7 +29,7 @@
             />
           </div>
 
-          <button type="button" class="usual-button cancel-button" @click.stop="onclose">
+          <button type="button" class="usual-button cancel-button" @click.stop="onClose">
             <div class="font-size-l">キャンセル</div>
           </button>
           <button type="submit" class="unusual-button register-button">
@@ -69,15 +69,15 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
   period: 0,
 })
 
-const emit = defineEmits(['submit', 'onclose'])
+const emit = defineEmits(['submit', 'onClose'])
 
 function regist(e: Event) {
   e.preventDefault()
   emit('submit', { subject: subject.value, teacher: teacher.value })
 }
 
-function onclose() {
-  emit('onclose')
+function onClose() {
+  emit('onClose')
 }
 </script>
 

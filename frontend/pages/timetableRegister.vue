@@ -61,7 +61,6 @@ function selectDate(e: Date[]) {
 }
 
 function useState() {
-  const hoge = timetables.filter((x) => !x.lessons)
   useTimetables().lessons.value = timetables
     .map((timetable) =>
       (timetable.lessons ?? [])

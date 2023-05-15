@@ -6,7 +6,7 @@
         <subject-teacher-register-modal
           :is-shown="isShown"
           @submit="submit"
-          @onclose="() => (isShown = false)"
+          @on-close="() => (isShown = false)"
           :dayOfWeek="props.dayOfWeek"
           :period="props.period"
         >

@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body" v-if="props.isShown">
-    <div class="modal-overlay" @click.stop="onclose">
+    <div class="modal-overlay" @click.stop="onClose">
       <div class="modal-content" @click.stop="doNothing">
         <slot></slot>
       </div>
@@ -12,12 +12,12 @@
 const props = defineProps({
   isShown: false,
 })
-const emit = defineEmits(['onclose'])
+const emit = defineEmits(['onClose'])
 
 function doNothing() {}
 
-function onclose() {
-  emit('onclose')
+function onClose() {
+  emit('onClose')
 }
 </script>
 
