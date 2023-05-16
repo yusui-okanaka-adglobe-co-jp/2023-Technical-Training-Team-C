@@ -30,7 +30,6 @@ class RegisterPostRequest extends FormRequest
      */
     public function rules()
     {
-        $today = today();
         $latestDate = date("Y", strtotime("1  year")) . '-12-31';
         return [
             'time.start' => 'required|date_format:"Y-m-d"|after:2014-01-01|before:' . $latestDate,
