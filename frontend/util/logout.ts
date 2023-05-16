@@ -1,7 +1,7 @@
-export function commonLogout() {
+export async function commonLogout() {
   const router = useRouter()
   const config = useRuntimeConfig()
-  useFetch('/api/logout', {
+  await useFetch('/api/logout', {
     baseURL: config.public.apiUrl,
     credentials: 'include',
   })
