@@ -1,0 +1,98 @@
+// ページ全体に適応させたいscssの記述場所
+$main-color: #5160ae;
+$accent-color: #f4c9c9;
+$link-color: #6a53f9;
+$board-color: #ffffff;
+$base-color: #eaeaea;
+$font: 'Noto Sans JP';
+$font-weight: 400;
+
+// 背景色設定
+body {
+  background-color: $base-color;
+}
+
+.main-color {
+  background-color: $main-color;
+}
+
+.accent-color {
+  background-color: $accent-color;
+}
+
+.link-color {
+  background-color: $link-color;
+}
+
+.board-color {
+  background-color: $board-color;
+}
+
+.base-color {
+  background-color: $base-color;
+}
+
+// 文字設定
+.font-size-xs {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 12px;
+}
+
+.font-size-s {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 14px;
+}
+
+.font-size-m {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 18px;
+}
+
+.font-size-l {
+  font-family: $font;
+  font-weight: $font-weight;
+  font-size: 24px;
+}
+
+.font-size-xl {
+  font-family: $font;
+  font-weight: $font-weight;
+}
+
+.white {
+  color: #fff;
+}
+
+.red {
+  color: #f00;
+}
+
+.usual-button {
+  background-color: $board-color;
+  color: $main-color;
+  width: 160px;
+  height: 60px;
+  border-radius: 10px;
+  border: solid 3px $main-color;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+
+.unusual-button {
+  background-color: $main-color;
+  color: $board-color;
+  width: 160px;
+  height: 60px;
+  border-radius: 10px;
+  border: solid 3px $main-color;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+@media screen and (min-width: 768px) {
+  .font-size-xl {
+    font-size: 36px;
+  }
+}
