@@ -10,7 +10,7 @@ primary_region = "nrt"
 processes = []
 
 [build]
-  builder = "heroku/buildpacks:20"
+  builder = "heroku/nodejs:19"
 
 [env]
   PORT = "8080"
