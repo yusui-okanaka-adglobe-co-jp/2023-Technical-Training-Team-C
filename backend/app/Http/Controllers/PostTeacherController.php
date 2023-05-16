@@ -7,23 +7,20 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Requests\PostTeacherRequest;
 use App\Models\Teacher;
 
 class PostTeacherController extends Controller
 {
     // 教師ログインAPI
     public const TOKEN_NAME = 'app_api_token';
-    public function __invoke(Request $request)
+    public function __invoke(PostTeacherRequest $request)
     {
         $message = [];
         $token = '';
 
-        // バック側バリデーションチェック
-        $validated = $request->validate([
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|between:8,255',
-        ]);
-
+        // PostTeacherRequestでvalidateされる
+        $validated = $request;
         // バリデーションが通った場合の処理
         // DBのemailと一致するデータがあるか
         $user = Teacher::where('email', $validated['email'])->first();
