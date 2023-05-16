@@ -30,14 +30,16 @@ class RegisterPostRequest extends FormRequest
      */
     public function rules()
     {
+        $today = today();
+        $latestDate = date("Y", strtotime("1  year")) . '-12-31';
         return [
-            'time.start' => 'required|date_format:"Y-m-d"',
-            'time.end' => 'required|date_format:"Y-m-d"',
+            'time.start' => 'required|date_format:"Y-m-d"|after:2014-01-01|before:' . $latestDate,
+            'time.end' => 'required|date_format:"Y-m-d"|after:time.start|before:' . $latestDate,
             'lessons' => 'required|array',
             'lessons.*.subject' => 'required_with:lessons.*.subject|string|max:10',
             'lessons.*.teacher' => 'required_with:lessons.*.teacher|string|max:10',
-            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|numeric|min:0|max:6',
-            'lessons.*.period' => 'required_with:lessons.*.period|numeric|min:1|max:6'
+            'lessons.*.dayOfWeek' => 'required_with:lessons.*.dayOfWeek|integer|min:0|max:6',
+            'lessons.*.period' => 'required_with:lessons.*.period|integer|min:1|max:6'
         ];
     }
 
