@@ -29,12 +29,13 @@ const isShown = ref(false)
 
 function onclick() {
   isShown.value = !isShown.value
-  console.log('onclick')
 }
 
 function deleteClass() {
   updateSubject.value = ''
   updateTeacher.value = ''
+  emit('update:subject', updateSubject.value)
+  emit('update:teacherName', updateTeacher.value)
 }
 
 const props = defineProps({
