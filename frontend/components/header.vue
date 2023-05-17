@@ -1,7 +1,7 @@
 <template>
   <header>
-    <img src="~/assets/img/logo3-2.png" class="logo" />
-    <div>
+    <img src="~/assets/img/logo.png" class="logo" />
+    <div class="titles">
       <h1 class="font-size-xl">〇〇中学校時間割</h1>
       <h2 class="font-size-l">{{ props.pageName }}</h2>
     </div>
@@ -19,12 +19,6 @@ header {
   width: 100%;
   height: 100px;
   background-color: #89929b;
-  .logo {
-    position: absolute;
-    width: 167px;
-    height: 100px;
-    margin-left: 960px;
-  }
   div {
     padding: 15px 0px 15px 100px;
     h1 {
@@ -32,7 +26,12 @@ header {
     }
   }
 }
-
+.logo {
+  position: absolute;
+  width: 167px;
+  height: 100px;
+  margin-left: 720px;
+}
 // モバイル用スタイル
 @media only screen and (max-width: 767px) {
   header {
