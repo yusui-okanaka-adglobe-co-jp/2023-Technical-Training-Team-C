@@ -20,7 +20,9 @@
           <button class="button-font-color usual-button font-size-l" @click="openCalendarModal">日付選択</button>
           <button class="button-font-color usual-button font-size-l" @click="goToRegisterPage">時間割登録</button>
           <button class="button-font-color usual-button font-size-m" @click="goToStudentPage">生徒用画面確認</button>
-          <button class="button-font-color usual-button font-size-l" @click="commonLogout">ログアウト</button>
+          <button class="button-font-color usual-button font-size-l" type="button" @click="commonLogout">
+            ログアウト
+          </button>
         </div>
         <calendar-modal :is-shown="isShown" @update:value="selectDate" />
 
