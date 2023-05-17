@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 
-
+//TODO:月曜チェック
+//TODO:不正な日付
+//TODO:正しくない型ではないか確認
 class GetTimetablesAcquireController extends Controller
 {
     //main
@@ -19,14 +21,26 @@ class GetTimetablesAcquireController extends Controller
         $filtered_timetables = collect();
         //比較用
         $today = today();
-        $oldestDate = strtotime('20141226');
+        $oldestDate = strtotime('20141229');
         $latestDate = strtotime(date("Y", strtotime($today . +1 . ' year')) . '1231');
-
         //再来年取得
         $yearAfterNext = date("Y", strtotime($today . +2 . ' year'));
 
+        //dateの型判定
+        if (!(preg_match('/\A[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\z/', $date))) {
+            $date = date("Y-m-d", strtotime($today));
+        }
+        //不正な日付判定
+        list($dateYear, $dateMonth, $dateDay) = explode("-", $date);
+        if (!(checkdate($dateMonth, $dateDay, $dateYear))) {
+            $date = date("Y-m-d", strtotime($today));
+        }
+
+        //月曜判定
+        $date = $this->setMondayDate($date);
+
         //年だけ取得
-        $holidayDataYear = explode("-", ($date))[0];
+        $holidayDataYear = explode("-", $date)[0];
 
         if ($holidayDataYear <= '2014' || $holidayDataYear >= $yearAfterNext) {
             $yearHolidayDatas = [];
@@ -36,12 +50,9 @@ class GetTimetablesAcquireController extends Controller
                 $date = date("Y-m-d", strtotime($today));
 
                 //月曜日判定
-                $dateDayOfWeek = date("w", strtotime($date));
-                if ($dateDayOfWeek !== 1) {
-                    $date = date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
-                }
+                $date = $this->setMondayDate($date);
+
                 //値取り直し
-                $yearAfterNext = date("Y", strtotime($date . +2 . ' year'));
                 $holidayDataYear = explode("-", ($date))[0];
                 $yearHolidayDatas = $this->getHolidays($holidayDataYear);
             }
@@ -61,6 +72,21 @@ class GetTimetablesAcquireController extends Controller
         $timetables = $this->setTimetables($ranked_timetable, $timetables);
 
         return Response::json($timetables);
+    }
+
+    //月曜かチェックし、異なった場合は月曜を返却する
+    function setMondayDate($date)
+    {
+        $dateDayOfWeek = date("w", strtotime($date));
+        //日曜のときの処理
+        if ($dateDayOfWeek === '0') {
+            $date = date('Y-m-d', strtotime(-6 . " day", strtotime($date)));
+        } else {
+            if ($dateDayOfWeek !== '1') {
+                $date = date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
+            }
+        }
+        return $date;
     }
 
 
@@ -102,6 +128,12 @@ class GetTimetablesAcquireController extends Controller
             //DBからデータ取得
             $getDBData = $this->getTimetablesFromDB($getDate, $setData['dayOfWeek']);
 
+            //範囲外判定
+            if ($getDateYear <= '2014' || $getDateYear >= $yearAfterNext) {
+                $setData['isunavailable'] = true;
+            } else {
+                $setData['isunavailable'] = false;
+            }
             //祝日判定
             if (array_key_exists($getDate, $yearHolidayDatas)) {
                 //祝日のとき
@@ -111,12 +143,7 @@ class GetTimetablesAcquireController extends Controller
                 $setData['isHoliday'] = false;
                 $setData['lessons'] = array();
             }
-            //範囲外判定
-            if ($getDateYear <= '2014' || $getDateYear >= $yearAfterNext) {
-                $setData['isunavailable'] = true;
-            } else {
-                $setData['isunavailable'] = false;
-            }
+
 
             array_push($timetables, $setData);
 
