@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 
-//TODO:月曜チェック
-//TODO:不正な日付
-//TODO:正しくない型ではないか確認
 class GetTimetablesAcquireController extends Controller
 {
     //main
@@ -23,13 +20,14 @@ class GetTimetablesAcquireController extends Controller
         $today = today();
         $oldestDate = strtotime('20141229');
         $latestDate = strtotime(date("Y", strtotime($today . +1 . ' year')) . '1231');
-        //再来年取得
+        //再来年
         $yearAfterNext = date("Y", strtotime($today . +2 . ' year'));
 
         //dateの型判定
         if (!(preg_match('/\A[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\z/', $date))) {
             $date = date("Y-m-d", strtotime($today));
         }
+
         //不正な日付判定
         list($dateYear, $dateMonth, $dateDay) = explode("-", $date);
         if (!(checkdate($dateMonth, $dateDay, $dateYear))) {
