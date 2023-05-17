@@ -6,7 +6,8 @@
       <div class="button-wrapper">
         <button class="font-size-xs button-wrapper__button" @click="getThisWeekTimetables">今週の時間割</button>
         <button class="font-size-xs button-wrapper__button" @click="openCarendar">日付選択</button>
-        <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)">
+        </calendar-modal>
       </div>
       <!--三角ボタン-->
       <div class="triangle-wrapper">

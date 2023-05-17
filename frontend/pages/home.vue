@@ -24,7 +24,7 @@
             ログアウト
           </button>
         </div>
-        <calendar-modal :is-shown="isShown" @update:value="selectDate" />
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)" />
 
         <!--時間割-->
         <div>
