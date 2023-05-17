@@ -1,5 +1,6 @@
 <template>
   <header>
+    <img src="~/assets/img/logo3-2.png" class="logo" />
     <div>
       <h1 class="font-size-xl">〇〇中学校時間割</h1>
       <h2 class="font-size-l">{{ props.pageName }}</h2>
@@ -18,6 +19,12 @@ header {
   width: 100%;
   height: 100px;
   background-color: #89929b;
+  .logo {
+    position: absolute;
+    width: 167px;
+    height: 100px;
+    margin-left: 960px;
+  }
   div {
     padding: 15px 0px 15px 100px;
     h1 {
