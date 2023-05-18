@@ -15,13 +15,13 @@
           <button
             class="triangle-wrapper__inner__left"
             :disabled="displayLeftButton()"
-            @click="getLastWeekTimetable()"
+            @click="getLastWeekTimetable"
           ></button>
           <!--来週-->
           <button
             class="triangle-wrapper__inner__right"
             :disabled="displayRightButton()"
-            @click="getNextWeekTimetable()"
+            @click="getNextWeekTimetable"
           ></button>
         </div>
       </div>
@@ -83,17 +83,25 @@ function displayToggle() {
   loadingDisplay.value = !loadingDisplay.value
 }
 
+// 前週、次週ボタン
+const isRendering = ref(true)
+
+onMounted(() => {
+  isRendering.value = false
+})
+
 //前週ボタン表示
 function displayLeftButton() {
-  return oldestDate >= displayDate
+  return oldestDate >= displayDate || isRendering.value == true
 }
 //次週ボタン表示
 function displayRightButton() {
-  return latestDate <= displayDate
+  return latestDate <= displayDate || isRendering.value == true
 }
 
 //前週ボタン押下時
-function getLastWeekTimetable() {
+const getLastWeekTimetable = () => {
+  isRendering.value = true
   if (oldestDate <= displayDate) {
     displayDate.setDate(displayDate.getDate() - 7)
     const lastWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -106,9 +114,11 @@ function getLastWeekTimetable() {
   } else {
     alert('2014年の時間割は表示できません')
   }
+  isRendering.value = false
 }
 //次週ボタン押下時
-function getNextWeekTimetable() {
+const getNextWeekTimetable = () => {
+  isRendering.value = true
   if (latestDate >= displayDate) {
     displayDate.setDate(displayDate.getDate() + 7)
     const nextWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -121,6 +131,7 @@ function getNextWeekTimetable() {
   } else {
     alert('再来年の時間割は表示できません')
   }
+  isRendering.value = false
 }
 //APIから時間割取得
 async function getTimetableData() {
@@ -148,12 +159,15 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
+    if (response.value == null) {
+      return
+    }
     //クエリの日付と渡されている日付が同じか確認
-    if (response.value?.[0].date !== view.value) {
+    if (response.value[0].date !== view.value) {
       navigateTo({
         path: '/studentHome',
         query: {
-          date: response.value?.[0].date,
+          date: response.value[0].date,
         },
       })
     }
@@ -192,6 +206,10 @@ watch(
   () => route.query,
   () => {
     getTimetableData()
+    isRendering.value = true
+    setTimeout(() =>{
+      isRendering.value = false
+    }, 300)
   }
 )
 </script>
