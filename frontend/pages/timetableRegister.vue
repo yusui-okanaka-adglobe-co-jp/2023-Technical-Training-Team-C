@@ -50,7 +50,6 @@ import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
 import { Lesson, Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { commonLogout } from '~~/util/logout'
-import { tr } from 'date-fns/locale'
 
 const isShown = ref(false)
 
