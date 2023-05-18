@@ -5,7 +5,13 @@
         <div class="font-size-m">開始日終了日選択</div>
       </button>
       <label class="datetext">{{ start }}~{{ end }}</label>
-      <calendar-modal :is-shown="isShown" @update:value="selectDate" selection-type="range"> </calendar-modal>
+      <calendar-modal
+        :is-shown="isShown"
+        @update:value="selectDate"
+        selection-type="range"
+        @on-close="() => (isShown = false)"
+      >
+      </calendar-modal>
     </div>
 
     <p>
