@@ -2,15 +2,6 @@
   <default-layout page-name="教師用ページ">
     <section class="container">
       <!-- html記述場所 -->
-      <!--三角ボタン-->
-      <div class="triangle-button-area">
-        <div class="triangle-button">
-          <!--先週-->
-          <button class="triangle-left" :disabled="displayLeftButton()" @click="getLastWeekTimetable()"></button>
-          <!--来週-->
-          <button class="triangle-right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
-        </div>
-      </div>
       <div class="main">
         <!--ボタン-->
         <div class="timetable-button-area">
@@ -24,10 +15,21 @@
             ログアウト
           </button>
         </div>
-        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)" />
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)">
+        </calendar-modal>
+        <div class="timetable-wrapper">
+          <!--三角ボタン-->
+          <div class="triangle-button-area">
+            <div class="triangle-button">
+              <!--先週-->
+              <button class="triangle-left" :disabled="displayLeftButton()" @click="getLastWeekTimetable()"></button>
+              <!--来週-->
+              <button class="triangle-right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
+            </div>
+          </div>
 
-        <!--時間割-->
-        <div>
+          <!--時間割-->
+
           <div v-show="loadingDisplay">
             <TimetableComponent :timetables="timetables"></TimetableComponent>
           </div>
@@ -216,19 +218,19 @@ watch(
 
 <style scoped lang="scss">
 .container {
-  margin: 0 36px 0 0;
+  margin: 15px min(10%, 20px);
 }
 /* 三角関連 */
 .triangle-button-area {
   height: 120px;
   padding-top: 48px;
-  display: flex;
-  justify-content: flex-end;
 }
 .triangle-button {
   width: 160px;
   height: 56px;
+  margin-left: auto;
 }
+
 .triangle-left {
   background: transparent;
   width: 0;
@@ -268,12 +270,16 @@ watch(
 .main {
   display: flex;
 }
+.timetable-wrapper {
+  margin-bottom: min(80px, 10%);
+}
 button {
   margin-bottom: 24px;
 }
 .timetable-button-area {
-  // width: 204px;
-  width: 14%;
+  margin-top: 120px;
+  padding: auto;
+  width: min(20%, 250px);
   display: flex;
   flex-direction: column;
   text-align: center;
