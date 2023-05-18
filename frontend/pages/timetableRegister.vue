@@ -4,7 +4,7 @@
       <button class="usual-button start-end-date" type="button" @click="onclick">
         <div class="font-size-m">開始日終了日選択</div>
       </button>
-      <label class="datetext">{{ start }}~{{ end }}</label>
+      <label v-if="booleanStart || booleanEnd" class="datetext">{{ start }}~{{ end }}</label>
       <calendar-modal
         :is-shown="isShown"
         @update:value="selectDate"
@@ -64,9 +64,15 @@ function open() {
 const start = ref()
 const end = ref()
 
+let booleanStart = false
+let booleanEnd = false
+
 function selectDate(e: Date[]) {
   start.value = format(e[0], 'yyyy-MM-dd')
   end.value = format(e[1], 'yyyy-MM-dd')
+  booleanStart = Boolean(start)
+  booleanEnd = Boolean(end)
+
   //カレンダーモーダルを閉じる
   isShown.value = false
 }
