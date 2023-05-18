@@ -3,6 +3,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiUrl: process.env.API_URL,
+      //.envファイルにNUXT_PUBLIC_SCHOOL_NAME=""と書くことで値変更可能
+      schoolName: 'adglobe',
     },
   },
   css: [
