@@ -15,6 +15,8 @@
             ログアウト
           </button>
         </div>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)">
+        </calendar-modal>
         <div class="timetable-wrapper">
           <!--三角ボタン-->
           <div class="triangle-button-area">
@@ -25,7 +27,6 @@
               <button class="triangle-right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
             </div>
           </div>
-          <calendar-modal :is-shown="isShown" @update:value="selectDate" />
 
           <!--時間割-->
 
