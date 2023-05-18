@@ -35,7 +35,7 @@
             </div>
           </div>
 
-          <button type="button" class="usual-button cancel-button" @click.stop="isShown = false">
+          <button type="button" class="usual-button cancel-button" @click.stop="onClose">
             <div class="font-size-l">キャンセル</div>
           </button>
           <button type="button" class="unusual-button register-button" @click="regist">
