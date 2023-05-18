@@ -65,8 +65,8 @@ const start = ref()
 const end = ref()
 
 function selectDate(e: Date[]) {
-  start.value = format(e[0], 'yyyy-MM-dd')
-  end.value = format(e[1], 'yyyy-MM-dd')
+  start.value = format(e[0], 'yyyy/MM/dd')
+  end.value = format(e[1], 'yyyy/MM/dd')
   //カレンダーモーダルを閉じる
   isShown.value = false
 }
