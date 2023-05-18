@@ -91,11 +91,11 @@ onMounted(() => {
 
 //前週ボタン表示
 function displayLeftButton() {
-  return oldestDate >= displayDate || isRendering.value == true
+  return oldestDate >= displayDate || isRendering.value
 }
 //次週ボタン表示
 function displayRightButton() {
-  return latestDate <= displayDate || isRendering.value == true
+  return latestDate <= displayDate || isRendering.value
 }
 
 //前週ボタン押下時
