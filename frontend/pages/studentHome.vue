@@ -49,6 +49,7 @@ const oldestDate = parse('20150101', 'yyyyMMdd', new Date())
 const nextYear = String(new Date().getFullYear() + 1)
 const latestString = nextYear + '1225'
 const latestDate = parse(latestString, 'yyyyMMdd', new Date())
+const isRendering = ref(true)
 
 await getTimetableData()
 
@@ -83,9 +84,6 @@ function displayToggle() {
   loadingDisplay.value = !loadingDisplay.value
 }
 
-// 前週、次週ボタン
-const isRendering = ref(true)
-
 onMounted(() => {
   isRendering.value = false
 })
@@ -101,7 +99,6 @@ function displayRightButton() {
 
 //前週ボタン押下時
 const getLastWeekTimetable = () => {
-  isRendering.value = true
   if (oldestDate <= displayDate) {
     displayDate.setDate(displayDate.getDate() - 7)
     const lastWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -114,11 +111,9 @@ const getLastWeekTimetable = () => {
   } else {
     alert('2014年の時間割は表示できません')
   }
-  isRendering.value = false
 }
 //次週ボタン押下時
 const getNextWeekTimetable = () => {
-  isRendering.value = true
   if (latestDate >= displayDate) {
     displayDate.setDate(displayDate.getDate() + 7)
     const nextWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -131,7 +126,6 @@ const getNextWeekTimetable = () => {
   } else {
     alert('再来年の時間割は表示できません')
   }
-  isRendering.value = false
 }
 //APIから時間割取得
 async function getTimetableData() {
@@ -159,6 +153,7 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
+    isRendering.value = false
     if (response.value == null) {
       return
     }
@@ -207,9 +202,6 @@ watch(
   () => {
     getTimetableData()
     isRendering.value = true
-    setTimeout(() =>{
-      isRendering.value = false
-    }, 300)
   }
 )
 </script>
