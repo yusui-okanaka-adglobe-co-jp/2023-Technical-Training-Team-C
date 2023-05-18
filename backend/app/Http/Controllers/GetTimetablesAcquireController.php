@@ -68,7 +68,6 @@ class GetTimetablesAcquireController extends Controller
         $ranked_timetable = $filtered_timetables->sortByDesc('created_at');
 
         $timetables = $this->setTimetables($ranked_timetable, $timetables);
-
         return Response::json($timetables);
     }
 
@@ -78,11 +77,9 @@ class GetTimetablesAcquireController extends Controller
         $dateDayOfWeek = date("w", strtotime($date));
         //日曜のときの処理
         if ($dateDayOfWeek === '0') {
-            $date = date('Y-m-d', strtotime(-6 . " day", strtotime($date)));
-        } else {
-            if ($dateDayOfWeek !== '1') {
-                $date = date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
-            }
+            return date('Y-m-d', strtotime(-6 . " day", strtotime($date)));
+        } else if ($dateDayOfWeek !== '1') {
+            return date('Y-m-d', strtotime(- ($dateDayOfWeek - 1) . " day", strtotime($date)));
         }
         return $date;
     }
@@ -127,11 +124,8 @@ class GetTimetablesAcquireController extends Controller
             $getDBData = $this->getTimetablesFromDB($getDate, $setData['dayOfWeek']);
 
             //範囲外判定
-            if ($getDateYear <= '2014' || $getDateYear >= $yearAfterNext) {
-                $setData['isunavailable'] = true;
-            } else {
-                $setData['isunavailable'] = false;
-            }
+            $setData['isunavailable'] = $getDateYear <= '2014' || $getDateYear >= $yearAfterNext;
+
             //祝日判定
             if (array_key_exists($getDate, $yearHolidayDatas)) {
                 //祝日のとき
