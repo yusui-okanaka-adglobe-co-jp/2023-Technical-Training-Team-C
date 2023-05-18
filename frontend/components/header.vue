@@ -2,7 +2,7 @@
   <header>
     <div class="flex-box">
       <div class="titles">
-        <h1 class="font-size-xl">〇〇中学校時間割</h1>
+        <h1 class="font-size-xl">{{ schoolName }}中学校時間割</h1>
         <h2 class="font-size-l">{{ props.pageName }}</h2>
       </div>
       <img src="~/assets/img/logo.png" class="logo" />
@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts" setup>
+const schoolName = useRuntimeConfig().public.schoolName
 const props = defineProps({
   pageName: String,
 })
