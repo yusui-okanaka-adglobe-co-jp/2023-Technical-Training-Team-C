@@ -4,7 +4,7 @@
       <button class="usual-button start-end-date" type="button" @click="onclick">
         <div class="font-size-m">開始日終了日選択</div>
       </button>
-      <label v-if="booleanStart || booleanEnd" class="datetext">{{ start }}~{{ end }}</label>
+      <label v-if="isDisplayableTerm" class="datetext">{{ start }}~{{ end }}</label>
       <calendar-modal
         :is-shown="isShown"
         @update:value="selectDate"
@@ -50,6 +50,7 @@ import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
 import { Lesson, Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { commonLogout } from '~~/util/logout'
+import { tr } from 'date-fns/locale'
 
 const isShown = ref(false)
 
@@ -64,15 +65,12 @@ function open() {
 const start = ref()
 const end = ref()
 
-let booleanStart = false
-let booleanEnd = false
+const isDisplayableTerm = ref(false)
 
 function selectDate(e: Date[]) {
   start.value = format(e[0], 'yyyy-MM-dd')
   end.value = format(e[1], 'yyyy-MM-dd')
-  booleanStart = Boolean(start)
-  booleanEnd = Boolean(end)
-
+  isDisplayableTerm.value = true
   //カレンダーモーダルを閉じる
   isShown.value = false
 }
