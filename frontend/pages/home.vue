@@ -218,7 +218,7 @@ watch(
 
 <style scoped lang="scss">
 .container {
-  margin: 15px min(10%, 20px);
+  margin: 15px min(10%, 20px) 15px 0;
 }
 /* 三角関連 */
 .triangle-button-area {
