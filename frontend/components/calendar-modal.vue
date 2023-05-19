@@ -58,4 +58,9 @@ watch(date, () => {
 div {
   margin: 6px 2.5px;
 }
+@media only screen and (max-width: 767px) {
+  div {
+    margin: 6px 9px 6px 3px;
+  }
+}
 </style>
