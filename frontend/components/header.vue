@@ -36,11 +36,11 @@ header {
 }
 .logo {
   width: auto;
-  height: 100px;
+  height: 80px;
   margin-right: auto;
   margin-left: auto;
   position: absolute;
-  left: 44%;
+  left: 50%;
 }
 // モバイル用スタイル
 @media only screen and (max-width: 767px) {
@@ -56,7 +56,7 @@ header {
     padding: 15px 0px 15px 0px;
   }
   .logo {
-    height: 100%;
+    height: 75%;
     margin-left: 0px;
     left: 0%;
   }
