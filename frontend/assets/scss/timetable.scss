@@ -1,3 +1,17 @@
+//共通
+/* 範囲外 */
+.unavailable-cell {
+  background-color: #a9a9a9;
+}
+/* 科目/教師*/
+.lesson-holiday-cell {
+  background-color: #f4c9c9;
+}
+/*日付*/
+.date-holiday-cell {
+  background-color: #f4c9c9;
+}
+
 //PC用scss
 @media screen and (min-width: 768px) {
   .timetable {
@@ -39,14 +53,7 @@
     height: 90px;
     font-weight: bold;
   }
-  /* 範囲外 */
-  .unavailable-cell {
-    background-color: #a9a9a9;
-  }
   /* 科目/教師*/
-  .lesson-holiday-cell {
-    background-color: #f4c9c9;
-  }
   .lesson-cell-box {
     margin: 5px;
   }
@@ -112,9 +119,7 @@
     font-weight: bold;
   }
   /*　科目/教師 */
-  .lesson-holiday-cell {
-    background-color: #f4c9c9;
-  }
+
   .lesson-cell-box {
     margin: 0;
   }
