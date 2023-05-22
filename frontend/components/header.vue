@@ -40,7 +40,7 @@ header {
   margin-right: auto;
   margin-left: auto;
   position: absolute;
-  left: 44%;
+  left: 47%;
 }
 // モバイル用スタイル
 @media only screen and (max-width: 767px) {
@@ -59,6 +59,7 @@ header {
     height: 75%;
     margin-left: 0px;
     left: 0%;
+    margin-top: 8px;
   }
 }
 </style>
