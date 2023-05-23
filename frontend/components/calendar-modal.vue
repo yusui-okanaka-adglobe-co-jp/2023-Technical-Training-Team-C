@@ -28,7 +28,7 @@ import { getYear } from 'date-fns'
 const date = ref()
 
 const minDate = computed(() => new Date(2015, 0, 5))
-const maxDate = computed(() => new Date(getYear(new Date()) + 2, 0, 1))
+const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
 
 const props = defineProps({
   isShown: false,
@@ -57,5 +57,10 @@ watch(date, () => {
 <style lang="scss" scoped>
 div {
   margin: 6px 2.5px;
+}
+@media only screen and (max-width: 767px) {
+  div {
+    margin: 6px 9px 6px 3px;
+  }
 }
 </style>

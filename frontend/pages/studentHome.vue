@@ -6,7 +6,8 @@
       <div class="button-wrapper">
         <button class="font-size-xs button-wrapper__button" @click="getThisWeekTimetables">今週の時間割</button>
         <button class="font-size-xs button-wrapper__button" @click="openCarendar">日付選択</button>
-        <calendar-modal :is-shown="isShown" @update:value="selectDate"> </calendar-modal>
+        <calendar-modal :is-shown="isShown" @update:value="selectDate" @on-close="() => (isShown = false)">
+        </calendar-modal>
       </div>
       <!--三角ボタン-->
       <div class="triangle-wrapper">
@@ -15,13 +16,13 @@
           <button
             class="triangle-wrapper__inner__left"
             :disabled="displayLeftButton()"
-            @click="getLastWeekTimetable()"
+            @click="getLastWeekTimetable"
           ></button>
           <!--来週-->
           <button
             class="triangle-wrapper__inner__right"
             :disabled="displayRightButton()"
-            @click="getNextWeekTimetable()"
+            @click="getNextWeekTimetable"
           ></button>
         </div>
       </div>
@@ -49,6 +50,7 @@ const oldestDate = parse('20150101', 'yyyyMMdd', new Date())
 const nextYear = String(new Date().getFullYear() + 1)
 const latestString = nextYear + '1225'
 const latestDate = parse(latestString, 'yyyyMMdd', new Date())
+const isRendering = ref(true)
 
 await getTimetableData()
 
@@ -83,17 +85,21 @@ function displayToggle() {
   loadingDisplay.value = !loadingDisplay.value
 }
 
+onMounted(() => {
+  isRendering.value = false
+})
+
 //前週ボタン表示
 function displayLeftButton() {
-  return oldestDate >= displayDate
+  return oldestDate >= displayDate || isRendering.value
 }
 //次週ボタン表示
 function displayRightButton() {
-  return latestDate <= displayDate
+  return latestDate <= displayDate || isRendering.value
 }
 
 //前週ボタン押下時
-function getLastWeekTimetable() {
+const getLastWeekTimetable = () => {
   if (oldestDate <= displayDate) {
     displayDate.setDate(displayDate.getDate() - 7)
     const lastWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -108,7 +114,7 @@ function getLastWeekTimetable() {
   }
 }
 //次週ボタン押下時
-function getNextWeekTimetable() {
+const getNextWeekTimetable = () => {
   if (latestDate >= displayDate) {
     displayDate.setDate(displayDate.getDate() + 7)
     const nextWeekDate = format(displayDate, 'yyyy-MM-dd')
@@ -148,12 +154,16 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
+    isRendering.value = false
+    if (response.value == null) {
+      return
+    }
     //クエリの日付と渡されている日付が同じか確認
-    if (response.value?.[0].date !== view.value) {
+    if (response.value[0].date !== view.value) {
       navigateTo({
         path: '/studentHome',
         query: {
-          date: response.value?.[0].date,
+          date: response.value[0].date,
         },
       })
     }
@@ -192,6 +202,7 @@ watch(
   () => route.query,
   () => {
     getTimetableData()
+    isRendering.value = true
   }
 )
 </script>
