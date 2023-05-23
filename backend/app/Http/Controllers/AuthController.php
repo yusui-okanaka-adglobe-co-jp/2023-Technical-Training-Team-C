@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function __invoke(Request $request)
     {
         // Cookieの取得
-        $cookieValue = Cookie::get('api_token', 'default');
+        $cookieValue = Cookie::get('api_token');
         // Teacherテーブルのトークン取得
         $user = Teacher::where('api_token', $cookieValue)->first();
         $response = "";
