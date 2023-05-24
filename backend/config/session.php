@@ -155,8 +155,7 @@ return [
     |
     */
 
-    //'domain' => env('SESSION_DOMAIN'),
-    'domain' => '.fly.dev',
+    'domain' => env('SESSION_DOMAIN'),
 
 
     /*
@@ -198,6 +197,6 @@ return [
     |
     */
 
-    'same_site' => 'lax',
+    'same_site' => 'none',
 
 ];
