@@ -11,8 +11,13 @@ class LogoutController extends Controller
     public function __invoke(Request $request)
     {
         // Cookieの削除
-        setcookie('api_token', '', 0, '/');
+        $response = response();
+        $response->cookie('api_token', '', 0, '/');
 
-        return;
+        // レスポンスを返す
+        return $response;
+        // setcookie('api_token', '', 0, '/');
+
+        // return $response;
     }
 }
