@@ -156,7 +156,7 @@ return [
     */
 
     //'domain' => env('SESSION_DOMAIN'),
-    'domain' => 'fly.dev',
+    'domain' => '.fly.dev',
 
 
     /*
