@@ -5,5 +5,6 @@ export async function commonLogout() {
     baseURL: config.public.apiUrl,
     credentials: 'include',
   })
+  alert('ログアウト処理')
   return router.push('/teachersLogin')
 }
