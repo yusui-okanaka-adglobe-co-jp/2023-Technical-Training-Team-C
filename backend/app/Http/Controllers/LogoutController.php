@@ -13,14 +13,12 @@ class LogoutController extends Controller
         // Cookieの削除
         $response = response();
         // $response->setcookie('api_token', '', 0, '/');
+        // $response = response();
         // $response->cookie('api_token');
         // $response->cookie('api_token', '', 0, '/');
         Cookie::queue(Cookie::forget('api_token'));
         // $response->cookie('api_token');
         // レスポンスを返す
         return;
-        // setcookie('api_token', '', 0, '/');
-
-        // return $response;
     }
 }
