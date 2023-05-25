@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: process.env.API_URL,
       //.envファイルにNUXT_PUBLIC_SCHOOL_NAME=""と書くことで値変更可能
-      schoolName: 'adglobe',
+      schoolName: process.env.NUXT_PUBLIC_SCHOOL_NAME,
     },
   },
   css: [
