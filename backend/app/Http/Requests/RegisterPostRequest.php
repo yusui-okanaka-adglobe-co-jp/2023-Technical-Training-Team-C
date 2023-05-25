@@ -32,7 +32,7 @@ class RegisterPostRequest extends FormRequest
     {
         $latestDate = date("Y", strtotime("1  year")) . '-12-31';
         return [
-            'time.start' => 'required|date_format:"Y-m-d"|after_or_equal:2014-01-01|before_or_equal:' . $latestDate,
+            'time.start' => 'required|date_format:"Y-m-d"|after_or_equal:2015-01-01|before_or_equal:' . $latestDate,
             'time.end' => 'required|date_format:"Y-m-d"|after_or_equal:time.start|before_or_equal:' . $latestDate,
             'lessons' => 'required|array',
             'lessons.*.subject' => 'required_with:lessons|string|max:10',
