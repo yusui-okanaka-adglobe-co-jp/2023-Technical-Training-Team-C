@@ -2,6 +2,13 @@
   <table class="timetable register">
     <tbody>
       <!--最初の列 空白と時間割の時限を置く-->
+      <tr>
+        <th class="dayOfWeek-head horizontal-writing"></th>
+        <!--時限表示ループ-->
+        <template v-for="periodNumber of blankCell" :key="periodNumber">
+          <TimetablePeriod :period="periodNumber"></TimetablePeriod>
+        </template>
+      </tr>
       <!--配列をループ-->
       <template v-for="timetable in props.timetables" :key="timetable">
         <tr>
@@ -53,6 +60,8 @@ for (const timetable of props.timetables) {
     )
   }
 }
+/* 6回回す用　*/
+const blankCell = 6
 
 /* 曜日の文字を返却 */
 function dayOfWeekChangeString(dayOfWeek: number) {
