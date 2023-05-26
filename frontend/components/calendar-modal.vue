@@ -26,10 +26,8 @@ import { ref } from 'vue'
 import { getYear } from 'date-fns'
 
 const date = ref()
-
-const minDate = computed(() => new Date(2014, 11, 29))
+let minDate = computed(() => new Date(2014, 11, 29))
 const maxDate = computed(() => new Date(getYear(new Date()) + 1, 11, 31))
-
 const props = defineProps({
   isShown: false,
   selectionType: {
@@ -38,6 +36,11 @@ const props = defineProps({
     validator: (value) => ['week-picker', 'range'].includes(value),
   },
 })
+console.log(props.selectionType)
+
+if (props.selectionType === 'range') {
+  minDate = computed(() => new Date(2015, 0, 1))
+}
 
 const emit = defineEmits()
 
