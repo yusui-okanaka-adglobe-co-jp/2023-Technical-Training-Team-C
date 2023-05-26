@@ -1,5 +1,8 @@
 <template>
   <default-layout page-name="ログイン画面">
+    <div class="button-area">
+      <button class="button-font-color usual-button font-size-m" @click="goToStudentPage">生徒用画面確認</button>
+    </div>
     <div class="container board-color">
       <section class="login">
         <div class="inner-title">
@@ -58,9 +61,15 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
 import { messagesResponse } from '~~/types/response/messagesResponse'
+
+//生徒用画面遷移
+function goToStudentPage() {
+  window.open('/studentHome', '_blank', 'noreferrer')
+}
+
 // パスワード表示切り替え部分
 const isChecked = ref(false)
 const passwordType = computed(function () {
@@ -185,5 +194,11 @@ const onClick = async () => {
 }
 .nonebox {
   background-color: #ffffff;
+}
+
+//生徒用画面ボタンエリア
+.button-area {
+  text-align: right;
+  margin-right: min(5%, 20px);
 }
 </style>
