@@ -23,6 +23,14 @@
       <div class="right-area">
         <table class="timetable-update">
           <!--時間割-->
+          <!--最初の列 空白と時間割の時限を置く-->
+          <tr>
+            <th class="dayOfWeek-head horizontal-writing"></th>
+            <!--時限表示ループ-->
+            <template v-for="periodNumber of periodCount" :key="periodNumber">
+              <TimetablePeriod :period="periodNumber"></TimetablePeriod>
+            </template>
+          </tr>
           <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
             <tr>
               <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dayOfWeek)" />
