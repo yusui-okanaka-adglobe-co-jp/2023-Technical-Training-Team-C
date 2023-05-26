@@ -14,6 +14,7 @@
               id="subject"
               maxlength="10"
               required
+              placeholder="「クリア」で削除"
             />
             <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
               科目名を入力してください
@@ -29,6 +30,7 @@
               id="teacher"
               maxlength="10"
               required
+              placeholder="「クリア」で削除"
             />
             <div v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">
               教師名を入力してください
