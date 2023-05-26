@@ -36,7 +36,6 @@ const props = defineProps({
     validator: (value) => ['week-picker', 'range'].includes(value),
   },
 })
-console.log(props.selectionType)
 
 if (props.selectionType === 'range') {
   minDate = computed(() => new Date(2015, 0, 1))
