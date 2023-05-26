@@ -23,6 +23,14 @@
       <div class="right-area">
         <table class="timetable-update">
           <!--時間割-->
+          <!--最初の列 空白と時間割の時限を置く-->
+          <tr>
+            <th class="dayOfWeek-head horizontal-writing"></th>
+            <!--時限表示ループ-->
+            <template v-for="periodNumber of blankCell" :key="periodNumber">
+              <TimetablePeriod :period="periodNumber"></TimetablePeriod>
+            </template>
+          </tr>
           <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
             <tr>
               <TimetableDayOfWeek
@@ -79,6 +87,8 @@ import { commonLogout } from '~~/util/logout'
 definePageMeta({
   middleware: 'auth',
 })
+/* 6回回す用　*/
+const blankCell = 6
 
 /* 固定の変数　*/
 const periodCount: number = 6
