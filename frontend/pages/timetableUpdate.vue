@@ -27,7 +27,7 @@
           <tr>
             <th class="dayOfWeek-head horizontal-writing"></th>
             <!--時限表示ループ-->
-            <template v-for="periodNumber of blankCell" :key="periodNumber">
+            <template v-for="periodNumber of periodCount" :key="periodNumber">
               <TimetablePeriod :period="periodNumber"></TimetablePeriod>
             </template>
           </tr>
@@ -87,8 +87,6 @@ import { commonLogout } from '~~/util/logout'
 definePageMeta({
   middleware: 'auth',
 })
-/* 6回回す用　*/
-const blankCell = 6
 
 /* 固定の変数　*/
 const periodCount: number = 6
