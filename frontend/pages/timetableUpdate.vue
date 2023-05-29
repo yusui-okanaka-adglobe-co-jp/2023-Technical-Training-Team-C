@@ -216,7 +216,7 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   box-shadow: 0 0 0 1px #333 inset;
 }
 .time-area {
-  height: 180px;
+  height: 150px;
 }
 .time-area-text {
   text-align: center;
@@ -232,10 +232,7 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 .right_area {
   display: flex;
 }
-.left-button {
-  margin-left: 24px;
-  margin-bottom: 24px;
-}
+
 .timetable-button-area {
   width: 14%;
   display: flex;

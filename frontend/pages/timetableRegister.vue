@@ -13,34 +13,26 @@
       >
       </calendar-modal>
     </div>
+    <div class="main">
+      <div class="timetable-button-area">
+        <button class="usual-button home font-size-l" type="button" @click="() => navigateTo('/home')">ホーム</button>
 
-    <p>
-      <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
-        <div class="font-size-l">ホーム</div>
-      </button>
-    </p>
+        <button class="usual-button student-home font-size-m" type="button" @click="open">生徒用画面確認</button>
 
-    <p>
-      <button class="usual-button student-home" type="button" @click="open">
-        <div class="font-size-m">生徒用画面確認</div>
-      </button>
-    </p>
-
-    <p>
-      <button class="usual-button logout" type="button" @click="commonLogout">
-        <div class="font-size-l">ログアウト</div>
-      </button>
-    </p>
-
-    <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
-    <p>
-      <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
-        <div class="font-size-l">戻る</div>
-      </button>
-      <button class="unusual-button timetable-update" type="button" @click="useState">
-        <div class="font-size-l">時間割更新</div>
-      </button>
-    </p>
+        <button class="usual-button logout font-size-l" type="button" @click="commonLogout">ログアウト</button>
+      </div>
+      <div class="timtetable-area">
+        <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
+      </div>
+      <div class="bottom">
+        <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
+          <div class="font-size-l">戻る</div>
+        </button>
+        <button class="unusual-button timetable-update" type="button" @click="useState">
+          <div class="font-size-l">時間割更新</div>
+        </button>
+      </div>
+    </div>
   </default-layout>
 </template>
 
@@ -140,9 +132,9 @@ input {
   font-size: 24px;
 }
 
-.home {
-  margin-top: 66px;
-}
+// .home {
+//   margin-top: 66px;
+// }
 
 .back-home {
   position: absolute;
@@ -153,6 +145,28 @@ input {
   position: absolute;
   left: 960px;
   top: 888px;
+}
+
+.timtetable-area {
+  margin-top: 180px;
+}
+
+.register {
+  margin-top: 60px;
+  margin-left: 0px;
+}
+
+.timetable-button-area {
+  margin-top: 80px;
+  width: 14%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.bottom {
+  width: 100%;
+  padding: 0 80px;
 }
 
 // カレンダーダイアログのscss
