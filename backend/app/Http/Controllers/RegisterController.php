@@ -17,6 +17,7 @@ class RegisterController extends Controller
             $start = $request->input('time.start');
             $end = $request->input('time.end');
             $lessons = $request->collect('lessons');
+            $isClear = $request->input('isClear');
 
             foreach ($lessons as $class) {
                 $post = new Timetable();
@@ -25,11 +26,9 @@ class RegisterController extends Controller
                 $dayOfWeek = $class['dayOfWeek'];
                 $period = $class['period'];
                 $subject = $class['subject'];
-                if ($subject === "クリア") {
-                    $subject = "";
-                }
                 $teacher = $class['teacher'];
-                if ($teacher === "クリア") {
+                if ($isClear === true) {
+                    $subject = "";
                     $teacher = "";
                 }
                 $post->day_of_week = $dayOfWeek;
