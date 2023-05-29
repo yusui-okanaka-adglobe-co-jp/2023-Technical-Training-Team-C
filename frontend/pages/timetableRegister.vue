@@ -1,18 +1,5 @@
 <template>
   <default-layout page-name="教師用登録ページ">
-    <div class="date-set">
-      <button class="usual-button start-end-date" type="button" @click="onclick">
-        <div class="font-size-m">開始日終了日選択</div>
-      </button>
-      <label v-if="isDisplayableTerm" class="datetext">{{ start }}~{{ end }}</label>
-      <calendar-modal
-        :is-shown="isShown"
-        @update:value="selectDate"
-        selection-type="range"
-        @on-close="() => (isShown = false)"
-      >
-      </calendar-modal>
-    </div>
     <div class="main">
       <div class="timetable-button-area">
         <button class="usual-button home font-size-l" type="button" @click="() => navigateTo('/home')">ホーム</button>
@@ -21,16 +8,32 @@
 
         <button class="usual-button logout font-size-l" type="button" @click="commonLogout">ログアウト</button>
       </div>
-      <div class="timtetable-area">
+
+      <div class="timetable-wrapper">
+        <div class="date-set">
+          <button class="usual-button start-end-date" type="button" @click="onclick">
+            <div class="font-size-m">開始日終了日選択</div>
+          </button>
+          <label v-if="isDisplayableTerm" class="datetext">{{ start }}~{{ end }}</label>
+          <calendar-modal
+            :is-shown="isShown"
+            @update:value="selectDate"
+            selection-type="range"
+            @on-close="() => (isShown = false)"
+          >
+          </calendar-modal>
+        </div>
         <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
-      </div>
-      <div class="bottom">
-        <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
-          <div class="font-size-l">戻る</div>
-        </button>
-        <button class="unusual-button timetable-update" type="button" @click="useState">
-          <div class="font-size-l">時間割更新</div>
-        </button>
+        <div class="bottom">
+          <div class="bottom-button-area">
+            <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
+              <div class="font-size-l">戻る</div>
+            </button>
+            <button class="unusual-button timetable-update" type="button" @click="useState">
+              <div class="font-size-l">時間割更新</div>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </default-layout>
@@ -122,7 +125,7 @@ input {
 }
 
 .date-set {
-  padding-left: 380px;
+  margin-left: 180px;
   font-size: 24px;
   margin-top: 16px;
 }
@@ -132,33 +135,16 @@ input {
   font-size: 24px;
 }
 
-// .home {
-//   margin-top: 66px;
-// }
-
-.back-home {
-  position: absolute;
-  left: 320px;
-  top: 888px;
-}
-.timetable-update {
-  position: absolute;
-  left: 960px;
-  top: 888px;
-}
-
-.timtetable-area {
-  margin-top: 180px;
-}
-
-.register {
-  margin-top: 60px;
-  margin-left: 0px;
+.main {
+  display: flex;
+  height: calc(100vh - 100px);
+  margin-bottom: min(10px, 5%);
 }
 
 .timetable-button-area {
-  margin-top: 80px;
-  width: 14%;
+  margin-top: 200px;
+  padding: auto;
+  width: min(20%, 250px);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -167,6 +153,11 @@ input {
 .bottom {
   width: 100%;
   padding: 0 80px;
+}
+.bottom-button-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 // カレンダーダイアログのscss
