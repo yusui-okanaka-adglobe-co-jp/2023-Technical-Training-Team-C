@@ -136,7 +136,9 @@ const onClick = async () => {
 .container {
   width: 450px;
   height: 600px;
-  margin: 64px auto 0;
+  // margin: 64px auto 0;
+  margin: 0 auto 0;
+
   padding-top: 32px;
 }
 .inner-title {
@@ -198,6 +200,7 @@ const onClick = async () => {
 
 //生徒用画面ボタンエリア
 .button-area {
+  height: 64px;
   text-align: right;
   margin-right: min(5%, 20px);
 }
