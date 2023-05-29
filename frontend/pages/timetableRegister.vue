@@ -141,6 +141,10 @@ input {
   margin-bottom: min(10px, 5%);
 }
 
+.register {
+  margin-top: 80px;
+}
+
 .timetable-button-area {
   margin-top: 200px;
   padding: auto;
