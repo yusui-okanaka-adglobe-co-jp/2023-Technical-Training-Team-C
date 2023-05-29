@@ -136,9 +136,7 @@ const onClick = async () => {
 .container {
   width: 450px;
   height: 600px;
-  // margin: 64px auto 0;
-  margin: 0 auto 0;
-
+  margin: 0 auto;
   padding-top: 32px;
 }
 .inner-title {
