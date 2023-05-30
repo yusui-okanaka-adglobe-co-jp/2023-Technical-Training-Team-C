@@ -125,6 +125,8 @@ defineExpose({
 
 function displayInput() {
   if (checked.value === true) {
+    subject.value = ''
+    teacher.value = ''
     return true
   }
   return false
