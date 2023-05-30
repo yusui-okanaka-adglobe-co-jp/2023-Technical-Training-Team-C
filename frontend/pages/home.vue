@@ -1,5 +1,5 @@
 <template>
-  <default-layout page-name="教師用ページ">
+  <default-layout page-name="教師用一覧ページ">
     <section class="container">
       <!-- html記述場所 -->
       <div class="main">
@@ -50,9 +50,10 @@
 </template>
 
 <script lang="ts" setup>
-// 認証用middleware
+// 認証用middleware,tilte
 definePageMeta({
   middleware: 'auth',
+  title: 'T.T.L - 一覧画面',
 })
 import { Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { format, parse } from 'date-fns'

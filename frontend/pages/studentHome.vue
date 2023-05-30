@@ -43,6 +43,10 @@ import { format, parse } from 'date-fns'
 const route = useRoute()
 const timetables = ref<Timetable[]>([])
 
+definePageMeta({
+  title: 'T.T.L - 生徒用画面',
+})
+
 //createdのときに行う処理
 const view = ref()
 const calendarView = view
