@@ -14,7 +14,6 @@
                 maxlength="10"
                 :required="!isClear"
                 :disabled="isClear"
-                :readonly="isClear"
               />
             </label>
             <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
