@@ -75,7 +75,6 @@ defineExpose({
     subject.value = ''
     teacher.value = ''
     isClear.value = false
-    console.log('clear')
   },
 })
 
@@ -95,7 +94,6 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
 const emit = defineEmits(['submit', 'onClose'])
 
 function regist(e: Event) {
-  console.log('regist')
   e.preventDefault()
   isValidSubject.value = subject.value.length !== 0 || isClear.value
   isValidTeacher.value = teacher.value.length !== 0 || isClear.value
