@@ -58,15 +58,6 @@
 import { ref } from 'vue'
 import ModalBase from './modal-base.vue'
 
-const subject = ref('')
-const teacher = ref('')
-const isClear = ref(false)
-
-const checked = ref(false)
-
-const isValidSubject = ref(true)
-const isValidTeacher = ref(true)
-
 export interface Submit {
   subject: string
   teacher: string
@@ -78,6 +69,24 @@ interface ModalBaseProps {
   dayOfWeek: string
   period: number
 }
+
+defineExpose({
+  clear() {
+    subject.value = ''
+    teacher.value = ''
+    isClear.value = false
+    console.log('clear')
+  },
+})
+
+const subject = ref('')
+const teacher = ref('')
+const isClear = ref(false)
+
+const checked = ref(false)
+
+const isValidSubject = ref(true)
+const isValidTeacher = ref(true)
 
 const props = withDefaults(defineProps<ModalBaseProps>(), {
   isShown: false,
@@ -113,15 +122,6 @@ function regist(e: Event) {
 function onClose() {
   emit('onClose')
 }
-
-defineExpose({
-  clear() {
-    subject.value = ''
-    teacher.value = ''
-    isClear.value = false
-    console.log('clear')
-  },
-})
 
 function displayInput() {
   if (checked.value === true) {

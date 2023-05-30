@@ -86,9 +86,7 @@ function useState() {
         .filter((lesson) => lesson.subject.length || lesson.teacher.length)
     )
     .flat()
-  console.log(useTimetables().lessons.value)
   useTimetables().time.value = { start: start.value, end: end.value }
-  console.log(useTimetables().time.value)
 
   if (start.value == undefined || end.value == undefined) {
     alert('開始日終了日を選択してください')
