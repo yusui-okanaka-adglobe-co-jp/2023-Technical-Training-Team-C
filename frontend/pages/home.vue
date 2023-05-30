@@ -242,7 +242,7 @@ watch(
 
 <style scoped lang="scss">
 .container {
-  margin: 15px min(10%, 20px) 15px 0;
+  margin: 0 min(10%, 20px) 15px 0;
 }
 /* 三角関連 */
 .triangle-button-area {
@@ -297,11 +297,9 @@ watch(
 .timetable-wrapper {
   margin-bottom: min(80px, 10%);
 }
-button {
-  margin-bottom: 24px;
-}
+
 .timetable-button-area {
-  margin-top: 120px;
+  margin-top: 200px;
   padding: auto;
   width: min(20%, 250px);
   display: flex;

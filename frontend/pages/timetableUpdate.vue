@@ -213,7 +213,7 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   margin-left: 0px;
 }
 .time-area {
-  height: 150px;
+  height: 170px;
 }
 .time-area-text {
   text-align: center;
@@ -252,7 +252,6 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 .bottom-button-area {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 .important-button {
