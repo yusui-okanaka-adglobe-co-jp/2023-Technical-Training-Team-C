@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="root">
     <Header :page-name="props.pageName" />
     <main>
       <slot></slot>
@@ -19,3 +19,8 @@ const props = defineProps({
   },
 })
 </script>
+<style lang="scss" scoped>
+.root {
+  height: 100vh;
+}
+</style>
