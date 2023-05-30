@@ -31,11 +31,14 @@ function onclick() {
   isShown.value = !isShown.value
 }
 
+/* 消ボタンの処理 */
 function deleteClass() {
   updateSubject.value = ''
   updateTeacher.value = ''
+  updateIsClear.value = false
   emit('update:subject', updateSubject.value)
   emit('update:teacherName', updateTeacher.value)
+  emit('update:isClear', updateIsClear.value)
 }
 
 const props = defineProps({
@@ -57,15 +60,18 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:subject', 'update:teacherName'])
+const emit = defineEmits(['update:subject', 'update:teacherName', 'update:isClear'])
 
 const updateSubject = ref('')
 const updateTeacher = ref('')
+const updateIsClear = ref(false)
 function submit(submit: Submit) {
   updateSubject.value = submit.subject
   updateTeacher.value = submit.teacher
+  updateIsClear.value = submit.isClear
   emit('update:subject', updateSubject.value)
   emit('update:teacherName', updateTeacher.value)
+  emit('update:isClear', updateIsClear.value)
   isShown.value = false
 }
 

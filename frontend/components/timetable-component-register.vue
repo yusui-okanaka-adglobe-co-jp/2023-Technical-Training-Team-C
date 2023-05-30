@@ -22,6 +22,7 @@
               :period="index + 1"
               v-model:subject="lesson.subject"
               v-model:teacher-name="lesson.teacher"
+              v-model:isClear="lesson.isClear"
             >
             </TimetableLessonRegister>
           </template>

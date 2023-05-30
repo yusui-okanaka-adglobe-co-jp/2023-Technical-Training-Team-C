@@ -57,6 +57,7 @@ function onclick() {
   isShown.value = !isShown.value
 }
 
+/* 生徒用画面へ遷移 */
 function open() {
   window.open('/studentHome', '_blank', 'noreferrer')
 }
@@ -84,6 +85,7 @@ function useState() {
             teacher: lesson.teacher,
             period: index + 1,
             dayOfWeek: timetable.dayOfWeek,
+            isClear: lesson.isClear,
           }
         })
         .filter((lesson) => lesson.subject.length || lesson.teacher.length)
@@ -102,10 +104,7 @@ function useState() {
   }
 }
 
-const today = new Date()
-console.log(today)
-
-/* 検証用オブジェクト */
+/* 初期オブジェクト */
 const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, value]) => ({
   dayOfWeek: value,
   isHoliday: false,
@@ -114,6 +113,7 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, 
   lessons: [...Array(6)].map<Lesson>((_) => ({
     subject: '',
     teacher: '',
+    isClear: false,
   })),
 }))
 

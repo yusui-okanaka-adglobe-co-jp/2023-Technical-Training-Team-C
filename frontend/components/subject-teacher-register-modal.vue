@@ -34,7 +34,7 @@
               教師名を入力してください
             </div>
           </div>
-
+          <input type="checkbox" id="check1" v-model="checked" />この授業を削除
           <button type="button" class="usual-button cancel-button" @click.stop="onClose">
             <div class="font-size-l">キャンセル</div>
           </button>
@@ -53,6 +53,9 @@ import ModalBase from './modal-base.vue'
 
 const subject = ref('')
 const teacher = ref('')
+const isClear = ref(false)
+
+const checked = ref(false)
 
 const isValidSubject = ref(true)
 const isValidTeacher = ref(true)
@@ -60,6 +63,7 @@ const isValidTeacher = ref(true)
 export interface Submit {
   subject: string
   teacher: string
+  isClear: boolean
 }
 
 interface ModalBaseProps {
@@ -84,8 +88,21 @@ function regist(e: Event) {
   e.preventDefault()
   isValidSubject.value = subject.value.length !== 0
   isValidTeacher.value = teacher.value.length !== 0
-  if (isValidSubject.value && isValidTeacher.value) {
-    emit('submit', { subject: subject.value, teacher: teacher.value })
+  console.log(checked.value)
+  if (checked.value) {
+    isClear.value = true
+  } else {
+    isClear.value = false
+  }
+
+  if (checked.value) {
+    subject.value = '削除'
+    teacher.value = ''
+    emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
+  } else {
+    if (isValidSubject.value && isValidTeacher.value) {
+      emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
+    }
   }
 }
 
