@@ -1,5 +1,5 @@
 <template>
-  <default-layout page-name="教師用更新ページ">
+  <default-layout page-name="教師用時間割更新ページ">
     <!-- html記述場所 -->
     <div class="main">
       <!--ボタン-->

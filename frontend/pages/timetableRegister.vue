@@ -1,5 +1,5 @@
 <template>
-  <default-layout page-name="教師用登録ページ">
+  <default-layout page-name="教師用時間割登録ページ">
     <div class="main">
       <div class="timetable-button-area">
         <button class="usual-button home font-size-l" type="button" @click="() => navigateTo('/home')">ホーム</button>

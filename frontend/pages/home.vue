@@ -1,5 +1,5 @@
 <template>
-  <default-layout page-name="教師用ページ">
+  <default-layout page-name="教師用一覧ページ">
     <section class="container">
       <!-- html記述場所 -->
       <div class="main">
