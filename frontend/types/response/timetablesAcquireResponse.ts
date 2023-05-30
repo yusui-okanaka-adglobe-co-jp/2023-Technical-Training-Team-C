@@ -10,4 +10,5 @@ export interface Timetable {
 export interface Lesson {
   subject: string
   teacher: string
+  isClear: boolean
 }

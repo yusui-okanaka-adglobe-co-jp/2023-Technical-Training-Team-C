@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-
 use Illuminate\Foundation\Http\FormRequest;
 
-// use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -31,15 +29,16 @@ class RegisterPostRequest extends FormRequest
     public function rules()
     {
         $latestDate = date("Y", strtotime("1  year")) . '-12-31';
-        return [
+        $rules = [
             'time.start' => 'required|date_format:"Y-m-d"|after_or_equal:2015-01-01|before_or_equal:' . $latestDate,
             'time.end' => 'required|date_format:"Y-m-d"|after_or_equal:time.start|before_or_equal:' . $latestDate,
             'lessons' => 'required|array',
-            'lessons.*.subject' => 'required_with:lessons|string|max:10',
-            'lessons.*.teacher' => 'required_with:lessons|string|max:10',
+            'lessons.*.subject' => 'exclude_unless:lessons.*.isClear,false|required_with:lessons|string|max:10',
+            'lessons.*.teacher' => 'exclude_unless:lessons.*.isClear,false|required_with:lessons|string|max:10',
             'lessons.*.dayOfWeek' => 'required_with:lessons|integer|min:0|max:6',
-            'lessons.*.period' => 'required_with:lessons|integer|min:1|max:6'
+            'lessons.*.period' => 'required_with:lessons|integer|min:1|max:6',
         ];
+        return $rules;
     }
 
 
