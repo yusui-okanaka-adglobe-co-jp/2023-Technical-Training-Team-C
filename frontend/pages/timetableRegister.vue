@@ -161,7 +161,6 @@ input {
 .bottom-button-area {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 // カレンダーダイアログのscss

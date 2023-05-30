@@ -252,7 +252,6 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 .bottom-button-area {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 .important-button {
