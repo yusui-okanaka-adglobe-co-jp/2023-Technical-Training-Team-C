@@ -3,6 +3,7 @@ export interface Lesson {
   teacher: string
   dayOfWeek: number
   period: number
+  isClear: boolean
 }
 
 export interface Time {

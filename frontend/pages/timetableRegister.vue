@@ -57,6 +57,7 @@ function onclick() {
   isShown.value = !isShown.value
 }
 
+/* 生徒用画面へ遷移 */
 function open() {
   window.open('/studentHome', '_blank', 'noreferrer')
 }
@@ -84,14 +85,13 @@ function useState() {
             teacher: lesson.teacher,
             period: index + 1,
             dayOfWeek: timetable.dayOfWeek,
+            isClear: lesson.isClear,
           }
         })
         .filter((lesson) => lesson.subject.length || lesson.teacher.length)
     )
     .flat()
-  console.log(useTimetables().lessons.value)
   useTimetables().time.value = { start: start.value, end: end.value }
-  console.log(useTimetables().time.value)
 
   if (start.value == undefined || end.value == undefined) {
     alert('開始日終了日を選択してください')
@@ -102,10 +102,7 @@ function useState() {
   }
 }
 
-const today = new Date()
-console.log(today)
-
-/* 検証用オブジェクト */
+/* 初期オブジェクト */
 const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, value]) => ({
   dayOfWeek: value,
   isHoliday: false,
@@ -114,6 +111,7 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, 
   lessons: [...Array(6)].map<Lesson>((_) => ({
     subject: '',
     teacher: '',
+    isClear: false,
   })),
 }))
 </script>

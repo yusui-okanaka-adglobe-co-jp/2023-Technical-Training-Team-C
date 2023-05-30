@@ -26,6 +26,11 @@ class RegisterController extends Controller
                 $period = $class['period'];
                 $subject = $class['subject'];
                 $teacher = $class['teacher'];
+                $isClear = $class['isClear'];
+                if ($isClear === true) {
+                    $subject = '';
+                    $teacher = '';
+                }
                 $post->day_of_week = $dayOfWeek;
                 $post->period = $period;
                 $post->subject = $subject;
