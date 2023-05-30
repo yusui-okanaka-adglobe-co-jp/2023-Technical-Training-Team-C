@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="clear-checkbox-set font-size-m">
-            <label for="is-chech">
+            <label for="is-check">
               <input type="checkbox" id="is-check" class="clear-checkbox" v-model="isClear" />
               授業削除
             </label>
