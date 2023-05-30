@@ -88,11 +88,10 @@ function useState() {
             isClear: lesson.isClear,
           }
         })
-        .filter((lesson) => lesson.subject.length || lesson.teacher.length)
+        .filter((lesson) => (lesson.subject.length && lesson.teacher.length) || lesson.isClear)
     )
     .flat()
   useTimetables().time.value = { start: start.value, end: end.value }
-
   if (start.value == undefined || end.value == undefined) {
     alert('開始日終了日を選択してください')
   } else if (useTimetables().lessons.value.length === 0) {
