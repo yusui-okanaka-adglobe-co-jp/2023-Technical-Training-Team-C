@@ -1,13 +1,6 @@
 <template>
-  <default-layout page-name="教師用更新ページ">
+  <default-layout page-name="教師用時間割更新ページ">
     <!-- html記述場所 -->
-    <!--時間表示場所-->
-    <div class="time-area">
-      <div class="time-area-text">
-        <div class="font-size-xl">この時間割を登録しますか？</div>
-        <div class="time-area-text-margin font-size-l">{{ time?.start }} ~ {{ time?.end }}</div>
-      </div>
-    </div>
     <div class="main">
       <!--ボタン-->
       <div class="timetable-button-area">
@@ -19,35 +12,51 @@
           ログアウト
         </button>
       </div>
-      <!--時間割エリア-->
-      <div class="right-area">
-        <table class="timetable-update">
-          <!--時間割-->
-          <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
-            <tr>
-              <TimetableDayOfWeek
-                :day-of-week="dayOfWeekChangeString(dayOfWeekNumber[dayOfWeek - 1])"
-              ></TimetableDayOfWeek>
-              <template v-for="period in periodCount" :key="period">
-                <template v-if="lessonExist(period, dayOfWeek)">
-                  <!--データがある時-->
-                  <TimetableLesson
-                    :is-holiday="false"
-                    :subject="getSubject(period, dayOfWeek)"
-                    :teacher-name="getTeacher(period, dayOfWeek)"
-                    :is-unavailable="false"
-                  />
+      <div class="timetable-wrapper">
+        <!--時間表示場所-->
+        <div class="time-area">
+          <div class="time-area-text">
+            <div class="font-size-xl">この時間割を登録しますか？</div>
+            <div class="time-area-text-margin font-size-l">{{ time?.start }} ~ {{ time?.end }}</div>
+          </div>
+        </div>
+        <!--時間割エリア-->
+        <div class="right-area">
+          <table class="timetable update">
+            <tbody>
+              <!--時間割-->
+              <!--最初の列 空白と時間割の時限を置く-->
+              <tr>
+                <th class="dayOfWeek-head horizontal-writing"></th>
+                <!--時限表示ループ-->
+                <template v-for="periodNumber of periodCount" :key="periodNumber">
+                  <TimetablePeriod :period="periodNumber"></TimetablePeriod>
                 </template>
+              </tr>
+              <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
+                <tr>
+                  <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dayOfWeek)" />
+                  <template v-for="period in periodCount" :key="period">
+                    <template v-if="lessonExist(period, dayOfWeek)">
+                      <!--データがある時-->
+                      <TimetableLesson
+                        :is-holiday="false"
+                        :subject="getSubject(period, dayOfWeek)"
+                        :teacher-name="getTeacher(period, dayOfWeek)"
+                        :is-unavailable="false"
+                      />
+                    </template>
 
-                <template v-else>
-                  <!--データがないとき-->
-                  <TimetableLesson :is-holiday="false" :is-unavailable="false" />
-                </template>
+                    <template v-else>
+                      <!--データがないとき-->
+                      <TimetableLesson :is-holiday="false" :is-unavailable="false" />
+                    </template>
+                  </template>
+                </tr>
               </template>
-            </tr>
-          </template>
-        </table>
-
+            </tbody>
+          </table>
+        </div>
         <div class="bottom">
           <div class="bottom-button-area">
             <div class="bottom-left-button">
@@ -73,11 +82,11 @@
 <script lang="ts" setup>
 import { useTimetables } from '~~/composables/useTimetables'
 import { messagesResponse } from '~~/types/response/messagesResponse'
-import { DAY_OF_WEEK } from '~~/util/constants'
 import { commonLogout } from '~~/util/logout'
 
 definePageMeta({
   middleware: 'auth',
+  title: 'T.T.L - 時間割更新画面',
 })
 
 /* 固定の変数　*/
@@ -107,9 +116,6 @@ const timetablesData = {
   lessons: lessons.value,
 }
 
-//曜日用
-const dayOfWeekNumber = Object.values(DAY_OF_WEEK)
-
 //ホーム画面遷移
 function goToHome() {
   navigateTo({ path: '/home' })
@@ -123,7 +129,6 @@ function goToStudentPage() {
 async function registerTimetables() {
   //登録処理
   try {
-    console.log(timetablesData)
     const response = await $fetch<messagesResponse>('/api/timetablesCreate/', {
       method: 'POST',
       body: timetablesData,
@@ -199,16 +204,17 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 
 <style scoped lang="scss">
 @import '../assets/scss/timetable.scss';
-.timetable-update {
-  writing-mode: vertical-lr;
-  border-collapse: collapse;
-  table-layout: fixed;
 
-  background-color: #ffffff;
-  box-shadow: 0 0 0 1px #333 inset;
+.timetable {
+  width: 1120px;
+  height: 580px;
+}
+
+.update {
+  margin-left: 0px;
 }
 .time-area {
-  height: 180px;
+  height: 170px;
 }
 .time-area-text {
   text-align: center;
@@ -220,20 +226,22 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 /* メイン */
 .main {
   display: flex;
+  margin-bottom: min(10px, 5%);
 }
 .right_area {
   display: flex;
-}
-.left-button {
   margin-left: 24px;
-  margin-bottom: 24px;
 }
+
 .timetable-button-area {
-  width: 14%;
+  margin-top: 200px;
+  padding: auto;
+  width: min(20%, 250px);
   display: flex;
   flex-direction: column;
   text-align: center;
 }
+
 /*下部 */
 .bottom {
   width: 100%;
@@ -243,16 +251,10 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   color: #5160ae;
 }
 .bottom-button-area {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
 }
-.bottom-left-button {
-  position: absolute;
-  left: 24px;
-}
-.bottom-right-button {
-  position: absolute;
-  right: 24px;
-}
+
 .important-button {
   background-color: #5160ae;
   width: 160px;

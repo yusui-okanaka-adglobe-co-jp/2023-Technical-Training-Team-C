@@ -1,46 +1,41 @@
 <template>
-  <default-layout page-name="教師用登録ページ">
-    <div class="date-set">
-      <button class="usual-button start-end-date" type="button" @click="onclick">
-        <div class="font-size-m">開始日終了日選択</div>
-      </button>
-      <label v-if="isDisplayableTerm" class="datetext">{{ start }}~{{ end }}</label>
-      <calendar-modal
-        :is-shown="isShown"
-        @update:value="selectDate"
-        selection-type="range"
-        @on-close="() => (isShown = false)"
-      >
-      </calendar-modal>
+  <default-layout page-name="教師用時間割登録ページ">
+    <div class="main">
+      <div class="timetable-button-area">
+        <button class="usual-button home font-size-l" type="button" @click="() => navigateTo('/home')">ホーム</button>
+
+        <button class="usual-button student-home font-size-m" type="button" @click="open">生徒用画面確認</button>
+
+        <button class="usual-button logout font-size-l" type="button" @click="commonLogout">ログアウト</button>
+      </div>
+
+      <div class="timetable-wrapper">
+        <div class="date-set">
+          <button class="usual-button start-end-date" type="button" @click="onclick">
+            <div class="font-size-m">開始日終了日選択</div>
+          </button>
+          <label v-if="isDisplayableTerm" class="datetext">{{ start }}~{{ end }}</label>
+          <calendar-modal
+            :is-shown="isShown"
+            @update:value="selectDate"
+            selection-type="range"
+            @on-close="() => (isShown = false)"
+          >
+          </calendar-modal>
+        </div>
+        <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
+        <div class="bottom">
+          <div class="bottom-button-area">
+            <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
+              <div class="font-size-l">戻る</div>
+            </button>
+            <button class="unusual-button timetable-update" type="button" @click="useState">
+              <div class="font-size-l">時間割更新</div>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <p>
-      <button class="usual-button home" type="button" @click="() => navigateTo('/home')">
-        <div class="font-size-l">ホーム</div>
-      </button>
-    </p>
-
-    <p>
-      <button class="usual-button student-home" type="button" @click="open">
-        <div class="font-size-m">生徒用画面確認</div>
-      </button>
-    </p>
-
-    <p>
-      <button class="usual-button logout" type="button" @click="commonLogout">
-        <div class="font-size-l">ログアウト</div>
-      </button>
-    </p>
-
-    <TimetableComponentRegister v-model:timetables="timetables"></TimetableComponentRegister>
-    <p>
-      <button class="usual-button back-home" type="button" @click="() => navigateTo('/home')">
-        <div class="font-size-l">戻る</div>
-      </button>
-      <button class="unusual-button timetable-update" type="button" @click="useState">
-        <div class="font-size-l">時間割更新</div>
-      </button>
-    </p>
   </default-layout>
 </template>
 
@@ -50,6 +45,11 @@ import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
 import { Lesson, Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { commonLogout } from '~~/util/logout'
+
+definePageMeta({
+  middleware: 'auth',
+  title: 'T.T.L - 時間割登録画面',
+})
 
 const isShown = ref(false)
 
@@ -116,10 +116,6 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, 
     teacher: '',
   })),
 }))
-
-definePageMeta({
-  middleware: 'auth',
-})
 </script>
 
 <style lang="scss" scoped>
@@ -130,7 +126,7 @@ input {
 }
 
 .date-set {
-  padding-left: 380px;
+  margin-left: 180px;
   font-size: 24px;
   margin-top: 16px;
 }
@@ -140,19 +136,32 @@ input {
   font-size: 24px;
 }
 
-.home {
-  margin-top: 66px;
+.main {
+  display: flex;
+  height: calc(100vh - 100px);
+  margin-bottom: min(10px, 5%);
 }
 
-.back-home {
-  position: absolute;
-  left: 320px;
-  top: 888px;
+.register {
+  margin-top: 100px;
 }
-.timetable-update {
-  position: absolute;
-  left: 960px;
-  top: 888px;
+
+.timetable-button-area {
+  margin-top: 200px;
+  padding: auto;
+  width: min(20%, 250px);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.bottom {
+  width: 100%;
+  padding: 0 80px;
+}
+.bottom-button-area {
+  display: flex;
+  justify-content: space-between;
 }
 
 // カレンダーダイアログのscss
