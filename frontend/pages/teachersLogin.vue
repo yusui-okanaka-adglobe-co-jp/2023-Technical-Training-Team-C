@@ -62,6 +62,7 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: 'auth',
+  title: 'T.T.L - ログイン画面',
 })
 import { messagesResponse } from '~~/types/response/messagesResponse'
 

@@ -9,7 +9,11 @@
 
 <script lang="ts" setup>
 import Header from '@/components/header.vue'
-useHead({ link: [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Sans+JP' }] })
+const route = useRoute()
+useHead({
+  link: [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Sans+JP' }],
+  title: route.meta.title as string,
+})
 const props = defineProps({
   pageName: {
     type: String,
