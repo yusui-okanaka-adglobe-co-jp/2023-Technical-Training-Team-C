@@ -1,5 +1,4 @@
 <template>
-  <title>T.T.L - ログイン画面</title>
   <default-layout page-name="ログイン画面">
     <div class="button-area">
       <button class="button-font-color usual-button font-size-m" @click="goToStudentPage">生徒用画面確認</button>
@@ -63,6 +62,7 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: 'auth',
+  title: 'T.T.L - ログイン画面',
 })
 import { messagesResponse } from '~~/types/response/messagesResponse'
 

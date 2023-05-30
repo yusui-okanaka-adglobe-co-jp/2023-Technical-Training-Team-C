@@ -1,5 +1,4 @@
 <template>
-  <title>T.T.L - 時間割更新画面</title>
   <default-layout page-name="教師用更新ページ">
     <!-- html記述場所 -->
     <div class="main">
@@ -87,6 +86,7 @@ import { commonLogout } from '~~/util/logout'
 
 definePageMeta({
   middleware: 'auth',
+  title: 'T.T.L - 時間割更新画面',
 })
 
 /* 固定の変数　*/

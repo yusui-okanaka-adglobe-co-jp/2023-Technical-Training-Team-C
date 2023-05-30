@@ -1,5 +1,4 @@
 <template>
-  <title>T.T.L - 生徒用画面</title>
   <default-layout page-name="">
     <section class="main">
       <!-- html記述場所 -->
@@ -41,6 +40,10 @@ import { format, parse } from 'date-fns'
 
 const route = useRoute()
 const timetables = ref<Timetable[]>([])
+
+definePageMeta({
+  title: 'T.T.L - 生徒用画面',
+})
 
 //createdのときに行う処理
 const view = ref()

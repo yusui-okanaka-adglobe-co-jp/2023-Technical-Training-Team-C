@@ -1,5 +1,4 @@
 <template>
-  <title>T.T.L - 時間割登録画面</title>
   <default-layout page-name="教師用登録ページ">
     <div class="main">
       <div class="timetable-button-area">
@@ -46,6 +45,11 @@ import { DAY_OF_WEEK } from '~~/util/constants'
 import { useTimetables } from '~~/composables/useTimetables'
 import { Lesson, Timetable } from '~~/types/response/timetablesAcquireResponse'
 import { commonLogout } from '~~/util/logout'
+
+definePageMeta({
+  middleware: 'auth',
+  title: 'T.T.L - 時間割登録画面',
+})
 
 const isShown = ref(false)
 
@@ -112,10 +116,6 @@ const timetables: Timetable[] = Object.entries(DAY_OF_WEEK).map<Timetable>(([_, 
     teacher: '',
   })),
 }))
-
-definePageMeta({
-  middleware: 'auth',
-})
 </script>
 
 <style lang="scss" scoped>
