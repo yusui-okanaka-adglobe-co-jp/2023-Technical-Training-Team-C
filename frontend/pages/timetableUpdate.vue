@@ -205,13 +205,8 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
 @import '../assets/scss/timetable.scss';
 
 .timetable {
-  writing-mode: vertical-lr;
-  border-collapse: collapse;
-  table-layout: fixed;
   width: 1120px;
   height: 580px;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 1px #333 inset;
 }
 
 .update {
