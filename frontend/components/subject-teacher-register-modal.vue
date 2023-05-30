@@ -10,10 +10,11 @@
               type="text"
               v-model="subject"
               class="subject-input"
-              name="subject"
-              id="subject"
+              name="subject-input"
+              id="subject-input"
               maxlength="10"
               required
+              :disabled="displayInput()"
             />
             <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
               科目名を入力してください
@@ -25,16 +26,22 @@
               type="text"
               v-model="teacher"
               class="teacher-input"
-              name="teacher"
-              id="teacher"
+              name="teacher-input"
+              id="teacher-input"
               maxlength="10"
               required
+              :disabled="displayInput()"
             />
             <div v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">
               教師名を入力してください
             </div>
           </div>
-          <input type="checkbox" id="check1" v-model="checked" />この授業を削除
+          <div class="clear-checkbox-set font-size-m">
+            <label for="check1">
+              <input type="checkbox" id="check1" class="clear-checkbox" v-model="checked" />
+              授業削除
+            </label>
+          </div>
           <button type="button" class="usual-button cancel-button" @click.stop="onClose">
             <div class="font-size-l">キャンセル</div>
           </button>
@@ -72,10 +79,6 @@ interface ModalBaseProps {
   period: number
 }
 
-interface ModalBaseEmit {
-  (e: 'submit', value: Submit): void
-}
-
 const props = withDefaults(defineProps<ModalBaseProps>(), {
   isShown: false,
   dayOfWeek: '',
@@ -88,7 +91,7 @@ function regist(e: Event) {
   e.preventDefault()
   isValidSubject.value = subject.value.length !== 0
   isValidTeacher.value = teacher.value.length !== 0
-  console.log(checked.value)
+
   if (checked.value) {
     isClear.value = true
   } else {
@@ -96,7 +99,7 @@ function regist(e: Event) {
   }
 
   if (checked.value) {
-    subject.value = '削除'
+    subject.value = ''
     teacher.value = ''
     emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
   } else {
@@ -104,10 +107,27 @@ function regist(e: Event) {
       emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
     }
   }
+  checked.value = false
 }
 
 function onClose() {
   emit('onClose')
+}
+
+defineExpose({
+  clear() {
+    subject.value = ''
+    teacher.value = ''
+    isClear.value = false
+    console.log('clear')
+  },
+})
+
+function displayInput() {
+  if (checked.value === true) {
+    return true
+  }
+  return false
 }
 </script>
 
@@ -123,21 +143,30 @@ div {
 
 .register-modal-header {
   text-align: center;
-  padding-top: 12px;
+  padding-top: 2%;
+}
+
+.clear-checkbox-set {
+  text-align: center;
+  margin-top: 8%;
+}
+.clear-checkbox {
+  transform: scale(2);
+  margin-right: 2%;
 }
 .cancel-button {
   text-align: center;
-  margin-left: 64px;
-  margin-top: 104px;
+  margin-left: 10%;
+  margin-top: 5%;
 }
 
 .validate {
-  margin-left: 72px;
-  position: absolute;
+  margin-left: 5%;
+  position: fixed;
 }
 .register-button {
   text-align: center;
-  margin-left: 152px;
+  margin-left: 25%;
 }
 
 .subject-form {

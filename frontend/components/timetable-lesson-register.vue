@@ -9,12 +9,13 @@
           @on-close="() => (isShown = false)"
           :dayOfWeek="props.dayOfWeek"
           :period="props.period"
+          ref="modal"
         >
         </subject-teacher-register-modal>
         <button class="delete-button font-size-m" @click="deleteClass">消</button>
       </div>
       <div>
-        <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ updateSubject }}</p>
+        <p class="lesson-cell-box" :class="[fontSizeClass('subject')]">{{ displaySubject }}</p>
         <p class="lesson-cell-box" :class="[fontSizeClass('teacher')]">{{ updateTeacher }}</p>
       </div>
     </div>
@@ -24,6 +25,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { Submit } from './subject-teacher-register-modal.vue'
+import { SubjectTeacherRegisterModalMethod } from '~/types/SubjectTeacherRegisterModalMethod'
+
+const modal = ref<SubjectTeacherRegisterModalMethod>()
 
 const isShown = ref(false)
 
@@ -39,6 +43,7 @@ function deleteClass() {
   emit('update:subject', updateSubject.value)
   emit('update:teacherName', updateTeacher.value)
   emit('update:isClear', updateIsClear.value)
+  modal.value?.clear()
 }
 
 const props = defineProps({
@@ -65,6 +70,12 @@ const emit = defineEmits(['update:subject', 'update:teacherName', 'update:isClea
 const updateSubject = ref('')
 const updateTeacher = ref('')
 const updateIsClear = ref(false)
+const displaySubject = computed(() => {
+  if (updateIsClear.value) {
+    return '削除'
+  }
+  return updateSubject.value
+})
 function submit(submit: Submit) {
   updateSubject.value = submit.subject
   updateTeacher.value = submit.teacher
