@@ -1,4 +1,5 @@
 <template>
+  <title>T.T.L - 一覧画面</title>
   <default-layout page-name="教師用ページ">
     <section class="container">
       <!-- html記述場所 -->

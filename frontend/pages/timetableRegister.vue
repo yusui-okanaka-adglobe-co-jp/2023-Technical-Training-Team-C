@@ -1,4 +1,5 @@
 <template>
+  <title>T.T.L - 時間割登録画面</title>
   <default-layout page-name="教師用登録ページ">
     <div class="main">
       <div class="timetable-button-area">

@@ -1,4 +1,5 @@
 <template>
+  <title>T.T.L - 生徒用画面</title>
   <default-layout page-name="">
     <section class="main">
       <!-- html記述場所 -->
