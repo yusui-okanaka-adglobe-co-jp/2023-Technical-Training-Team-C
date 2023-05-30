@@ -93,9 +93,6 @@ definePageMeta({
 const periodCount: number = 6
 const dayOfWeekCount = [1, 2, 3, 4, 5, 6, 0]
 
-let subjectData: string = ''
-let teacherData: string = ''
-
 const config = useRuntimeConfig()
 
 const { time, lessons } = useTimetables()
@@ -186,19 +183,17 @@ function lessonExist(periodNumber: number, dayOfWeekNumber: number) {
 
 //教科名取得
 function getSubject(periodNumber: number, dayOfWeekNumber: number) {
-  subjectData = String(
-    timetableInfo.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
-      ?.subject
-  )
-  return subjectData
+  const lesson = timetableInfo
+    .filter(({ period }) => period === periodNumber)
+    .find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
+  return lesson?.isClear ? '削除' : lesson?.subject
 }
 //教師名取得
 function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
-  teacherData = String(
-    timetableInfo.filter(({ period }) => period === periodNumber).find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
-      ?.teacher
-  )
-  return teacherData
+  const lesson = timetableInfo
+    .filter(({ period }) => period === periodNumber)
+    .find(({ dayOfWeek }) => dayOfWeek === dayOfWeekNumber)
+  return lesson?.isClear ? '' : lesson?.teacher
 }
 </script>
 
