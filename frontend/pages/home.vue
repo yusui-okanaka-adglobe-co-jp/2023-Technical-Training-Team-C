@@ -22,9 +22,19 @@
           <div class="triangle-button-area">
             <div class="triangle-button">
               <!--先週-->
-              <button class="triangle-left" :disabled="displayLeftButton()" @click="getLastWeekTimetable()"></button>
+              <button
+                class="triangle-left"
+                :disabled="displayLeftButton()"
+                :class="{ oldest: displayDateOldestDate() }"
+                @click="getLastWeekTimetable()"
+              ></button>
               <!--来週-->
-              <button class="triangle-right" :disabled="displayRightButton()" @click="getNextWeekTimetable()"></button>
+              <button
+                class="triangle-right"
+                :disabled="displayRightButton()"
+                :class="{ latest: displayDateLatestDate() }"
+                @click="getNextWeekTimetable()"
+              ></button>
             </div>
           </div>
 
@@ -54,6 +64,7 @@ const route = useRoute()
 const timetables = ref<Timetable[]>([])
 //calendar用
 const isShown = ref(false)
+const isRendering = ref(true)
 
 //createdのときに行う処理
 const view = ref()
@@ -74,12 +85,23 @@ function displayToggle() {
   loadingDisplay.value = !loadingDisplay.value
 }
 
+onMounted(() => {
+  isRendering.value = false
+})
+
 //前週ボタン表示
 function displayLeftButton() {
+  return oldestDate >= displayDate || isRendering.value
+}
+function displayDateOldestDate() {
   return oldestDate >= displayDate
 }
 //次週ボタン表示
 function displayRightButton() {
+  return latestDate <= displayDate || isRendering.value
+}
+
+function displayDateLatestDate() {
   return latestDate <= displayDate
 }
 
@@ -138,6 +160,7 @@ async function getTimetableData() {
       baseURL: config.public.apiUrl,
       query: { date: view.value },
     })
+    isRendering.value = false
     if (response.value == null) {
       return
     }
@@ -213,13 +236,14 @@ watch(
   () => route.query,
   () => {
     getTimetableData()
+    isRendering.value = true
   }
 )
 </script>
 
 <style scoped lang="scss">
 .container {
-  margin: 15px min(10%, 20px) 15px 0;
+  margin: 0 min(10%, 20px) 15px 0;
 }
 /* 三角関連 */
 .triangle-button-area {
@@ -257,12 +281,12 @@ watch(
 .triangle-right:hover {
   filter: brightness(1.1);
 }
-.triangle-left:disabled {
+.oldest {
   border-color: transparent gray transparent transparent;
   opacity: 0.3;
   filter: brightness(0.8);
 }
-.triangle-right:disabled {
+.latest {
   border-color: transparent transparent transparent gray;
   opacity: 0.3;
   filter: brightness(0.8);
@@ -274,11 +298,9 @@ watch(
 .timetable-wrapper {
   margin-bottom: min(80px, 10%);
 }
-button {
-  margin-bottom: 24px;
-}
+
 .timetable-button-area {
-  margin-top: 120px;
+  margin-top: 200px;
   padding: auto;
   width: min(20%, 250px);
   display: flex;

@@ -16,12 +16,14 @@
           <button
             class="triangle-wrapper__inner__left"
             :disabled="displayLeftButton()"
+            :class="{ oldest: displayDateOldestDate() }"
             @click="getLastWeekTimetable"
           ></button>
           <!--来週-->
           <button
             class="triangle-wrapper__inner__right"
             :disabled="displayRightButton()"
+            :class="{ latest: displayDateLatestDate() }"
             @click="getNextWeekTimetable"
           ></button>
         </div>
@@ -97,9 +99,15 @@ onMounted(() => {
 function displayLeftButton() {
   return oldestDate >= displayDate || isRendering.value
 }
+function displayDateOldestDate() {
+  return oldestDate >= displayDate
+}
 //次週ボタン表示
 function displayRightButton() {
   return latestDate <= displayDate || isRendering.value
+}
+function displayDateLatestDate() {
+  return latestDate <= displayDate
 }
 
 //前週ボタン押下時
@@ -254,13 +262,13 @@ watch(
     filter: brightness(1.1);
   }
 
-  &__left:disabled {
+  .oldest {
     border-color: transparent gray transparent transparent;
     opacity: 0.3;
     filter: brightness(0.8);
   }
 
-  &__right:disabled {
+  .latest {
     border-color: transparent transparent transparent gray;
     opacity: 0.3;
     filter: brightness(0.8);
