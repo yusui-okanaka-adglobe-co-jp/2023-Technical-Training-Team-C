@@ -5,40 +5,41 @@
         <form class="form-example" @submit="regist">
           <div class="register-modal-header font-size-l">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
           <div class="subject-form font-size-l">
-            <label for="subject">科目：</label>
-            <input
-              type="text"
-              v-model="subject"
-              class="subject-input"
-              name="subject-input"
-              id="subject-input"
-              maxlength="10"
-              required
-              :disabled="displayInput()"
-            />
+            <label for="subject"
+              >科目：
+              <input
+                type="text"
+                v-model="subject"
+                class="subject-teacher-input"
+                maxlength="10"
+                :required="!isClear"
+                :disabled="isClear"
+                :readonly="isClear"
+              />
+            </label>
             <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
               科目名を入力してください
             </div>
           </div>
           <div class="teacher-form font-size-l">
-            <label for="teacher">教師：</label>
-            <input
-              type="text"
-              v-model="teacher"
-              class="teacher-input"
-              name="teacher-input"
-              id="teacher-input"
-              maxlength="10"
-              required
-              :disabled="displayInput()"
-            />
+            <label for="teacher"
+              >教師：
+              <input
+                type="text"
+                v-model="teacher"
+                class="subject-teacher-input"
+                maxlength="10"
+                :required="!isClear"
+                :disabled="isClear"
+              />
+            </label>
             <div v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">
               教師名を入力してください
             </div>
           </div>
           <div class="clear-checkbox-set font-size-m">
             <label for="check1">
-              <input type="checkbox" id="check1" class="clear-checkbox" v-model="checked" />
+              <input type="checkbox" id="check1" class="clear-checkbox" v-model="isClear" />
               授業削除
             </label>
           </div>
@@ -83,8 +84,6 @@ const subject = ref('')
 const teacher = ref('')
 const isClear = ref(false)
 
-const checked = ref(false)
-
 const isValidSubject = ref(true)
 const isValidTeacher = ref(true)
 
@@ -97,17 +96,12 @@ const props = withDefaults(defineProps<ModalBaseProps>(), {
 const emit = defineEmits(['submit', 'onClose'])
 
 function regist(e: Event) {
+  console.log('regist')
   e.preventDefault()
-  isValidSubject.value = subject.value.length !== 0
-  isValidTeacher.value = teacher.value.length !== 0
+  isValidSubject.value = subject.value.length !== 0 || isClear.value
+  isValidTeacher.value = teacher.value.length !== 0 || isClear.value
 
-  if (checked.value) {
-    isClear.value = true
-  } else {
-    isClear.value = false
-  }
-
-  if (checked.value) {
+  if (isClear.value) {
     subject.value = ''
     teacher.value = ''
     emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
@@ -116,21 +110,19 @@ function regist(e: Event) {
       emit('submit', { subject: subject.value, teacher: teacher.value, isClear: isClear.value })
     }
   }
-  checked.value = false
 }
 
 function onClose() {
   emit('onClose')
 }
 
-function displayInput() {
-  if (checked.value === true) {
+watch(
+  () => isClear.value,
+  () => {
     subject.value = ''
     teacher.value = ''
-    return true
   }
-  return false
-}
+)
 </script>
 
 <style lang="scss" scoped>
@@ -182,11 +174,11 @@ div {
   margin-left: 108px;
   margin-top: 40px;
 }
-.subject-input {
+.subject-teacher-input {
   border: 1px solid black;
-}
 
-.teacher-input {
-  border: 1px solid black;
+  &:disabled {
+    background: #a9a9a9;
+  }
 }
 </style>
