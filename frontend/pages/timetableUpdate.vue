@@ -213,7 +213,7 @@ function getTeacher(periodNumber: number, dayOfWeekNumber: number) {
   margin-left: 0px;
 }
 .time-area {
-  height: 150px;
+  height: 170px;
 }
 .time-area-text {
   text-align: center;

@@ -142,7 +142,7 @@ input {
 }
 
 .register {
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
 .timetable-button-area {
