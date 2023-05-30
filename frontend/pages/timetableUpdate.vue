@@ -33,9 +33,7 @@
           </tr>
           <template v-for="dayOfWeek in dayOfWeekCount" :key="dayOfWeek">
             <tr>
-              <TimetableDayOfWeek
-                :day-of-week="dayOfWeekChangeString(dayOfWeekNumber[dayOfWeek - 1])"
-              ></TimetableDayOfWeek>
+              <TimetableDayOfWeek :day-of-week="dayOfWeekChangeString(dayOfWeek)" />
               <template v-for="period in periodCount" :key="period">
                 <template v-if="lessonExist(period, dayOfWeek)">
                   <!--データがある時-->
@@ -81,7 +79,6 @@
 <script lang="ts" setup>
 import { useTimetables } from '~~/composables/useTimetables'
 import { messagesResponse } from '~~/types/response/messagesResponse'
-import { DAY_OF_WEEK } from '~~/util/constants'
 import { commonLogout } from '~~/util/logout'
 
 definePageMeta({
@@ -115,9 +112,6 @@ const timetablesData = {
   lessons: lessons.value,
 }
 
-//曜日用
-const dayOfWeekNumber = Object.values(DAY_OF_WEEK)
-
 //ホーム画面遷移
 function goToHome() {
   navigateTo({ path: '/home' })
@@ -131,7 +125,6 @@ function goToStudentPage() {
 async function registerTimetables() {
   //登録処理
   try {
-    console.log(timetablesData)
     const response = await $fetch<messagesResponse>('/api/timetablesCreate/', {
       method: 'POST',
       body: timetablesData,
