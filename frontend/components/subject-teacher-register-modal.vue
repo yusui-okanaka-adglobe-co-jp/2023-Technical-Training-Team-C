@@ -5,40 +5,36 @@
         <form class="form-example" @submit="regist">
           <div class="register-modal-header font-size-l">{{ props.dayOfWeek }}曜{{ props.period }}時間目</div>
           <div class="subject-form font-size-l">
-            <label for="subject"
-              >科目：
-              <input
-                type="text"
-                v-model="subject"
-                class="subject-teacher-input"
-                maxlength="10"
-                :required="!isClear"
-                :disabled="isClear"
-              />
-            </label>
+            科目：
+            <input
+              type="text"
+              v-model="subject"
+              class="subject-teacher-input"
+              maxlength="10"
+              :required="!isClear"
+              :disabled="isClear"
+            />
             <div v-if="!isValidSubject" class="font-size-xs red inner-title__err validate">
               科目名を入力してください
             </div>
           </div>
           <div class="teacher-form font-size-l">
-            <label for="teacher"
-              >教師：
-              <input
-                type="text"
-                v-model="teacher"
-                class="subject-teacher-input"
-                maxlength="10"
-                :required="!isClear"
-                :disabled="isClear"
-              />
-            </label>
+            教師：
+            <input
+              type="text"
+              v-model="teacher"
+              class="subject-teacher-input"
+              maxlength="10"
+              :required="!isClear"
+              :disabled="isClear"
+            />
             <div v-if="!isValidTeacher" class="font-size-xs red inner-title__err validate">
               教師名を入力してください
             </div>
           </div>
           <div class="clear-checkbox-set font-size-m">
-            <label for="check1">
-              <input type="checkbox" id="check1" class="clear-checkbox" v-model="isClear" />
+            <label for="is-chech">
+              <input type="checkbox" id="is-check" class="clear-checkbox" v-model="isClear" />
               授業削除
             </label>
           </div>
